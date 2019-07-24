@@ -1,4 +1,4 @@
-package com.manager;
+package com.self;
 
 import java.io.*;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class file {
         if (!file.exists()) {
             file.createNewFile();
         }
-        
+
     }
 
     public static void getContent(File file) throws Exception {
