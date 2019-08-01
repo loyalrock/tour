@@ -32,7 +32,7 @@ public class file {
             int beginIndex = 0;
             int endIndex = 0;
             int length = stringBuffer.length();
-            while ((beginIndex = stringBuffer.indexOf("chronic/")) != -1) {
+            while ((beginIndex = stringBuffer.indexOf("/chronic/")) != -1 || (beginIndex = stringBuffer.indexOf("/iot/")) != -1 || (beginIndex = stringBuffer.indexOf("/im/")) != -1) {
                 // 缓存起始位置，从当前位置寻找下一个引号
                 int tempIndex = beginIndex;
                 do {
