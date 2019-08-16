@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manager.system.dao.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.manager.entry.system.UserRole" >
+    <constructor >
+      <arg column="sys_user_uid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sys_role_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.manager.entry.system.UserRole" >
+    insert into sys_user_role (sys_user_uid, sys_role_id)
+    values (#{sysUserUid,jdbcType=VARCHAR}, #{sysRoleId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.manager.entry.system.UserRole" >
+    insert into sys_user_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sysUserUid != null" >
+        sys_user_uid,
+      </if>
+      <if test="sysRoleId != null" >
+        sys_role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sysUserUid != null" >
+        #{sysUserUid,jdbcType=VARCHAR},
+      </if>
+      <if test="sysRoleId != null" >
+        #{sysRoleId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

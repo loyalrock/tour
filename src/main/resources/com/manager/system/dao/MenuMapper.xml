@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manager.system.dao.MenuMapper" >
+  <resultMap id="BaseResultMap" type="com.manager.entry.system.Menu" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="parent_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="menu_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="menu_icon" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="menu_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="menu_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="menu_order" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="create_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="create_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="last_update_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="last_update_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, parent_id, menu_name, menu_icon, menu_url, menu_type, menu_order, remark, status, 
+    create_time, create_date, last_update_time, last_update_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.manager.entry.system.Menu" >
+    insert into sys_menu (id, parent_id, menu_name, 
+      menu_icon, menu_url, menu_type, 
+      menu_order, remark, status, 
+      create_time, create_date, last_update_time, 
+      last_update_date)
+    values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR}, 
+      #{menuIcon,jdbcType=VARCHAR}, #{menuUrl,jdbcType=VARCHAR}, #{menuType,jdbcType=TINYINT}, 
+      #{menuOrder,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=BIGINT}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.manager.entry.system.Menu" >
+    insert into sys_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="menuName != null" >
+        menu_name,
+      </if>
+      <if test="menuIcon != null" >
+        menu_icon,
+      </if>
+      <if test="menuUrl != null" >
+        menu_url,
+      </if>
+      <if test="menuType != null" >
+        menu_type,
+      </if>
+      <if test="menuOrder != null" >
+        menu_order,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null" >
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIcon != null" >
+        #{menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null" >
+        #{menuType,jdbcType=TINYINT},
+      </if>
+      <if test="menuOrder != null" >
+        #{menuOrder,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.system.Menu" >
+    update sys_menu
+    <set >
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null" >
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIcon != null" >
+        menu_icon = #{menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        menu_url = #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null" >
+        menu_type = #{menuType,jdbcType=TINYINT},
+      </if>
+      <if test="menuOrder != null" >
+        menu_order = #{menuOrder,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.manager.entry.system.Menu" >
+    update sys_menu
+    set parent_id = #{parentId,jdbcType=INTEGER},
+      menu_name = #{menuName,jdbcType=VARCHAR},
+      menu_icon = #{menuIcon,jdbcType=VARCHAR},
+      menu_url = #{menuUrl,jdbcType=VARCHAR},
+      menu_type = #{menuType,jdbcType=TINYINT},
+      menu_order = #{menuOrder,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=BIGINT},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -25,9 +25,9 @@ import javax.sql.DataSource;
 public class MyDruirdConfig implements DbConfig {
 
 
-    public static final String PACKAGE = "com.manager.tour.dao.**";
+    public static final String PACKAGE = "com.manager.*.dao.**";
 
-    public static final String MAPPER = "classpath:com/manager/tour/dao/*Mapper.xml";
+    public static final String MAPPER = "classpath:com/manager/*/dao/*Mapper*.xml";
 
     @Value("${spring.datasource.url}")
     private String dbUrl;
@@ -37,9 +37,6 @@ public class MyDruirdConfig implements DbConfig {
 
     @Value("${spring.datasource.password}")
     private String password;
-
-    @Value("${spring.datasource.driverClassName}")
-    private String driverClassName;
 
     @Value("${spring.datasource.initialSize}")
     private int initialSize;
@@ -119,7 +116,6 @@ public class MyDruirdConfig implements DbConfig {
         datasource.setUrl(this.dbUrl);
         datasource.setUsername(this.username);
         datasource.setPassword(this.password);
-        datasource.setDriverClassName(this.driverClassName);
 
         datasource.setInitialSize(this.initialSize);
         datasource.setMinIdle(this.minIdle);

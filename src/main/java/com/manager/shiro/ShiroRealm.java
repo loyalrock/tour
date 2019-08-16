@@ -1,12 +1,14 @@
 package com.manager.shiro;
 
-import org.apache.catalina.User;
+import com.manager.entry.system.User;
+import com.manager.system.dao.UserMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,6 +16,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class ShiroRealm extends AuthorizingRealm {
+
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
@@ -39,12 +45,16 @@ public class ShiroRealm extends AuthorizingRealm {
         String username = token.getUsername();
         String password = String.valueOf(token.getPassword());
 
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("nickname", username);
-//        //密码进行加密处理  明文为  password+name
-//        String paw = password + username;
+        User user = userMapper.selectUserByUsername(username);
+        if (user == null) {
+            // 用户名不存在抛出异常
+            throw new UnknownAccountException();
+        }
+        if (user.getStatus() == 0) {
+            // 用户被管理员锁定抛出异常
+            throw new LockedAccountException();
+        }
 
-
-        return new SimpleAuthenticationInfo(username, password, getName());
+        return new SimpleAuthenticationInfo(username, user.getPassword(), getName());
     }
 }
