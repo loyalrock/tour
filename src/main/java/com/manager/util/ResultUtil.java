@@ -10,7 +10,15 @@ import com.manager.entry.common.ResultEntry;
  */
 public class ResultUtil {
 
-    public static ResultEntry success(String message) {
+    public static ResultEntry success(Object obj) {
+        return new ResultEntry(obj);
+    }
+
+    public static ResultEntry success() {
         return new ResultEntry();
+    }
+
+    public static ResultEntry error(Message message) {
+        return new ResultEntry(message.getCode(), message.getMessage());
     }
 }

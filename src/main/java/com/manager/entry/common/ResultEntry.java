@@ -1,5 +1,10 @@
 package com.manager.entry.common;
 
+import com.manager.util.Message;
+
+/**
+ * 统一返回实体
+ */
 public class ResultEntry {
 
     private String code;
@@ -28,15 +33,18 @@ public class ResultEntry {
         return body;
     }
 
-    public ResultEntry () {};
+    public ResultEntry () {
+        this.code = Message.SUCCESS.getCode();
+        this.message = Message.SUCCESS.getMessage();
+    };
 
     public void setBody(Object body) {
         this.body = body;
     }
 
     public ResultEntry(Object body) {
-        this.code = "0000";
-        this.message = "success";
+        this.code = Message.SUCCESS.getCode();
+        this.message = Message.SUCCESS.getMessage();
         this.body = body;
     }
 
@@ -44,5 +52,10 @@ public class ResultEntry {
         this.code = code;
         this.message = message;
         this.body = body;
+    }
+
+    public ResultEntry(String code, String message) {
+        this.code = code;
+        this.message = message;
     }
 }

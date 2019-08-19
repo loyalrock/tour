@@ -1,6 +1,8 @@
 package com.manager.system.controller;
 
 import com.manager.entry.common.ResultEntry;
+import com.manager.util.Message;
+import com.manager.util.ResultUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -31,10 +33,11 @@ public class LoginController {
         try {
             subject.login(token);
         } catch (UnknownAccountException e) {
-          return new ResultEntry("账户不存在");
-        } catch (AuthenticationException e) {
+            // 用户没有找到
+          return ResultUtil.error(Message.NOT_USER_FOUND);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ResultEntry("登陆成功");
+        return ResultUtil.success();
     }
 }

@@ -37,8 +37,10 @@
             <charset>UTF-8</charset>
             <pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
         </encoder>
-    </appender>
 
+
+    </appender>
+    <logger name="com.manager.system.dao" level="DEBUG" />
 
     <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--如果只是想要 Error 级别的日志，那么需要过滤一下，默认是 info 级别的，ThresholdFilter-->
