@@ -3,66 +3,71 @@ package com.manager.entry.system;
 import java.util.Date;
 
 public class Menu {
-    private Integer id;
+    private String ss04Id;
 
-    private Integer parentId;
+    private String menuId;
+
+    private String menuOredr;
 
     private String menuName;
 
-    private String menuIcon;
+    private String menuPath;
 
-    private String menuUrl;
+    private String ifRootNode;
 
-    private Byte menuType;
+    private String status;
 
-    private Byte menuOrder;
+    private String createUser;
 
-    private String remark;
+    private Date createTime;
 
-    private Byte status;
+    private String updateUser;
 
-    private Long createTime;
+    private Date updateTime;
 
-    private Date createDate;
+    private String deleteFlag;
 
-    private Long lastUpdateTime;
-
-    private Date lastUpdateDate;
-
-    public Menu(Integer id, Integer parentId, String menuName, String menuIcon, String menuUrl, Byte menuType, Byte menuOrder, String remark, Byte status, Long createTime, Date createDate, Long lastUpdateTime, Date lastUpdateDate) {
-        this.id = id;
-        this.parentId = parentId;
+    public Menu(String ss04Id, String menuId, String menuOredr, String menuName, String menuPath, String ifRootNode, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+        this.ss04Id = ss04Id;
+        this.menuId = menuId;
+        this.menuOredr = menuOredr;
         this.menuName = menuName;
-        this.menuIcon = menuIcon;
-        this.menuUrl = menuUrl;
-        this.menuType = menuType;
-        this.menuOrder = menuOrder;
-        this.remark = remark;
+        this.menuPath = menuPath;
+        this.ifRootNode = ifRootNode;
         this.status = status;
+        this.createUser = createUser;
         this.createTime = createTime;
-        this.createDate = createDate;
-        this.lastUpdateTime = lastUpdateTime;
-        this.lastUpdateDate = lastUpdateDate;
+        this.updateUser = updateUser;
+        this.updateTime = updateTime;
+        this.deleteFlag = deleteFlag;
     }
 
     public Menu() {
         super();
     }
 
-    public Integer getId() {
-        return id;
+    public String getSs04Id() {
+        return ss04Id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSs04Id(String ss04Id) {
+        this.ss04Id = ss04Id == null ? null : ss04Id.trim();
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public String getMenuId() {
+        return menuId;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setMenuId(String menuId) {
+        this.menuId = menuId == null ? null : menuId.trim();
+    }
+
+    public String getMenuOredr() {
+        return menuOredr;
+    }
+
+    public void setMenuOredr(String menuOredr) {
+        this.menuOredr = menuOredr == null ? null : menuOredr.trim();
     }
 
     public String getMenuName() {
@@ -73,83 +78,67 @@ public class Menu {
         this.menuName = menuName == null ? null : menuName.trim();
     }
 
-    public String getMenuIcon() {
-        return menuIcon;
+    public String getMenuPath() {
+        return menuPath;
     }
 
-    public void setMenuIcon(String menuIcon) {
-        this.menuIcon = menuIcon == null ? null : menuIcon.trim();
+    public void setMenuPath(String menuPath) {
+        this.menuPath = menuPath == null ? null : menuPath.trim();
     }
 
-    public String getMenuUrl() {
-        return menuUrl;
+    public String getIfRootNode() {
+        return ifRootNode;
     }
 
-    public void setMenuUrl(String menuUrl) {
-        this.menuUrl = menuUrl == null ? null : menuUrl.trim();
+    public void setIfRootNode(String ifRootNode) {
+        this.ifRootNode = ifRootNode == null ? null : ifRootNode.trim();
     }
 
-    public Byte getMenuType() {
-        return menuType;
-    }
-
-    public void setMenuType(Byte menuType) {
-        this.menuType = menuType;
-    }
-
-    public Byte getMenuOrder() {
-        return menuOrder;
-    }
-
-    public void setMenuOrder(Byte menuOrder) {
-        this.menuOrder = menuOrder;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
-
-    public Byte getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
-        this.status = status;
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
-    public Long getCreateTime() {
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser == null ? null : createUser.trim();
+    }
+
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Long createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public String getUpdateUser() {
+        return updateUser;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser == null ? null : updateUser.trim();
     }
 
-    public Long getLastUpdateTime() {
-        return lastUpdateTime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setLastUpdateTime(Long lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
+    public String getDeleteFlag() {
+        return deleteFlag;
     }
 
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
+    public void setDeleteFlag(String deleteFlag) {
+        this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
     }
 }

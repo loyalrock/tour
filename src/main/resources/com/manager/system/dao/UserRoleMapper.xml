@@ -3,31 +3,129 @@
 <mapper namespace="com.manager.system.dao.UserRoleMapper" >
   <resultMap id="BaseResultMap" type="com.manager.entry.system.UserRole" >
     <constructor >
-      <arg column="sys_user_uid" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="sys_role_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <idArg column="SS0101_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SS01_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="USER_ROLE_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="UPDATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="UPDATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="DELETE_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
+  <sql id="Base_Column_List" >
+    SS0101_ID, SS01_ID, USER_ROLE_ID, CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME, 
+    DELETE_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SS0101
+    where SS0101_ID = #{ss0101Id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SS0101
+    where SS0101_ID = #{ss0101Id,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.manager.entry.system.UserRole" >
-    insert into sys_user_role (sys_user_uid, sys_role_id)
-    values (#{sysUserUid,jdbcType=VARCHAR}, #{sysRoleId,jdbcType=INTEGER})
+    insert into SS0101 (SS0101_ID, SS01_ID, USER_ROLE_ID, 
+      CREATE_USER, CREATE_TIME, UPDATE_USER, 
+      UPDATE_TIME, DELETE_FLAG)
+    values (#{ss0101Id,jdbcType=VARCHAR}, #{ss01Id,jdbcType=VARCHAR}, #{userRoleId,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.manager.entry.system.UserRole" >
-    insert into sys_user_role
+    insert into SS0101
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="sysUserUid != null" >
-        sys_user_uid,
+      <if test="ss0101Id != null" >
+        SS0101_ID,
       </if>
-      <if test="sysRoleId != null" >
-        sys_role_id,
+      <if test="ss01Id != null" >
+        SS01_ID,
+      </if>
+      <if test="userRoleId != null" >
+        USER_ROLE_ID,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="deleteFlag != null" >
+        DELETE_FLAG,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="sysUserUid != null" >
-        #{sysUserUid,jdbcType=VARCHAR},
+      <if test="ss0101Id != null" >
+        #{ss0101Id,jdbcType=VARCHAR},
       </if>
-      <if test="sysRoleId != null" >
-        #{sysRoleId,jdbcType=INTEGER},
+      <if test="ss01Id != null" >
+        #{ss01Id,jdbcType=VARCHAR},
+      </if>
+      <if test="userRoleId != null" >
+        #{userRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.system.UserRole" >
+    update SS0101
+    <set >
+      <if test="ss01Id != null" >
+        SS01_ID = #{ss01Id,jdbcType=VARCHAR},
+      </if>
+      <if test="userRoleId != null" >
+        USER_ROLE_ID = #{userRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where SS0101_ID = #{ss0101Id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.manager.entry.system.UserRole" >
+    update SS0101
+    set SS01_ID = #{ss01Id,jdbcType=VARCHAR},
+      USER_ROLE_ID = #{userRoleId,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
+    where SS0101_ID = #{ss0101Id,jdbcType=VARCHAR}
+  </update>
 </mapper>

@@ -3,109 +3,120 @@ package com.manager.entry.system;
 import java.util.Date;
 
 public class Role {
-    private Integer id;
+    private String ss02Id;
 
-    private String uid;
+    private String userRoleId;
 
-    private String roleName;
+    private String userRoleName;
 
-    private String remark;
+    private String remarks;
 
-    private Byte status;
+    private String status;
 
-    private Long createTime;
+    private String createUser;
 
-    private Date createDate;
+    private Date createTime;
 
-    private Long lastUpdateTime;
+    private String updateUser;
 
-    private Date lastUpdateDate;
+    private Date updateTime;
 
-    public Role(Integer id, String uid, String roleName, String remark, Byte status, Long createTime, Date createDate, Long lastUpdateTime, Date lastUpdateDate) {
-        this.id = id;
-        this.uid = uid;
-        this.roleName = roleName;
-        this.remark = remark;
+    private String deleteFlag;
+
+    public Role(String ss02Id, String userRoleId, String userRoleName, String remarks, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+        this.ss02Id = ss02Id;
+        this.userRoleId = userRoleId;
+        this.userRoleName = userRoleName;
+        this.remarks = remarks;
         this.status = status;
+        this.createUser = createUser;
         this.createTime = createTime;
-        this.createDate = createDate;
-        this.lastUpdateTime = lastUpdateTime;
-        this.lastUpdateDate = lastUpdateDate;
+        this.updateUser = updateUser;
+        this.updateTime = updateTime;
+        this.deleteFlag = deleteFlag;
     }
 
     public Role() {
         super();
     }
 
-    public Integer getId() {
-        return id;
+    public String getSs02Id() {
+        return ss02Id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSs02Id(String ss02Id) {
+        this.ss02Id = ss02Id == null ? null : ss02Id.trim();
     }
 
-    public String getUid() {
-        return uid;
+    public String getUserRoleId() {
+        return userRoleId;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid == null ? null : uid.trim();
+    public void setUserRoleId(String userRoleId) {
+        this.userRoleId = userRoleId == null ? null : userRoleId.trim();
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getUserRoleName() {
+        return userRoleName;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName == null ? null : roleName.trim();
+    public void setUserRoleName(String userRoleName) {
+        this.userRoleName = userRoleName == null ? null : userRoleName.trim();
     }
 
-    public String getRemark() {
-        return remark;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
+    public void setRemarks(String remarks) {
+        this.remarks = remarks == null ? null : remarks.trim();
     }
 
-    public Byte getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
-        this.status = status;
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
-    public Long getCreateTime() {
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser == null ? null : createUser.trim();
+    }
+
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Long createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public String getUpdateUser() {
+        return updateUser;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser == null ? null : updateUser.trim();
     }
 
-    public Long getLastUpdateTime() {
-        return lastUpdateTime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setLastUpdateTime(Long lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
+    public String getDeleteFlag() {
+        return deleteFlag;
     }
 
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
+    public void setDeleteFlag(String deleteFlag) {
+        this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
     }
 }

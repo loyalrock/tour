@@ -21,7 +21,7 @@
         <!--jdbc的数据库连接 -->
         <jdbcConnection
                 connectionURL="jdbc:mysql://148.70.51.201:3306/tourism?characterEncoding=utf8&amp;tinyInt1isBit=false"
-                driverClass="com.mysql.jdbc.Driver"
+                driverClass="com.mysql.cj.jdbc.Driver"
                 userId="root"
                 password="123456">
             <property name="useInformationSchema" value="true"/>
@@ -68,37 +68,37 @@
         </javaClientGenerator>
 
          <!--需要生成的表名以及实体类命名 -->
-        <table tableName="sys_user" domainObjectName="User"
+        <table tableName="SS01" domainObjectName="User"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
                enableDeleteByPrimaryKey="true">
         </table>
-        <table tableName="sys_role" domainObjectName="Role"
+        <table tableName="SS0101" domainObjectName="UserRole"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
                enableDeleteByPrimaryKey="true">
         </table>
-        <table tableName="sys_menu" domainObjectName="Menu"
+        <table tableName="SS0102" domainObjectName="UserProject"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
                enableDeleteByPrimaryKey="true">
         </table>
-        <table tableName="sys_user_role" domainObjectName="UserRole"
+        <table tableName="SS02" domainObjectName="Role"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
                enableDeleteByPrimaryKey="true">
         </table>
-        <table tableName="sys_role_menu" domainObjectName="RoleMenu"
+        <table tableName="SS03" domainObjectName="Dict"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
                enableDeleteByPrimaryKey="true">
         </table>
-        <table tableName="sys_menu_perms" domainObjectName="MenuPerms"
+        <table tableName="SS04" domainObjectName="Menu"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"

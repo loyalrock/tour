@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.manager.system.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.manager.entry.system.User" >
+<mapper namespace="com.manager.system.dao.DictMapper" >
+  <resultMap id="BaseResultMap" type="com.manager.entry.system.Dict" >
     <constructor >
-      <idArg column="SS01_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="USER_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="USER_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="PASSWORD" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <idArg column="SS03_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DIR_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DIR_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DIR_EXP" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="STATUS" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="CREATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
@@ -16,43 +16,43 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    SS01_ID, USER_ID, USER_NAME, PASSWORD, STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER, 
+    SS03_ID, DIR_ID, DIR_NAME, DIR_EXP, STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER, 
     UPDATE_TIME, DELETE_FLAG
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from SS01
-    where SS01_ID = #{ss01Id,jdbcType=VARCHAR}
+    from SS03
+    where SS03_ID = #{ss03Id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from SS01
-    where SS01_ID = #{ss01Id,jdbcType=VARCHAR}
+    delete from SS03
+    where SS03_ID = #{ss03Id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.manager.entry.system.User" >
-    insert into SS01 (SS01_ID, USER_ID, USER_NAME, 
-      PASSWORD, STATUS, CREATE_USER, 
+  <insert id="insert" parameterType="com.manager.entry.system.Dict" >
+    insert into SS03 (SS03_ID, DIR_ID, DIR_NAME, 
+      DIR_EXP, STATUS, CREATE_USER, 
       CREATE_TIME, UPDATE_USER, UPDATE_TIME, 
       DELETE_FLAG)
-    values (#{ss01Id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, 
+    values (#{ss03Id,jdbcType=VARCHAR}, #{dirId,jdbcType=VARCHAR}, #{dirName,jdbcType=VARCHAR}, 
+      #{dirExp,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{deleteFlag,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.manager.entry.system.User" >
-    insert into SS01
+  <insert id="insertSelective" parameterType="com.manager.entry.system.Dict" >
+    insert into SS03
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="ss01Id != null" >
-        SS01_ID,
+      <if test="ss03Id != null" >
+        SS03_ID,
       </if>
-      <if test="userId != null" >
-        USER_ID,
+      <if test="dirId != null" >
+        DIR_ID,
       </if>
-      <if test="userName != null" >
-        USER_NAME,
+      <if test="dirName != null" >
+        DIR_NAME,
       </if>
-      <if test="password != null" >
-        PASSWORD,
+      <if test="dirExp != null" >
+        DIR_EXP,
       </if>
       <if test="status != null" >
         STATUS,
@@ -74,17 +74,17 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="ss01Id != null" >
-        #{ss01Id,jdbcType=VARCHAR},
+      <if test="ss03Id != null" >
+        #{ss03Id,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
+      <if test="dirId != null" >
+        #{dirId,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
+      <if test="dirName != null" >
+        #{dirName,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
+      <if test="dirExp != null" >
+        #{dirExp,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=CHAR},
@@ -106,17 +106,17 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.system.User" >
-    update SS01
+  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.system.Dict" >
+    update SS03
     <set >
-      <if test="userId != null" >
-        USER_ID = #{userId,jdbcType=VARCHAR},
+      <if test="dirId != null" >
+        DIR_ID = #{dirId,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null" >
-        USER_NAME = #{userName,jdbcType=VARCHAR},
+      <if test="dirName != null" >
+        DIR_NAME = #{dirName,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        PASSWORD = #{password,jdbcType=VARCHAR},
+      <if test="dirExp != null" >
+        DIR_EXP = #{dirExp,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         STATUS = #{status,jdbcType=CHAR},
@@ -137,19 +137,19 @@
         DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
       </if>
     </set>
-    where SS01_ID = #{ss01Id,jdbcType=VARCHAR}
+    where SS03_ID = #{ss03Id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.manager.entry.system.User" >
-    update SS01
-    set USER_ID = #{userId,jdbcType=VARCHAR},
-      USER_NAME = #{userName,jdbcType=VARCHAR},
-      PASSWORD = #{password,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.manager.entry.system.Dict" >
+    update SS03
+    set DIR_ID = #{dirId,jdbcType=VARCHAR},
+      DIR_NAME = #{dirName,jdbcType=VARCHAR},
+      DIR_EXP = #{dirExp,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=CHAR},
       CREATE_USER = #{createUser,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
-    where SS01_ID = #{ss01Id,jdbcType=VARCHAR}
+    where SS03_ID = #{ss03Id,jdbcType=VARCHAR}
   </update>
 </mapper>

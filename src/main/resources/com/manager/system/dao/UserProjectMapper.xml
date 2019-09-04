@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.manager.system.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.manager.entry.system.User" >
+<mapper namespace="com.manager.system.dao.UserProjectMapper" >
+  <resultMap id="BaseResultMap" type="com.manager.entry.system.UserProject" >
     <constructor >
-      <idArg column="SS01_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="USER_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="USER_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="PASSWORD" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="STATUS" jdbcType="CHAR" javaType="java.lang.String" />
+      <idArg column="SS0102_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SS01_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PROJECT_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="OP_UNIT" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="CREATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="UPDATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -16,46 +15,43 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    SS01_ID, USER_ID, USER_NAME, PASSWORD, STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER, 
-    UPDATE_TIME, DELETE_FLAG
+    SS0102_ID, SS01_ID, PROJECT_NO, OP_UNIT, CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME, 
+    DELETE_FLAG
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from SS01
-    where SS01_ID = #{ss01Id,jdbcType=VARCHAR}
+    from SS0102
+    where SS0102_ID = #{ss0102Id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from SS01
-    where SS01_ID = #{ss01Id,jdbcType=VARCHAR}
+    delete from SS0102
+    where SS0102_ID = #{ss0102Id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.manager.entry.system.User" >
-    insert into SS01 (SS01_ID, USER_ID, USER_NAME, 
-      PASSWORD, STATUS, CREATE_USER, 
-      CREATE_TIME, UPDATE_USER, UPDATE_TIME, 
-      DELETE_FLAG)
-    values (#{ss01Id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{deleteFlag,jdbcType=CHAR})
+  <insert id="insert" parameterType="com.manager.entry.system.UserProject" >
+    insert into SS0102 (SS0102_ID, SS01_ID, PROJECT_NO, 
+      OP_UNIT, CREATE_USER, CREATE_TIME, 
+      UPDATE_USER, UPDATE_TIME, DELETE_FLAG
+      )
+    values (#{ss0102Id,jdbcType=VARCHAR}, #{ss01Id,jdbcType=VARCHAR}, #{projectNo,jdbcType=VARCHAR}, 
+      #{opUnit,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.manager.entry.system.User" >
-    insert into SS01
+  <insert id="insertSelective" parameterType="com.manager.entry.system.UserProject" >
+    insert into SS0102
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ss0102Id != null" >
+        SS0102_ID,
+      </if>
       <if test="ss01Id != null" >
         SS01_ID,
       </if>
-      <if test="userId != null" >
-        USER_ID,
+      <if test="projectNo != null" >
+        PROJECT_NO,
       </if>
-      <if test="userName != null" >
-        USER_NAME,
-      </if>
-      <if test="password != null" >
-        PASSWORD,
-      </if>
-      <if test="status != null" >
-        STATUS,
+      <if test="opUnit != null" >
+        OP_UNIT,
       </if>
       <if test="createUser != null" >
         CREATE_USER,
@@ -74,20 +70,17 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ss0102Id != null" >
+        #{ss0102Id,jdbcType=VARCHAR},
+      </if>
       <if test="ss01Id != null" >
         #{ss01Id,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
+      <if test="projectNo != null" >
+        #{projectNo,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=CHAR},
+      <if test="opUnit != null" >
+        #{opUnit,jdbcType=VARCHAR},
       </if>
       <if test="createUser != null" >
         #{createUser,jdbcType=VARCHAR},
@@ -106,20 +99,17 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.system.User" >
-    update SS01
+  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.system.UserProject" >
+    update SS0102
     <set >
-      <if test="userId != null" >
-        USER_ID = #{userId,jdbcType=VARCHAR},
+      <if test="ss01Id != null" >
+        SS01_ID = #{ss01Id,jdbcType=VARCHAR},
       </if>
-      <if test="userName != null" >
-        USER_NAME = #{userName,jdbcType=VARCHAR},
+      <if test="projectNo != null" >
+        PROJECT_NO = #{projectNo,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        PASSWORD = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        STATUS = #{status,jdbcType=CHAR},
+      <if test="opUnit != null" >
+        OP_UNIT = #{opUnit,jdbcType=VARCHAR},
       </if>
       <if test="createUser != null" >
         CREATE_USER = #{createUser,jdbcType=VARCHAR},
@@ -137,19 +127,18 @@
         DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
       </if>
     </set>
-    where SS01_ID = #{ss01Id,jdbcType=VARCHAR}
+    where SS0102_ID = #{ss0102Id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.manager.entry.system.User" >
-    update SS01
-    set USER_ID = #{userId,jdbcType=VARCHAR},
-      USER_NAME = #{userName,jdbcType=VARCHAR},
-      PASSWORD = #{password,jdbcType=VARCHAR},
-      STATUS = #{status,jdbcType=CHAR},
+  <update id="updateByPrimaryKey" parameterType="com.manager.entry.system.UserProject" >
+    update SS0102
+    set SS01_ID = #{ss01Id,jdbcType=VARCHAR},
+      PROJECT_NO = #{projectNo,jdbcType=VARCHAR},
+      OP_UNIT = #{opUnit,jdbcType=VARCHAR},
       CREATE_USER = #{createUser,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
-    where SS01_ID = #{ss01Id,jdbcType=VARCHAR}
+    where SS0102_ID = #{ss0102Id,jdbcType=VARCHAR}
   </update>
 </mapper>

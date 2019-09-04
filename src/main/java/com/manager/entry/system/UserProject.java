@@ -1,15 +1,15 @@
 package com.manager.entry.system;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.Date;
 
-public class UserRole {
-    private String ss0101Id;
+public class UserProject {
+    private String ss0102Id;
 
     private String ss01Id;
 
-    private String userRoleId;
+    private String projectNo;
+
+    private String opUnit;
 
     private String createUser;
 
@@ -21,10 +21,11 @@ public class UserRole {
 
     private String deleteFlag;
 
-    public UserRole(String ss0101Id, String ss01Id, String userRoleId, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
-        this.ss0101Id = ss0101Id;
+    public UserProject(String ss0102Id, String ss01Id, String projectNo, String opUnit, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+        this.ss0102Id = ss0102Id;
         this.ss01Id = ss01Id;
-        this.userRoleId = userRoleId;
+        this.projectNo = projectNo;
+        this.opUnit = opUnit;
         this.createUser = createUser;
         this.createTime = createTime;
         this.updateUser = updateUser;
@@ -32,16 +33,16 @@ public class UserRole {
         this.deleteFlag = deleteFlag;
     }
 
-    public UserRole() {
+    public UserProject() {
         super();
     }
 
-    public String getSs0101Id() {
-        return ss0101Id;
+    public String getSs0102Id() {
+        return ss0102Id;
     }
 
-    public void setSs0101Id(String ss0101Id) {
-        this.ss0101Id = ss0101Id == null ? null : ss0101Id.trim();
+    public void setSs0102Id(String ss0102Id) {
+        this.ss0102Id = ss0102Id == null ? null : ss0102Id.trim();
     }
 
     public String getSs01Id() {
@@ -52,12 +53,20 @@ public class UserRole {
         this.ss01Id = ss01Id == null ? null : ss01Id.trim();
     }
 
-    public String getUserRoleId() {
-        return userRoleId;
+    public String getProjectNo() {
+        return projectNo;
     }
 
-    public void setUserRoleId(String userRoleId) {
-        this.userRoleId = userRoleId == null ? null : userRoleId.trim();
+    public void setProjectNo(String projectNo) {
+        this.projectNo = projectNo == null ? null : projectNo.trim();
+    }
+
+    public String getOpUnit() {
+        return opUnit;
+    }
+
+    public void setOpUnit(String opUnit) {
+        this.opUnit = opUnit == null ? null : opUnit.trim();
     }
 
     public String getCreateUser() {
@@ -68,7 +77,6 @@ public class UserRole {
         this.createUser = createUser == null ? null : createUser.trim();
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     public Date getCreateTime() {
         return createTime;
     }
@@ -85,7 +93,6 @@ public class UserRole {
         this.updateUser = updateUser == null ? null : updateUser.trim();
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     public Date getUpdateTime() {
         return updateTime;
     }

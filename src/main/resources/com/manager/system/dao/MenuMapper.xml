@@ -3,188 +3,177 @@
 <mapper namespace="com.manager.system.dao.MenuMapper" >
   <resultMap id="BaseResultMap" type="com.manager.entry.system.Menu" >
     <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="parent_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="menu_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="menu_icon" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="menu_url" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="menu_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
-      <arg column="menu_order" jdbcType="TINYINT" javaType="java.lang.Byte" />
-      <arg column="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte" />
-      <arg column="create_time" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <arg column="create_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="last_update_time" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <arg column="last_update_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <idArg column="SS04_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="MENU_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="MENU_OREDR" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="MENU_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="MENU_PATH" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="IF_ROOT_NODE" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="STATUS" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CREATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="UPDATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="UPDATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="DELETE_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, parent_id, menu_name, menu_icon, menu_url, menu_type, menu_order, remark, status, 
-    create_time, create_date, last_update_time, last_update_date
+    SS04_ID, MENU_ID, MENU_OREDR, MENU_NAME, MENU_PATH, IF_ROOT_NODE, STATUS, CREATE_USER, 
+    CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from sys_menu
-    where id = #{id,jdbcType=INTEGER}
+    from SS04
+    where SS04_ID = #{ss04Id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from sys_menu
-    where id = #{id,jdbcType=INTEGER}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SS04
+    where SS04_ID = #{ss04Id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.manager.entry.system.Menu" >
-    insert into sys_menu (id, parent_id, menu_name, 
-      menu_icon, menu_url, menu_type, 
-      menu_order, remark, status, 
-      create_time, create_date, last_update_time, 
-      last_update_date)
-    values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR}, 
-      #{menuIcon,jdbcType=VARCHAR}, #{menuUrl,jdbcType=VARCHAR}, #{menuType,jdbcType=TINYINT}, 
-      #{menuOrder,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=BIGINT}, 
-      #{lastUpdateDate,jdbcType=TIMESTAMP})
+    insert into SS04 (SS04_ID, MENU_ID, MENU_OREDR, 
+      MENU_NAME, MENU_PATH, IF_ROOT_NODE, 
+      STATUS, CREATE_USER, CREATE_TIME, 
+      UPDATE_USER, UPDATE_TIME, DELETE_FLAG
+      )
+    values (#{ss04Id,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR}, #{menuOredr,jdbcType=CHAR}, 
+      #{menuName,jdbcType=VARCHAR}, #{menuPath,jdbcType=VARCHAR}, #{ifRootNode,jdbcType=CHAR}, 
+      #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.manager.entry.system.Menu" >
-    insert into sys_menu
+    insert into SS04
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+      <if test="ss04Id != null" >
+        SS04_ID,
       </if>
-      <if test="parentId != null" >
-        parent_id,
+      <if test="menuId != null" >
+        MENU_ID,
+      </if>
+      <if test="menuOredr != null" >
+        MENU_OREDR,
       </if>
       <if test="menuName != null" >
-        menu_name,
+        MENU_NAME,
       </if>
-      <if test="menuIcon != null" >
-        menu_icon,
+      <if test="menuPath != null" >
+        MENU_PATH,
       </if>
-      <if test="menuUrl != null" >
-        menu_url,
-      </if>
-      <if test="menuType != null" >
-        menu_type,
-      </if>
-      <if test="menuOrder != null" >
-        menu_order,
-      </if>
-      <if test="remark != null" >
-        remark,
+      <if test="ifRootNode != null" >
+        IF_ROOT_NODE,
       </if>
       <if test="status != null" >
-        status,
+        STATUS,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
       </if>
       <if test="createTime != null" >
-        create_time,
+        CREATE_TIME,
       </if>
-      <if test="createDate != null" >
-        create_date,
+      <if test="updateUser != null" >
+        UPDATE_USER,
       </if>
-      <if test="lastUpdateTime != null" >
-        last_update_time,
+      <if test="updateTime != null" >
+        UPDATE_TIME,
       </if>
-      <if test="lastUpdateDate != null" >
-        last_update_date,
+      <if test="deleteFlag != null" >
+        DELETE_FLAG,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+      <if test="ss04Id != null" >
+        #{ss04Id,jdbcType=VARCHAR},
       </if>
-      <if test="parentId != null" >
-        #{parentId,jdbcType=INTEGER},
+      <if test="menuId != null" >
+        #{menuId,jdbcType=VARCHAR},
+      </if>
+      <if test="menuOredr != null" >
+        #{menuOredr,jdbcType=CHAR},
       </if>
       <if test="menuName != null" >
         #{menuName,jdbcType=VARCHAR},
       </if>
-      <if test="menuIcon != null" >
-        #{menuIcon,jdbcType=VARCHAR},
+      <if test="menuPath != null" >
+        #{menuPath,jdbcType=VARCHAR},
       </if>
-      <if test="menuUrl != null" >
-        #{menuUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="menuType != null" >
-        #{menuType,jdbcType=TINYINT},
-      </if>
-      <if test="menuOrder != null" >
-        #{menuOrder,jdbcType=TINYINT},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
+      <if test="ifRootNode != null" >
+        #{ifRootNode,jdbcType=CHAR},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=TINYINT},
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
       </if>
-      <if test="lastUpdateTime != null" >
-        #{lastUpdateTime,jdbcType=BIGINT},
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="lastUpdateDate != null" >
-        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.system.Menu" >
-    update sys_menu
+    update SS04
     <set >
-      <if test="parentId != null" >
-        parent_id = #{parentId,jdbcType=INTEGER},
+      <if test="menuId != null" >
+        MENU_ID = #{menuId,jdbcType=VARCHAR},
+      </if>
+      <if test="menuOredr != null" >
+        MENU_OREDR = #{menuOredr,jdbcType=CHAR},
       </if>
       <if test="menuName != null" >
-        menu_name = #{menuName,jdbcType=VARCHAR},
+        MENU_NAME = #{menuName,jdbcType=VARCHAR},
       </if>
-      <if test="menuIcon != null" >
-        menu_icon = #{menuIcon,jdbcType=VARCHAR},
+      <if test="menuPath != null" >
+        MENU_PATH = #{menuPath,jdbcType=VARCHAR},
       </if>
-      <if test="menuUrl != null" >
-        menu_url = #{menuUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="menuType != null" >
-        menu_type = #{menuType,jdbcType=TINYINT},
-      </if>
-      <if test="menuOrder != null" >
-        menu_order = #{menuOrder,jdbcType=TINYINT},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
+      <if test="ifRootNode != null" >
+        IF_ROOT_NODE = #{ifRootNode,jdbcType=CHAR},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=TINYINT},
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=BIGINT},
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP},
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
       </if>
-      <if test="lastUpdateTime != null" >
-        last_update_time = #{lastUpdateTime,jdbcType=BIGINT},
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="lastUpdateDate != null" >
-        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      <if test="deleteFlag != null" >
+        DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where SS04_ID = #{ss04Id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.manager.entry.system.Menu" >
-    update sys_menu
-    set parent_id = #{parentId,jdbcType=INTEGER},
-      menu_name = #{menuName,jdbcType=VARCHAR},
-      menu_icon = #{menuIcon,jdbcType=VARCHAR},
-      menu_url = #{menuUrl,jdbcType=VARCHAR},
-      menu_type = #{menuType,jdbcType=TINYINT},
-      menu_order = #{menuOrder,jdbcType=TINYINT},
-      remark = #{remark,jdbcType=VARCHAR},
-      status = #{status,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=BIGINT},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      last_update_time = #{lastUpdateTime,jdbcType=BIGINT},
-      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    update SS04
+    set MENU_ID = #{menuId,jdbcType=VARCHAR},
+      MENU_OREDR = #{menuOredr,jdbcType=CHAR},
+      MENU_NAME = #{menuName,jdbcType=VARCHAR},
+      MENU_PATH = #{menuPath,jdbcType=VARCHAR},
+      IF_ROOT_NODE = #{ifRootNode,jdbcType=CHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
+    where SS04_ID = #{ss04Id,jdbcType=VARCHAR}
   </update>
 </mapper>

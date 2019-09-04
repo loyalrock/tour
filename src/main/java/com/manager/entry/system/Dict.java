@@ -1,39 +1,15 @@
 package com.manager.entry.system;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 
-/**
- * 系统用户
- * @auth zhongyan
- */
-public class User {
+public class Dict {
+    private String ss03Id;
 
-    /**
-     * 启用
-     */
-    public static final String ENABLE = "1";
+    private String dirId;
 
-    /**
-     * 禁用
-     */
-    public static final String DISABLE = "0";
+    private String dirName;
 
-    private String ss01Id;
-
-    /**
-     * 登录账号
-     */
-    private String userId;
-
-    /**
-     * 用户姓名
-     */
-    private String userName;
-
-    private String password;
+    private String dirExp;
 
     private String status;
 
@@ -47,11 +23,11 @@ public class User {
 
     private String deleteFlag;
 
-    public User(String ss01Id, String userId, String userName, String password, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
-        this.ss01Id = ss01Id;
-        this.userId = userId;
-        this.userName = userName;
-        this.password = password;
+    public Dict(String ss03Id, String dirId, String dirName, String dirExp, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+        this.ss03Id = ss03Id;
+        this.dirId = dirId;
+        this.dirName = dirName;
+        this.dirExp = dirExp;
         this.status = status;
         this.createUser = createUser;
         this.createTime = createTime;
@@ -60,40 +36,40 @@ public class User {
         this.deleteFlag = deleteFlag;
     }
 
-    public User() {
+    public Dict() {
         super();
     }
 
-    public String getSs01Id() {
-        return ss01Id;
+    public String getSs03Id() {
+        return ss03Id;
     }
 
-    public void setSs01Id(String ss01Id) {
-        this.ss01Id = ss01Id == null ? null : ss01Id.trim();
+    public void setSs03Id(String ss03Id) {
+        this.ss03Id = ss03Id == null ? null : ss03Id.trim();
     }
 
-    public String getUserId() {
-        return userId;
+    public String getDirId() {
+        return dirId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+    public void setDirId(String dirId) {
+        this.dirId = dirId == null ? null : dirId.trim();
     }
 
-    public String getUserName() {
-        return userName;
+    public String getDirName() {
+        return dirName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+    public void setDirName(String dirName) {
+        this.dirName = dirName == null ? null : dirName.trim();
     }
 
-    public String getPassword() {
-        return password;
+    public String getDirExp() {
+        return dirExp;
     }
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+    public void setDirExp(String dirExp) {
+        this.dirExp = dirExp == null ? null : dirExp.trim();
     }
 
     public String getStatus() {
@@ -112,7 +88,6 @@ public class User {
         this.createUser = createUser == null ? null : createUser.trim();
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     public Date getCreateTime() {
         return createTime;
     }
@@ -129,7 +104,6 @@ public class User {
         this.updateUser = updateUser == null ? null : updateUser.trim();
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     public Date getUpdateTime() {
         return updateTime;
     }

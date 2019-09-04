@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manager.system.dao.UserRoleMapper" >
+
+  <select id="selectUserRoleByUserUid" parameterType="String" resultMap="BaseResultMap">
+
+    select <include refid="Base_Column_List"></include>
+    from SS0101 where SS01_ID = #{userUid,jdbcType=VARCHAR}
+
+  </select>
+</mapper>
