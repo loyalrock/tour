@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.tour.dao.SuperContentMapper">
+  <resultMap id="BaseResultMap" type="com.manager.entry.tour.SuperContent">
+    <constructor>
+      <idArg column="SC01_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SUPER_P_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SUPER_P_LEVEL" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SYS_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SUPER_P_CHECK" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SUPER_P_EXP" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SUPER_P_SCORE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="IF_ADD" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="ENABLE_TIME" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="DEACTI_TIME" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="STATUS" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="CREATE_USER" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="UPDATE_USER" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="UPDATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="DELETE_FLAG" javaType="java.lang.String" jdbcType="CHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    SC01_ID, SUPER_P_NO, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE, 
+    IF_ADD, ENABLE_TIME, DEACTI_TIME, STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER, 
+    UPDATE_TIME, DELETE_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SC01
+    where SC01_ID = #{sc01Id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SC01
+    where SC01_ID = #{sc01Id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.manager.entry.tour.SuperContent">
+    insert into SC01 (SC01_ID, SUPER_P_NO, SUPER_P_LEVEL, 
+      SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, 
+      SUPER_P_SCORE, IF_ADD, ENABLE_TIME, 
+      DEACTI_TIME, STATUS, CREATE_USER, 
+      CREATE_TIME, UPDATE_USER, UPDATE_TIME, 
+      DELETE_FLAG)
+    values (#{sc01Id,jdbcType=VARCHAR}, #{superPNo,jdbcType=VARCHAR}, #{superPLevel,jdbcType=VARCHAR}, 
+      #{sysNo,jdbcType=VARCHAR}, #{superPCheck,jdbcType=VARCHAR}, #{superPExp,jdbcType=VARCHAR}, 
+      #{superPScore,jdbcType=VARCHAR}, #{ifAdd,jdbcType=CHAR}, #{enableTime,jdbcType=DATE}, 
+      #{deactiTime,jdbcType=DATE}, #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleteFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.manager.entry.tour.SuperContent">
+    insert into SC01
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sc01Id != null">
+        SC01_ID,
+      </if>
+      <if test="superPNo != null">
+        SUPER_P_NO,
+      </if>
+      <if test="superPLevel != null">
+        SUPER_P_LEVEL,
+      </if>
+      <if test="sysNo != null">
+        SYS_NO,
+      </if>
+      <if test="superPCheck != null">
+        SUPER_P_CHECK,
+      </if>
+      <if test="superPExp != null">
+        SUPER_P_EXP,
+      </if>
+      <if test="superPScore != null">
+        SUPER_P_SCORE,
+      </if>
+      <if test="ifAdd != null">
+        IF_ADD,
+      </if>
+      <if test="enableTime != null">
+        ENABLE_TIME,
+      </if>
+      <if test="deactiTime != null">
+        DEACTI_TIME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="deleteFlag != null">
+        DELETE_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sc01Id != null">
+        #{sc01Id,jdbcType=VARCHAR},
+      </if>
+      <if test="superPNo != null">
+        #{superPNo,jdbcType=VARCHAR},
+      </if>
+      <if test="superPLevel != null">
+        #{superPLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="sysNo != null">
+        #{sysNo,jdbcType=VARCHAR},
+      </if>
+      <if test="superPCheck != null">
+        #{superPCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="superPExp != null">
+        #{superPExp,jdbcType=VARCHAR},
+      </if>
+      <if test="superPScore != null">
+        #{superPScore,jdbcType=VARCHAR},
+      </if>
+      <if test="ifAdd != null">
+        #{ifAdd,jdbcType=CHAR},
+      </if>
+      <if test="enableTime != null">
+        #{enableTime,jdbcType=DATE},
+      </if>
+      <if test="deactiTime != null">
+        #{deactiTime,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.tour.SuperContent">
+    update SC01
+    <set>
+      <if test="superPNo != null">
+        SUPER_P_NO = #{superPNo,jdbcType=VARCHAR},
+      </if>
+      <if test="superPLevel != null">
+        SUPER_P_LEVEL = #{superPLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="sysNo != null">
+        SYS_NO = #{sysNo,jdbcType=VARCHAR},
+      </if>
+      <if test="superPCheck != null">
+        SUPER_P_CHECK = #{superPCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="superPExp != null">
+        SUPER_P_EXP = #{superPExp,jdbcType=VARCHAR},
+      </if>
+      <if test="superPScore != null">
+        SUPER_P_SCORE = #{superPScore,jdbcType=VARCHAR},
+      </if>
+      <if test="ifAdd != null">
+        IF_ADD = #{ifAdd,jdbcType=CHAR},
+      </if>
+      <if test="enableTime != null">
+        ENABLE_TIME = #{enableTime,jdbcType=DATE},
+      </if>
+      <if test="deactiTime != null">
+        DEACTI_TIME = #{deactiTime,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null">
+        DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where SC01_ID = #{sc01Id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.manager.entry.tour.SuperContent">
+    update SC01
+    set SUPER_P_NO = #{superPNo,jdbcType=VARCHAR},
+      SUPER_P_LEVEL = #{superPLevel,jdbcType=VARCHAR},
+      SYS_NO = #{sysNo,jdbcType=VARCHAR},
+      SUPER_P_CHECK = #{superPCheck,jdbcType=VARCHAR},
+      SUPER_P_EXP = #{superPExp,jdbcType=VARCHAR},
+      SUPER_P_SCORE = #{superPScore,jdbcType=VARCHAR},
+      IF_ADD = #{ifAdd,jdbcType=CHAR},
+      ENABLE_TIME = #{enableTime,jdbcType=DATE},
+      DEACTI_TIME = #{deactiTime,jdbcType=DATE},
+      STATUS = #{status,jdbcType=CHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
+    where SC01_ID = #{sc01Id,jdbcType=VARCHAR}
+  </update>
+</mapper>

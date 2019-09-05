@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manager.tour.dao.UploadDataFileMapper" >
+  <resultMap id="BaseResultMap" type="com.manager.entry.tour.UploadDataFile" >
+    <constructor >
+      <idArg column="SFJ01_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="APP_SOURCE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="APP_NUM" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="APP_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="APP_URL" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="STATUS" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CREATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="UPDATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="UPDATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="DELETE_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SFJ01_ID, APP_SOURCE, APP_NUM, APP_NAME, APP_URL, STATUS, CREATE_USER, CREATE_TIME, 
+    UPDATE_USER, UPDATE_TIME, DELETE_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SFJ01
+    where SFJ01_ID = #{sfj01Id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SFJ01
+    where SFJ01_ID = #{sfj01Id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.manager.entry.tour.UploadDataFile" >
+    insert into SFJ01 (SFJ01_ID, APP_SOURCE, APP_NUM, 
+      APP_NAME, APP_URL, STATUS, 
+      CREATE_USER, CREATE_TIME, UPDATE_USER, 
+      UPDATE_TIME, DELETE_FLAG)
+    values (#{sfj01Id,jdbcType=VARCHAR}, #{appSource,jdbcType=VARCHAR}, #{appNum,jdbcType=VARCHAR}, 
+      #{appName,jdbcType=VARCHAR}, #{appUrl,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.manager.entry.tour.UploadDataFile" >
+    insert into SFJ01
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sfj01Id != null" >
+        SFJ01_ID,
+      </if>
+      <if test="appSource != null" >
+        APP_SOURCE,
+      </if>
+      <if test="appNum != null" >
+        APP_NUM,
+      </if>
+      <if test="appName != null" >
+        APP_NAME,
+      </if>
+      <if test="appUrl != null" >
+        APP_URL,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="deleteFlag != null" >
+        DELETE_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sfj01Id != null" >
+        #{sfj01Id,jdbcType=VARCHAR},
+      </if>
+      <if test="appSource != null" >
+        #{appSource,jdbcType=VARCHAR},
+      </if>
+      <if test="appNum != null" >
+        #{appNum,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null" >
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appUrl != null" >
+        #{appUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.tour.UploadDataFile" >
+    update SFJ01
+    <set >
+      <if test="appSource != null" >
+        APP_SOURCE = #{appSource,jdbcType=VARCHAR},
+      </if>
+      <if test="appNum != null" >
+        APP_NUM = #{appNum,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null" >
+        APP_NAME = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appUrl != null" >
+        APP_URL = #{appUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where SFJ01_ID = #{sfj01Id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.manager.entry.tour.UploadDataFile" >
+    update SFJ01
+    set APP_SOURCE = #{appSource,jdbcType=VARCHAR},
+      APP_NUM = #{appNum,jdbcType=VARCHAR},
+      APP_NAME = #{appName,jdbcType=VARCHAR},
+      APP_URL = #{appUrl,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
+    where SFJ01_ID = #{sfj01Id,jdbcType=VARCHAR}
+  </update>
+</mapper>

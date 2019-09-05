@@ -13,6 +13,7 @@
     <context id="default" targetRuntime="MyBatis3">
 
         <!-- optional，旨在创建class时，对注释进行控制 -->
+<!--        <commentGenerator type="com.manager.config.MyCommentGenerator"></commentGenerator>-->
         <commentGenerator>
             <property name="suppressDate" value="true"/>
             <property name="suppressAllComments" value="true"/>
@@ -38,7 +39,7 @@
             targetPackage     指定生成的model生成所在的包名
             targetProject     指定在该项目下所在的路径
         -->
-        <javaModelGenerator targetPackage="com.manager.entry.system"
+        <javaModelGenerator targetPackage="com.manager.entry.tour"
                             targetProject="src/main/java">
 
             <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
@@ -52,7 +53,7 @@
         </javaModelGenerator>
 
         <!--Mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
-        <sqlMapGenerator targetPackage="com/manager/system/dao"
+        <sqlMapGenerator targetPackage="com/manager/tour/dao"
                          targetProject="src/main/resources">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
@@ -62,47 +63,77 @@
                 type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
                 type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
         -->
-        <javaClientGenerator targetPackage="com.manager.system.dao"
+        <javaClientGenerator targetPackage="com.manager.tour.dao"
                              targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
          <!--需要生成的表名以及实体类命名 -->
-        <table tableName="SS01" domainObjectName="User"
+        <table tableName="SC01" domainObjectName="SuperContent"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
                enableDeleteByPrimaryKey="true">
         </table>
-        <table tableName="SS0101" domainObjectName="UserRole"
+        <table tableName="SC02" domainObjectName="ProjectJob"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
                enableDeleteByPrimaryKey="true">
         </table>
-        <table tableName="SS0102" domainObjectName="UserProject"
+        <table tableName="SC0201" domainObjectName="DocumentShow"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
                enableDeleteByPrimaryKey="true">
         </table>
-        <table tableName="SS02" domainObjectName="Role"
+        <table tableName="SC0202" domainObjectName="ImageShow"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
                enableDeleteByPrimaryKey="true">
         </table>
-        <table tableName="SS03" domainObjectName="Dict"
+        <table tableName="SC0202" domainObjectName="LineShow"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
                enableDeleteByPrimaryKey="true">
         </table>
-        <table tableName="SS04" domainObjectName="Menu"
+        <table tableName="SFJ01" domainObjectName="UploadDataFile"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
                enableDeleteByPrimaryKey="true">
         </table>
+<!--        <table tableName="SS0101" domainObjectName="UserRole"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"-->
+<!--               enableDeleteByPrimaryKey="true">-->
+<!--        </table>-->
+<!--        <table tableName="SS0102" domainObjectName="UserProject"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"-->
+<!--               enableDeleteByPrimaryKey="true">-->
+<!--        </table>-->
+<!--        <table tableName="SS02" domainObjectName="Role"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"-->
+<!--               enableDeleteByPrimaryKey="true">-->
+<!--        </table>-->
+<!--        <table tableName="SS03" domainObjectName="Dict"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"-->
+<!--               enableDeleteByPrimaryKey="true">-->
+<!--        </table>-->
+<!--        <table tableName="SS04" domainObjectName="Menu"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"-->
+<!--               enableDeleteByPrimaryKey="true">-->
+<!--        </table>-->
     </context>
 </generatorConfiguration>
