@@ -1,5 +1,7 @@
 package com.manager.entry.system;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 用户管理查询实体类
  * @author zhongyan
@@ -11,18 +13,23 @@ public class UserManager {
      */
     private String ss01Id;
 
+    @NotBlank(message = "登录名未填写")
     private String userId;
 
+    @NotBlank(message = "用户名称未填写")
     private String userName;
 
     private String status;
 
+    @NotBlank(message = "角色未选择")
     private String userRoleId;
 
     private String userRoleName;
 
+    @NotBlank(message = "所属单位未填写")
     private String opUnit;
 
+    @NotBlank(message = "所属项目未选择")
     private String projectNo;
 
     private String projectName;

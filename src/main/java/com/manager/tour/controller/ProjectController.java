@@ -3,6 +3,7 @@ package com.manager.tour.controller;
 import com.manager.entry.common.ResultEntry;
 import com.manager.entry.tour.ProjectJob;
 import com.manager.tour.service.ProjectJobService;
+import com.manager.util.Message;
 import com.manager.util.ResultUtil;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,6 @@ public class ProjectController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResultEntry getProjectJobList() {
         List<ProjectJob> projectJobs = projectJobService.selectList();
-        return ResultUtil.success(projectJobs);
+        return ResultUtil.success(Message.SELECT_SUCCESS, projectJobs);
     }
 }

@@ -2,6 +2,7 @@ package com.manager.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.manager.entry.common.CommonException;
 import com.manager.entry.system.User;
 import com.manager.entry.system.UserManager;
 import com.manager.entry.system.UserManagerQuery;
@@ -22,4 +23,13 @@ public interface UserService {
     public User selectUserByUserId(String userId);
 
     IPage<UserManager> selectUserManagerList(Page<UserManager> page, UserManagerQuery query);
+
+    /**
+     * 新增用户
+     * @param userManager
+     * @return
+     */
+    int addUser(UserManager userManager) throws Exception;
+
+    int updateStatus(String userUid, String status) throws Exception;
 }

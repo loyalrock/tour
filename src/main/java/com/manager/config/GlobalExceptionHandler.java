@@ -11,16 +11,35 @@ import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.function.Consumer;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     private static Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    /**
+     * 实体中参数校验失败
+     * @param e
+     * @param response
+     * @return
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public ResultEntry validExceptionHandler(MethodArgumentNotValidException e,  HttpServletResponse response) {
+        StringBuffer errorMessage = new StringBuffer();
+        e.getBindingResult().getAllErrors().forEach(error -> {
+            errorMessage.append(error.getDefaultMessage());
+        });
+        return ResultUtil.error(errorMessage.toString());
+    }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
@@ -28,8 +47,7 @@ public class GlobalExceptionHandler {
         e.printStackTrace();
         if (e instanceof CommonException) {
             CommonException commonException = (CommonException) e;
-            ResultEntry resultEntry = new ResultEntry(e.getMessage());
-            return resultEntry;
+            return ResultUtil.error(commonException.getMessageEnum());
         } else if (e instanceof UnauthenticatedException) {
             // 未登录
             return ResultUtil.error(Message.NEED_LOGIN);

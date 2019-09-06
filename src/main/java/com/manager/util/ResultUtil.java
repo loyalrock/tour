@@ -10,8 +10,12 @@ import com.manager.entry.common.ResultEntry;
  */
 public class ResultUtil {
 
-    public static ResultEntry success(Object obj) {
-        return new ResultEntry(obj);
+    public static ResultEntry success(Message message) {
+        return new ResultEntry(message.getCode(), message.getMessage());
+    }
+
+    public static ResultEntry success(Message message, Object body) {
+        return new ResultEntry(message.getCode(), message.getMessage(), body);
     }
 
     public static ResultEntry success() {
@@ -20,5 +24,9 @@ public class ResultUtil {
 
     public static ResultEntry error(Message message) {
         return new ResultEntry(message.getCode(), message.getMessage());
+    }
+
+    public static ResultEntry error(String m) {
+        return new ResultEntry("-1", m);
     }
 }

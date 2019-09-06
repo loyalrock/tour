@@ -2,12 +2,29 @@ package com.manager.util;
 
 public enum Message {
 
+    /**
+     * 系统
+     */
     SUCCESS("0000", "操作成功"),
     NOT_USER_FOUND("9001", "找不到用户"),
     DISABLE_USER("9002", "用户被禁用"),
     NEED_LOGIN("9003", "未登录"),
     PASSWORD_ERROR("9004", "密码错误"),
-    NO_PERMISSIONS("9005", "没有权限，请联系全域管理员");
+    NO_PERMISSIONS("9005", "没有权限，请联系全域管理员"),
+    EXIST_USER("9006", "用户已存在"),
+    LOGIN_SUCCESS("9007", "登陆成功"),
+
+
+
+    // 基础
+    INSERT_SUCCESS("1000", "新增成功"),
+    INSERT_FAILED("1001", "新增失败"),
+    UPDATE_SUCCESS("1002", "修改成功"),
+    UPDATE_FAILED("1003", "修改失败"),
+    DELETE_SUCCESS("1004", "删除成功"),
+    DELETE_FAILED("1005", "删除失败"),
+    SELECT_SUCCESS("1006", "查询成功"),
+    SELECT_FAILED("1007", "查询失败");
 
     private String code;
 
@@ -21,6 +38,15 @@ public enum Message {
     private Message(String message) {
         this.code = "500";
         this.message = message;
+    }
+
+    public static String getMessage(String code) {
+        for (Message c : Message.values()) {
+            if (c.getCode().equals(code)) {
+                return c.message;
+            }
+        }
+        return null;
     }
 
     public String getCode() {

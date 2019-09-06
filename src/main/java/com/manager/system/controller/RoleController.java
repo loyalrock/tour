@@ -3,6 +3,7 @@ package com.manager.system.controller;
 import com.manager.entry.common.ResultEntry;
 import com.manager.entry.system.Role;
 import com.manager.system.service.RoleService;
+import com.manager.util.Message;
 import com.manager.util.ResultUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -30,6 +31,6 @@ public class RoleController {
     @RequiresRoles(value = {"SYS_ADMIN"})
     public ResultEntry getRoleList() {
         List<Role> roleList = roleService.selectRoleList();
-        return ResultUtil.success(roleList);
+        return ResultUtil.success(Message.SELECT_SUCCESS, roleList);
     }
 }

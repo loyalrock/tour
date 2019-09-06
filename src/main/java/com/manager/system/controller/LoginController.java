@@ -2,16 +2,12 @@ package com.manager.system.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.manager.entry.common.ResultEntry;
-import com.manager.entry.system.Role;
 import com.manager.entry.system.User;
 import com.manager.entry.system.UserRole;
-import com.manager.system.service.RoleService;
 import com.manager.system.service.UserRoleService;
 import com.manager.util.Message;
 import com.manager.util.ResultUtil;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotBlank;
-import java.security.Principal;
-import java.util.LinkedHashMap;
 
 /**
  * 描述
@@ -54,6 +48,6 @@ public class LoginController {
         jsonObject.put("user", user);
         jsonObject.put("role", userRole);
 
-        return ResultUtil.success(jsonObject);
+        return ResultUtil.success(Message.LOGIN_SUCCESS, jsonObject);
     }
 }
