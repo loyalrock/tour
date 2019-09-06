@@ -7,6 +7,7 @@ import com.manager.entry.system.User;
 import com.manager.entry.system.UserManager;
 import com.manager.entry.system.UserManagerQuery;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * mapper
@@ -33,4 +34,7 @@ public interface UserMapper extends BaseMapper<UserManager> {
      * @return
      */
     IPage<UserManager> selectUserManagerList(Page page, @Param("query") UserManagerQuery query);
+
+    @Update("update SS01 set STATUS = #{status} where SS01_ID = #{userUid}")
+    int updateStatus(@Param("status") String status, @Param("userUid") String userUid);
 }

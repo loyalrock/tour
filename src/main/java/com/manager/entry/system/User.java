@@ -1,8 +1,11 @@
 package com.manager.entry.system;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import javafx.beans.DefaultProperty;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
@@ -31,8 +34,10 @@ public class User {
     /**
      * 用户姓名
      */
+    @NotBlank(message = "用户名称不能为空")
     private String userName;
 
+    @NotBlank(message = "密码不能为空")
     private String password;
 
     private String status;
