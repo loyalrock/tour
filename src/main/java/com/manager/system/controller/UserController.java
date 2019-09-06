@@ -1,5 +1,7 @@
 package com.manager.system.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.common.CommonException;
 import com.manager.entry.common.ResultEntry;
 import com.manager.entry.system.UserManager;
@@ -41,8 +43,8 @@ public class UserController {
      */
     @RequestMapping(value = "/manager/list", method = RequestMethod.GET)
     @RequiresRoles(value = {"SYS_ADMIN"})
-    public ResultEntry getUserManagerList(UserManagerQuery query) {
-        List<UserManager> userManagers = userService.selectUserManagerList(query);
+    public ResultEntry getUserManagerList(Page page, UserManagerQuery query) {
+        IPage<UserManager> userManagers = userService.selectUserManagerList(page, query);
         return ResultUtil.success(userManagers);
     }
 }

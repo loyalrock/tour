@@ -1,5 +1,7 @@
 package com.manager.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.system.User;
 import com.manager.entry.system.UserManager;
 import com.manager.entry.system.UserManagerQuery;
@@ -19,8 +21,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public List<UserManager> selectUserManagerList(UserManagerQuery query) {
-        return userMapper.selectUserManagerList(query);
+    public IPage<UserManager> selectUserManagerList(Page<UserManager> page, UserManagerQuery query) {
+        return userMapper.selectUserManagerList(page, query);
     }
 
     @Override

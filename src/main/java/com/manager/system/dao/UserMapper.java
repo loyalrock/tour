@@ -1,14 +1,17 @@
 package com.manager.system.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.system.User;
 import com.manager.entry.system.UserManager;
 import com.manager.entry.system.UserManagerQuery;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
-import java.util.List;
-
-public interface UserMapper {
+/**
+ * mapper
+ */
+public interface UserMapper extends BaseMapper<UserManager> {
     int deleteByPrimaryKey(String ss01Id);
 
     int insert(User record);
@@ -23,5 +26,11 @@ public interface UserMapper {
 
     User selectUserByUserId(@Param("userId") String userId);
 
-    List<UserManager> selectUserManagerList(UserManagerQuery query);
+    /**
+     * 分页查询
+     * @param page
+     * @param query
+     * @return
+     */
+    IPage<UserManager> selectUserManagerList(Page page, @Param("query") UserManagerQuery query);
 }

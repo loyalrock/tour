@@ -1,5 +1,7 @@
 package com.manager.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.system.User;
 import com.manager.entry.system.UserManager;
 import com.manager.entry.system.UserManagerQuery;
@@ -19,5 +21,5 @@ public interface UserService {
      */
     public User selectUserByUserId(String userId);
 
-    List<UserManager> selectUserManagerList(UserManagerQuery query);
+    IPage<UserManager> selectUserManagerList(Page<UserManager> page, UserManagerQuery query);
 }

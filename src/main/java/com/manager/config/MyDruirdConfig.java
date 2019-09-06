@@ -1,7 +1,11 @@
 package com.manager.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.type.JdbcType;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -101,6 +105,16 @@ public class MyDruirdConfig implements DbConfig {
     private String connectionProperties;
 
     /**
+     * 分页插件
+     */
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        // paginationInterceptor.setLimit(你的最大单页限制数量，默认 500 条，小于 0 如 -1 不受限制);
+        return paginationInterceptor;
+    }
+
+    /**
      * 定义数据源
      * 注意@Primary注解表示：自动装配时当出现多个Bean候选者时，被注解为@Primary的Bean将作为首选者，否则将抛出异常
      *
@@ -150,6 +164,16 @@ public class MyDruirdConfig implements DbConfig {
     public SqlSessionFactory sessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
+
+        MybatisConfiguration configuration = new MybatisConfiguration();
+        configuration.setJdbcTypeForNull(JdbcType.NULL);
+        configuration.setMapUnderscoreToCamelCase(true);
+        configuration.setCacheEnabled(false);
+        sessionFactory.setConfiguration(configuration);
+        // 添加分页插件
+        sessionFactory.setPlugins(new Interceptor[]{
+                paginationInterceptor()
+        });
 
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 

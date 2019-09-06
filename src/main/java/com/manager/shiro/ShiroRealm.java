@@ -14,8 +14,11 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ShiroRealm extends AuthorizingRealm {
 
@@ -25,6 +28,8 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     private UserRoleService userRoleService;
 
+    private static Map<String, String> USER_ROLE_CACHE = new ConcurrentHashMap<>();
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
@@ -32,9 +37,17 @@ public class ShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         // 获取用户角色
-        UserRole userRole = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
-        // 添加用户角色
-        info.addRole(userRole.getUserRoleId());
+        String ss01Id = user.getSs01Id();
+        String role = USER_ROLE_CACHE.get(ss01Id);
+
+        if (role == null) {
+            // 缓存并设置角色
+            UserRole userRole = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
+            USER_ROLE_CACHE.put(ss01Id, userRole.getUserRoleId());
+            info.addRole(userRole.getUserRoleId());
+        } else {
+            info.addRole(role);
+        }
 
         return info;
     }

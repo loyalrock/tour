@@ -7,10 +7,7 @@
     select * from SS01 where USER_ID = #{userId,jdbcType=VARCHAR}
   </select>
 
-    <select id="selectUserManagerList"
-            parameterType="com.manager.entry.system.UserManagerQuery"
-            resultMap="UserManagerResult">
-
+    <select id="selectUserManagerList"  resultMap="UserManagerResult">
         select t1.USER_ID,
         t1.SS01_ID,
         t1.USER_NAME,
@@ -32,17 +29,17 @@
         on t5.PROJECT_NO = t4.PROJECT_NO
         <where>
             1 = 1
-            <if test="status != null">
-                and t1.STATUS = #{status,jdbcType=VARCHAR}
+            <if test="query.status != null">
+                and t1.STATUS = #{query.status,jdbcType=VARCHAR}
             </if>
-            <if test="userName != null">
-                and t1.USER_NAME like CONCAT('%', #{userName,jdbcType=VARCHAR}, '%')
+            <if test="query.userName != null">
+                and t1.USER_NAME like CONCAT('%', #{query.userName,jdbcType=VARCHAR}, '%')
             </if>
-            <if test="projectNo != null">
-                and t5.PROJECT_NO = #{status,jdbcType=VARCHAR}
+            <if test="query.projectNo != null">
+                and t5.PROJECT_NO = #{query.projectNo,jdbcType=VARCHAR}
             </if>
-            <if test="userRoleId != null">
-                and t2.USER_ROLE_ID = #{userRoleId,jdbcType=VARCHAR}
+            <if test="query.userRoleId != null">
+                and t2.USER_ROLE_ID = #{query.userRoleId,jdbcType=VARCHAR}
             </if>
         </where>
         order by t1.CREATE_TIME
