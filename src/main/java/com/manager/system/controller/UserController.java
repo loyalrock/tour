@@ -8,6 +8,7 @@ import com.manager.entry.system.User;
 import com.manager.entry.system.UserManager;
 import com.manager.entry.system.UserManagerQuery;
 import com.manager.system.service.UserService;
+import com.manager.util.InsertGroup;
 import com.manager.util.Message;
 import com.manager.util.ResultUtil;
 import com.manager.util.Role;
@@ -17,6 +18,7 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,6 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@RequiresAuthentication
 public class UserController {
 
     @Autowired
@@ -35,8 +38,7 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping("/detail")
-    @RequiresAuthentication
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ResultEntry getUserDetail(Principal principal) {
         return ResultUtil.success(Message.SELECT_SUCCESS, principal);
     }
@@ -56,7 +58,7 @@ public class UserController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @RequiresRoles(value = {Role.SYSTEM})
-    public ResultEntry insertUser(@Valid @RequestBody UserManager userManager) throws Exception {
+    public ResultEntry insertUser(@Validated @RequestBody UserManager userManager) throws Exception {
         userService.addUser(userManager);
         return ResultUtil.success(Message.INSERT_SUCCESS);
     }

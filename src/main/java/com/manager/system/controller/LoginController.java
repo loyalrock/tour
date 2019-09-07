@@ -12,6 +12,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,7 @@ public class LoginController {
     @Autowired
     private UserRoleService userRoleService;
 
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResultEntry Login(@RequestParam @NotBlank(message = "用户名不能为空") String username,
                              @RequestParam @NotBlank(message = "密码不能为空") String password)
     {

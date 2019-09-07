@@ -34,12 +34,6 @@ public class LoggerAop {
         HttpServletResponse response = sra.getResponse();
         String uri = request.getRequestURI();
 
-//        // springboot admin的请求不拦截，不然日志太多
-//        if (uri.startsWith(request.getContextPath() + "/admin/")
-//                || uri.equals(request.getContextPath() + "/error")) {
-//            return pjp.proceed(pjp.getArgs());
-//        }
-
         // 打印日志
         long beginTime = System.currentTimeMillis();
 

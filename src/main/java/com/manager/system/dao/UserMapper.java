@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.system.User;
 import com.manager.entry.system.UserManager;
 import com.manager.entry.system.UserManagerQuery;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 /**
  * mapper
@@ -25,6 +24,8 @@ public interface UserMapper extends BaseMapper<UserManager> {
 
     int updateByPrimaryKey(User record);
 
+    @Select("select * from SS01 where USER_ID = #{userId}")
+    @ResultMap("BaseResultMap")
     User selectUserByUserId(@Param("userId") String userId);
 
     /**

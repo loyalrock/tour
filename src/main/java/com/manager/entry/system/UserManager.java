@@ -1,5 +1,8 @@
 package com.manager.entry.system;
 
+import com.manager.util.InsertGroup;
+import com.manager.util.UpdateGroup;
+
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -11,6 +14,7 @@ public class UserManager {
     /**
      * 用户主键
      */
+    @NotBlank(message = "唯一键必须", groups = {UpdateGroup.class})
     private String ss01Id;
 
     @NotBlank(message = "登录名未填写")
