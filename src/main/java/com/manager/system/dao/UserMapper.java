@@ -36,6 +36,9 @@ public interface UserMapper extends BaseMapper<UserManager> {
      */
     IPage<UserManager> selectUserManagerList(Page page, @Param("query") UserManagerQuery query);
 
+    UserManager selectUserManagerDetail(@Param("userUid") String userUid);
+
     @Update("update SS01 set STATUS = #{status} where SS01_ID = #{userUid}")
     int updateStatus(@Param("status") String status, @Param("userUid") String userUid);
+
 }

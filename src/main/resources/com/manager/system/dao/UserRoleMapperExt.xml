@@ -8,4 +8,20 @@
     from SS0101 where SS01_ID = #{userUid,jdbcType=VARCHAR}
 
   </select>
+
+  <update id="updateByUserUid" parameterType="com.manager.entry.system.UserRole">
+    update SS0101
+    <set >
+      <if test="userRoleId != null" >
+        USER_ROLE_ID = #{userRoleId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SS01_ID = #{ss01Id,jdbcType=VARCHAR}
+  </update>
 </mapper>

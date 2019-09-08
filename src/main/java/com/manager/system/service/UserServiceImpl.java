@@ -35,6 +35,54 @@ public class UserServiceImpl implements UserService {
     private UserProjectMapper userProjectMapper;
 
     @Override
+    public int updateUser(UserManager userManager) throws Exception {
+
+        String userUid = userManager.getSs01Id();
+        UserManager beforeUpdateUser = userMapper.selectUserManagerDetail(userUid);
+
+        // 当前登录用户
+        User currentUser = (User) SecurityUtils.getSubject().getPrincipal();
+        // 当前时间 修改时间
+        Date now = new Date();
+
+        int count = 0;
+
+        // 判断姓名和登录账号是否相同
+        if (!userManager.getUserName().equals(beforeUpdateUser.getUserName()) || !userManager.getUserId().equals(beforeUpdateUser.getUserId())) {
+            User user = new User();
+            user.setSs01Id(userUid);
+            user.setUserName(userManager.getUserName());
+            user.setUserId(userManager.getUserId());
+            user.setUpdateUser(currentUser.getSs01Id());
+            user.setUpdateTime(now);
+            count = userMapper.updateByPrimaryKeySelective(user);
+        }
+
+        // 判断角色是否改变
+        if (!userManager.getUserRoleId().equals(beforeUpdateUser.getUserRoleId())) {
+            UserRole userRole = new UserRole();
+            userRole.setSs01Id(userUid);
+            userRole.setUserRoleId(userManager.getUserRoleId());
+            userRole.setUpdateUser(currentUser.getSs01Id());
+            userRole.setUpdateTime(now);
+            count = userRoleMapper.updateByUserUid(userRole);
+        }
+
+        // 判断项目
+        if (!userManager.getProjectNo().equals(beforeUpdateUser.getProjectNo()) || !userManager.getOpUnit().equals(beforeUpdateUser.getOpUnit())) {
+            UserProject userProject = new UserProject();
+            userProject.setSs01Id(userUid);
+            userProject.setOpUnit(userManager.getOpUnit());
+            userProject.setProjectNo(userManager.getProjectNo());
+            userProject.setUpdateUser(currentUser.getSs01Id());
+            userProject.setUpdateTime(now);
+            count = userProjectMapper.updateByUserUid(userProject);
+        }
+
+        return count;
+    }
+
+    @Override
     public IPage<UserManager> selectUserManagerList(Page<UserManager> page, UserManagerQuery query) {
         return userMapper.selectUserManagerList(page, query);
     }

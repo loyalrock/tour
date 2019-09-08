@@ -32,4 +32,6 @@ public interface UserService {
     int addUser(UserManager userManager) throws Exception;
 
     int updateStatus(String userUid, String status) throws Exception;
+
+    int updateUser(UserManager userManager) throws Exception;
 }
