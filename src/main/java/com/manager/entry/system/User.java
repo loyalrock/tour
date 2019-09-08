@@ -1,6 +1,7 @@
 package com.manager.entry.system;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.manager.entry.common.CommonEntry;
 import javafx.beans.DefaultProperty;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,7 +13,7 @@ import java.util.Date;
  * 系统用户
  * @auth zhongyan
  */
-public class User {
+public class User extends CommonEntry {
 
     /**
      * 启用
@@ -40,29 +41,12 @@ public class User {
     @NotBlank(message = "密码不能为空")
     private String password;
 
-    private String status;
-
-    private String createUser;
-
-    private Date createTime;
-
-    private String updateUser;
-
-    private Date updateTime;
-
-    private String deleteFlag;
-
     public User(String ss01Id, String userId, String userName, String password, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+        super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
         this.ss01Id = ss01Id;
         this.userId = userId;
         this.userName = userName;
         this.password = password;
-        this.status = status;
-        this.createUser = createUser;
-        this.createTime = createTime;
-        this.updateUser = updateUser;
-        this.updateTime = updateTime;
-        this.deleteFlag = deleteFlag;
     }
 
     public User() {
@@ -99,55 +83,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser == null ? null : createUser.trim();
-    }
-
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser == null ? null : updateUser.trim();
-    }
-
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(String deleteFlag) {
-        this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
     }
 }

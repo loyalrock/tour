@@ -18,7 +18,7 @@ public class UserManager {
     @NotBlank(message = "唯一键必须", groups = {UpdateGroup.class})
     private String ss01Id;
 
-    @NotBlank(message = "登录名未填写", groups = {UpdateGroup.class, InsertGroup.class})
+    @NotBlank(message = "登录名未填写", groups = {UpdateGroup.class})
     private String userId;
 
     @NotBlank(message = "用户名称未填写", groups = {UpdateGroup.class, InsertGroup.class})

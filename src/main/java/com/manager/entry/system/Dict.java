@@ -1,39 +1,33 @@
 package com.manager.entry.system;
 
+import com.manager.entry.common.CommonEntry;
+import com.manager.util.InsertGroup;
+import com.manager.util.UpdateGroup;
+import com.manager.util.UpdateStatusGroup;
+import org.apache.ibatis.annotations.Update;
+
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
-public class Dict {
+public class Dict extends CommonEntry {
+    @NotBlank(message = "唯一键缺失", groups = {UpdateGroup.class, UpdateStatusGroup.class})
     private String ss03Id;
 
+    @NotBlank(message = "字典ID缺失", groups = {InsertGroup.class})
     private String dirId;
 
+    @NotBlank(message = "字典名称缺失", groups = {InsertGroup.class})
     private String dirName;
 
+    @NotBlank(message = "字典说明缺失", groups = {InsertGroup.class})
     private String dirExp;
 
-    private String status;
-
-    private String createUser;
-
-    private Date createTime;
-
-    private String updateUser;
-
-    private Date updateTime;
-
-    private String deleteFlag;
-
     public Dict(String ss03Id, String dirId, String dirName, String dirExp, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+        super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
         this.ss03Id = ss03Id;
         this.dirId = dirId;
         this.dirName = dirName;
         this.dirExp = dirExp;
-        this.status = status;
-        this.createUser = createUser;
-        this.createTime = createTime;
-        this.updateUser = updateUser;
-        this.updateTime = updateTime;
-        this.deleteFlag = deleteFlag;
     }
 
     public Dict() {
@@ -70,53 +64,5 @@ public class Dict {
 
     public void setDirExp(String dirExp) {
         this.dirExp = dirExp == null ? null : dirExp.trim();
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser == null ? null : createUser.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser == null ? null : updateUser.trim();
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(String deleteFlag) {
-        this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
     }
 }

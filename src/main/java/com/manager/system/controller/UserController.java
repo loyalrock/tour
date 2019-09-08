@@ -80,6 +80,13 @@ public class UserController {
         return ResultUtil.success(Message.UPDATE_SUCCESS);
     }
 
+    /**
+     * 用户状态修改
+     * @param status
+     * @param userUid
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/status/update", method = RequestMethod.POST)
     @RequiresRoles(value = {Role.SYSTEM})
     public ResultEntry updateStatus(@RequestParam("status") String status, @RequestParam("userUid") String userUid) throws Exception {

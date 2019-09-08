@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manager.system.dao.DictMapper">
+    <select id="selectPage" resultMap="PageResultMap">
+        SELECT SS03_ID, DIR_ID, DIR_NAME, DIR_EXP, STATUS
+        from SS03
+        where 1=1
+        <if test="query != null">
+            <if test="query.dirName != null and query.dirName.trim() != ''">
+                and DIR_NAME like concat('%', #{query.dirName,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="query.status != null and query.status.trim() != ''">
+                and STATUS = #{query.status,jdbcType=VARCHAR}
+            </if>
+        </if>
+        order by CREATE_TIME
+    </select>
+
+    <resultMap id="PageResultMap" type="com.manager.entry.system.Dict" >
+        <id column="SS03_ID" jdbcType="VARCHAR" property="ss03Id" />
+        <result column="DIR_ID" jdbcType="VARCHAR" property="dirId"  />
+        <result column="DIR_NAME" jdbcType="VARCHAR" property="dirName"  />
+        <result column="DIR_EXP" jdbcType="VARCHAR" property="dirExp" />
+        <result column="STATUS" jdbcType="CHAR" property="status"  />
+    </resultMap>
+</mapper>
