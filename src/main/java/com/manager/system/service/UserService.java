@@ -20,9 +20,11 @@ public interface UserService {
      * @param userId
      * @return
      */
-    public User selectUserByUserId(String userId);
+    User selectUserByUserId(String userId);
 
     IPage<UserManager> selectUserManagerList(Page<UserManager> page, UserManagerQuery query);
+
+    UserManager selectUserManagerDetail(String userUid) throws Exception;
 
     /**
      * 新增用户

@@ -2,26 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.manager.system.dao.UserMapper">
 
-    <select id="selectUserManagerList"  resultMap="UserManagerResult">
+    <select id="selectUserManagerList"  resultMap="UserManagerList">
         select t1.USER_ID,
         t1.SS01_ID,
         t1.USER_NAME,
         t1.STATUS,
-        t2.USER_ROLE_ID,
-        t3.USER_ROLE_NAME,
+        group_concat(t3.USER_ROLE_NAME) as USER_ROLE_NAME,
         t4.OP_UNIT,
         t5.PROJECT_NO,
         t5.PROJECT_NAME,
         t5.PROJECT_NAME_J
         from SS01 t1
-        left join SS0101 t2
-        on t1.SS01_ID = t2.SS01_ID
-        left join SS02 t3
-        on t3.USER_ROLE_ID = t2.USER_ROLE_ID
-        left join SS0102 t4
-        on t1.SS01_ID = t4.SS01_ID
-        left join SC02 t5
-        on t5.PROJECT_NO = t4.PROJECT_NO
+        left join SS0101 t2 on t1.SS01_ID = t2.SS01_ID
+        left join SS02 t3 on t3.USER_ROLE_ID = t2.USER_ROLE_ID
+        left join SS0102 t4 on t1.SS01_ID = t4.SS01_ID
+        left join SC02 t5 on t5.PROJECT_NO = t4.PROJECT_NO
         <where>
             1 = 1
             <if test="query.status != null and query.status.trim() != ''">
@@ -37,16 +32,28 @@
                 and t2.USER_ROLE_ID = #{query.userRoleId,jdbcType=VARCHAR}
             </if>
         </where>
-        order by t1.CREATE_TIME
+        group by t1.USER_ID order by t1.CREATE_TIME
     </select>
 
-    <select id="selectUserManagerDetail" parameterType="String"  resultMap="UserManagerResult">
+    <resultMap id="UserManagerList" type="com.manager.entry.system.UserManager">
+        <id column="SS01_id" property="ss01Id" jdbcType="VARCHAR"></id>
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR"></result>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"></result>
+        <result column="OP_UNIT" property="opUnit" jdbcType="VARCHAR"></result>
+        <result column="USER_ROLE_NAME" property="userRoleName" jdbcType="VARCHAR"></result>
+        <result column="PROJECT_NO" property="projectNo" jdbcType="VARCHAR"></result>
+        <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR"></result>
+        <result column="PROJECT_NAME_J" property="projectNameJ" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <select id="selectUserManagerDetail" parameterType="String"  resultMap="UserManagerDetail">
         select t1.USER_ID,
         t1.SS01_ID,
+        t1.USER_ID,
         t1.USER_NAME,
         t1.STATUS,
+        t2.SS0101_ID,
         t2.USER_ROLE_ID,
-        t3.USER_ROLE_NAME,
         t4.OP_UNIT,
         t5.PROJECT_NO,
         t5.PROJECT_NAME,
@@ -68,15 +75,18 @@
         </where>
     </select>
 
-    <resultMap id="UserManagerResult" type="com.manager.entry.system.UserManager">
+    <resultMap id="UserManagerDetail" type="com.manager.entry.system.UserManager">
         <id column="SS01_id" property="ss01Id" jdbcType="VARCHAR"></id>
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR"></result>
+        <result column="USER_ID" property="userId" jdbcType="VARCHAR"></result>
         <result column="STATUS" property="status" jdbcType="VARCHAR"></result>
-        <result column="USER_ROLE_ID" property="userRoleId" jdbcType="VARCHAR"></result>
-        <result column="USER_ROLE_NAME" property="userRoleName" jdbcType="VARCHAR"></result>
         <result column="OP_UNIT" property="opUnit" jdbcType="VARCHAR"></result>
         <result column="PROJECT_NO" property="projectNo" jdbcType="VARCHAR"></result>
         <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR"></result>
         <result column="PROJECT_NAME_J" property="projectNameJ" jdbcType="VARCHAR"></result>
+        <collection property="userRoles" ofType="com.manager.entry.system.UserRole">
+            <result column="USER_ROLE_ID" property="userRoleId" jdbcType="VARCHAR"></result>
+            <result column="SS0101_ID" property="ss0101Id" jdbcType="VARCHAR"></result>
+        </collection>
     </resultMap>
 </mapper>

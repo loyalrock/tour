@@ -3,6 +3,7 @@ package com.manager.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.common.CommonException;
+import com.manager.entry.common.UserUtil;
 import com.manager.entry.system.*;
 import com.manager.system.dao.UserMapper;
 import com.manager.system.dao.UserProjectMapper;
@@ -15,8 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.security.auth.Subject;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * UserService实现类
@@ -59,13 +59,26 @@ public class UserServiceImpl implements UserService {
         }
 
         // 判断角色是否改变
-        if (!userManager.getUserRoleId().equals(beforeUpdateUser.getUserRoleId())) {
-            UserRole userRole = new UserRole();
-            userRole.setSs01Id(userUid);
-            userRole.setUserRoleId(userManager.getUserRoleId());
-            userRole.setUpdateUser(currentUser.getSs01Id());
-            userRole.setUpdateTime(now);
-            count = userRoleMapper.updateByUserUid(userRole);
+        List<String> userRoles = Arrays.asList(userManager.getUserRoleId().split(","));
+        HashSet<String> beforeUpdateRoles = new HashSet<>();
+        for (UserRole userRole : beforeUpdateUser.getUserRoles()) {
+            beforeUpdateRoles.add(userRole.getUserRoleId());
+        }
+        if (!beforeUpdateRoles.containsAll(userRoles)) {
+            // 删除所有角色
+            userRoleMapper.deleteByUserUid(userUid);
+
+            // 新增
+            for (String userRoleId : userRoles) {
+                UserRole userRole = new UserRole();
+                userRole.setSs0101Id(UUID.randomUUID().toString());
+                userRole.setSs01Id(userUid);
+                userRole.setUserRoleId(userRoleId);
+                UserUtil.insertData(userRole);
+                count = userRoleMapper.insertSelective(userRole);
+            }
+
+
         }
 
         // 判断项目
@@ -98,6 +111,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserManager selectUserManagerDetail(String userUid) throws Exception {
+        return userMapper.selectUserManagerDetail(userUid);
+    }
+
+    @Override
     public int addUser(UserManager userManager) throws Exception {
         // 校验userUid 是否存在
         User checkUser = userMapper.selectUserByUserId(userManager.getUserId());
@@ -124,17 +142,21 @@ public class UserServiceImpl implements UserService {
         // 新增用户表
         int count = userMapper.insertSelective(user);
 
-        UserRole userRole = new UserRole(
-                UUID.randomUUID().toString(),
-                newUserUid,
-                userManager.getUserRoleId(),
-                currentUser.getSs01Id(),
-                now,
-                currentUser.getSs01Id(),
-                now,
-                Delete.UN_DELETE);
-        // 新增用户角色表
-        count = userRoleMapper.insertSelective(userRole);
+        // 新增多角色
+        String [] userRoleIds =  userManager.getUserRoleId().split(",");
+        for (String userRoleId : userRoleIds) {
+            UserRole userRole = new UserRole(
+                    UUID.randomUUID().toString(),
+                    newUserUid,
+                    userRoleId,
+                    currentUser.getSs01Id(),
+                    now,
+                    currentUser.getSs01Id(),
+                    now,
+                    Delete.UN_DELETE);
+            // 新增用户角色表
+            count = userRoleMapper.insertSelective(userRole);
+        }
 
         UserProject userProject = new UserProject(
                 UUID.randomUUID().toString(),

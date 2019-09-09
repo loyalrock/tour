@@ -24,4 +24,8 @@
     </set>
     where SS01_ID = #{ss01Id,jdbcType=VARCHAR}
   </update>
+
+  <delete id="deleteByUserUid" parameterType="String">
+    delete from SS0101 where SS01_id = #{userUid,jdbcType=VARCHAR}
+  </delete>
 </mapper>

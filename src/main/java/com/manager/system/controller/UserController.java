@@ -10,6 +10,7 @@ import com.manager.entry.system.UserManagerQuery;
 import com.manager.system.service.UserService;
 import com.manager.util.*;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -52,6 +53,19 @@ public class UserController {
     public ResultEntry getUserManagerList(Page page, UserManagerQuery query) {
         IPage<UserManager> userManagers = userService.selectUserManagerList(page, query);
         return ResultUtil.success(Message.SELECT_SUCCESS, userManagers);
+    }
+
+    /**
+     * 获取用户管理详情
+     *
+     * @param userUid
+     * @return
+     */
+    @RequestMapping(value = "/manager/detail", method = RequestMethod.GET)
+    @RequiresRoles(value = {Role.SYSTEM})
+    public ResultEntry getUserManagerList(@Param("userUid") String userUid) throws Exception {
+        UserManager userManager = userService.selectUserManagerDetail(userUid);
+        return ResultUtil.success(Message.SELECT_SUCCESS, userManager);
     }
 
     /**

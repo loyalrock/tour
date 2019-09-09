@@ -5,6 +5,8 @@ import com.manager.entry.system.UserRole;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 public interface UserRoleMapper {
     int deleteByPrimaryKey(String ss0101Id);
 
@@ -18,7 +20,7 @@ public interface UserRoleMapper {
 
     int updateByPrimaryKey(UserRole record);
 
-    UserRole selectUserRoleByUserUid(@Param("userUid") String userUid);
+    List<UserRole> selectUserRoleByUserUid(@Param("userUid") String userUid);
 
     /**
      * 修改用户角色关系 通过SS01_ID
@@ -26,4 +28,6 @@ public interface UserRoleMapper {
      * @return
      */
     int updateByUserUid(UserRole userRole);
+
+    int deleteByUserUid(@Param("userUid") String userUid);
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * 描述
@@ -43,11 +44,11 @@ public class LoginController {
         // 获取user对象
         User user = (User)SecurityUtils.getSubject().getPrincipal();
         // 获取角色
-        UserRole userRole = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
+        List<UserRole> userRoles = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("user", user);
-        jsonObject.put("role", userRole);
+        jsonObject.put("roles", userRoles);
 
         return ResultUtil.success(Message.LOGIN_SUCCESS, jsonObject);
     }

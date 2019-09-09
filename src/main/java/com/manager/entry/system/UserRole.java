@@ -1,35 +1,22 @@
 package com.manager.entry.system;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.manager.entry.common.CommonEntry;
 
 import java.util.Date;
 
-public class UserRole {
+public class UserRole extends CommonEntry {
     private String ss0101Id;
 
     private String ss01Id;
 
     private String userRoleId;
 
-    private String createUser;
-
-    private Date createTime;
-
-    private String updateUser;
-
-    private Date updateTime;
-
-    private String deleteFlag;
-
     public UserRole(String ss0101Id, String ss01Id, String userRoleId, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+        super(null, createUser, createTime, updateUser, updateTime, deleteFlag);
         this.ss0101Id = ss0101Id;
         this.ss01Id = ss01Id;
         this.userRoleId = userRoleId;
-        this.createUser = createUser;
-        this.createTime = createTime;
-        this.updateUser = updateUser;
-        this.updateTime = updateTime;
-        this.deleteFlag = deleteFlag;
     }
 
     public UserRole() {
@@ -58,47 +45,5 @@ public class UserRole {
 
     public void setUserRoleId(String userRoleId) {
         this.userRoleId = userRoleId == null ? null : userRoleId.trim();
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser == null ? null : createUser.trim();
-    }
-
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser == null ? null : updateUser.trim();
-    }
-
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(String deleteFlag) {
-        this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
     }
 }

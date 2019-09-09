@@ -5,6 +5,7 @@ import com.manager.util.UpdateGroup;
 import org.apache.ibatis.annotations.Update;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * 用户管理查询实体类
@@ -30,6 +31,11 @@ public class UserManager {
     private String userRoleId;
 
     private String userRoleName;
+
+    /**
+     * 多角色
+     */
+    private List<UserRole> userRoles;
 
     @NotBlank(message = "所属单位未填写", groups = {UpdateGroup.class, InsertGroup.class})
     private String opUnit;
@@ -119,5 +125,13 @@ public class UserManager {
 
     public void setProjectNameJ(String projectNameJ) {
         this.projectNameJ = projectNameJ;
+    }
+
+    public List<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 }

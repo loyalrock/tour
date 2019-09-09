@@ -14,10 +14,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ShiroRealm extends AuthorizingRealm {
@@ -28,7 +25,7 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     private UserRoleService userRoleService;
 
-    private static Map<String, String> USER_ROLE_CACHE = new ConcurrentHashMap<>();
+    private static Map<String, List<String>> USER_ROLE_CACHE = new ConcurrentHashMap<>();
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -38,15 +35,19 @@ public class ShiroRealm extends AuthorizingRealm {
 
         // 获取用户角色
         String ss01Id = user.getSs01Id();
-        String role = USER_ROLE_CACHE.get(ss01Id);
+        List<String> roles = USER_ROLE_CACHE.get(ss01Id);
 
-        if (role == null) {
+        if (roles == null) {
             // 缓存并设置角色
-            UserRole userRole = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
-            USER_ROLE_CACHE.put(ss01Id, userRole.getUserRoleId());
-            info.addRole(userRole.getUserRoleId());
+            List<UserRole> userRoles = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
+            roles = new ArrayList<>();
+            for (UserRole userRole : userRoles) {
+                roles.add(userRole.getUserRoleId());
+            }
+            USER_ROLE_CACHE.put(ss01Id, roles);
+            info.addRoles(roles);
         } else {
-            info.addRole(role);
+            info.addRoles(roles);
         }
 
         return info;
