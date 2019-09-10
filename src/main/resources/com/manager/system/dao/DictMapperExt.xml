@@ -2,8 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.manager.system.dao.DictMapper">
     <select id="selectPage" resultMap="PageResultMap">
-        SELECT SS03_ID, DIR_ID, DIR_NAME, DIR_EXP, STATUS
-        from SS03
+        select t1.SS03_Id, t1.DIR_NAME, group_concat(t3.CATEGORY_NAME) as DIR_EXP, t1.STATUS, t1.DIR_ID
+        from SS03 t1
+        left join SS0305 t2 on t1.SS03_ID = t2.SS03_ID
+        left join SS05 t3 on t2.SS05_ID = t3.SS05_ID
         where 1=1
         <if test="query != null">
             <if test="query.dirName != null and query.dirName.trim() != ''">
@@ -13,14 +15,38 @@
                 and STATUS = #{query.status,jdbcType=VARCHAR}
             </if>
         </if>
-        order by CREATE_TIME
+        group by t1.SS03_ID order by t1.CREATE_TIME
     </select>
 
-    <resultMap id="PageResultMap" type="com.manager.entry.system.Dict" >
-        <id column="SS03_ID" jdbcType="VARCHAR" property="ss03Id" />
-        <result column="DIR_ID" jdbcType="VARCHAR" property="dirId"  />
-        <result column="DIR_NAME" jdbcType="VARCHAR" property="dirName"  />
-        <result column="DIR_EXP" jdbcType="VARCHAR" property="dirExp" />
-        <result column="STATUS" jdbcType="CHAR" property="status"  />
+    <resultMap id="PageResultMap" type="com.manager.entry.system.Dict">
+        <id column="SS03_ID" jdbcType="VARCHAR" property="ss03Id"/>
+        <result column="DIR_ID" jdbcType="VARCHAR" property="dirId"/>
+        <result column="DIR_NAME" jdbcType="VARCHAR" property="dirName"/>
+        <result column="DIR_EXP" jdbcType="VARCHAR" property="dirExp"/>
+        <result column="STATUS" jdbcType="CHAR" property="status"/>
     </resultMap>
+
+    <select id="selectDetail" parameterType="String" resultMap="DetailResultMap">
+
+        select t1.SS03_Id, t1.DIR_NAME, t1.DIR_EXP, t1.STATUS, t1.DIR_ID, t3.CATEGORY_NAME, t3.CATEGORY_CODE, t3.SS05_ID
+        from SS03 t1
+                    left join SS0305 t2 on t1.SS03_ID = t2.SS03_ID
+                    left join SS05 t3 on t2.SS05_ID = t3.SS05_ID
+        where t1.SS03_ID = #{dictUid,jdbcType=VARCHAR}
+    </select>
+
+    <resultMap id="DetailResultMap" type="com.manager.entry.system.Dict">
+        <id column="SS03_ID" jdbcType="VARCHAR" property="ss03Id"/>
+        <result column="DIR_ID" jdbcType="VARCHAR" property="dirId"/>
+        <result column="DIR_NAME" jdbcType="VARCHAR" property="dirName"/>
+        <result column="DIR_EXP" jdbcType="VARCHAR" property="dirExp"/>
+        <result column="STATUS" jdbcType="CHAR" property="status"/>
+        <collection property="categories" ofType="com.manager.entry.system.Category">
+            <id column="SS05_ID" jdbcType="VARCHAR" property="ss05Id"></id>
+            <result column="CATEGORY_NAME" jdbcType="VARCHAR" property="categoryName"/>
+            <result column="CATEGORY_CODE" jdbcType="VARCHAR" property="categoryCode"/>
+        </collection>
+    </resultMap>
+
+
 </mapper>

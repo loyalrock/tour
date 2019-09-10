@@ -28,4 +28,6 @@ public interface DictMapper {
      */
     IPage<Dict> selectPage(Page<Dict> page, @Param("query")DictQuery query);
 
+    Dict selectDetail(@Param("dictUid") String dictUid);
+
 }

@@ -1,12 +1,12 @@
 package com.manager.entry.system;
 
 public class CategoryDict {
-    private String ss04Id;
+    private String ss03Id;
 
     private String ss05Id;
 
-    public CategoryDict(String ss04Id, String ss05Id) {
-        this.ss04Id = ss04Id;
+    public CategoryDict(String ss03Id, String ss05Id) {
+        this.ss03Id = ss03Id;
         this.ss05Id = ss05Id;
     }
 
@@ -15,11 +15,11 @@ public class CategoryDict {
     }
 
     public String getSs04Id() {
-        return ss04Id;
+        return ss03Id;
     }
 
     public void setSs04Id(String ss04Id) {
-        this.ss04Id = ss04Id == null ? null : ss04Id.trim();
+        this.ss03Id = ss04Id == null ? null : ss04Id.trim();
     }
 
     public String getSs05Id() {

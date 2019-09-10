@@ -2,8 +2,11 @@ package com.manager.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.manager.entry.system.Category;
 import com.manager.entry.system.Dict;
 import com.manager.entry.system.DictQuery;
+
+import java.util.List;
 
 /**
  * 数据字典service
@@ -21,4 +24,8 @@ public interface DictService {
     int deleteDict(String dictUid) throws Exception;
 
     String getNextId() throws Exception;
+
+    Dict selectDetail(String dictUid);
+
+    List<Category> selectCategoryList(String classify);
 }

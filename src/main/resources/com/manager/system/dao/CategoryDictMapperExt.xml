@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manager.system.dao.CategoryDictMapper" >
+
+  <insert id="insertList" parameterType="List">
+    insert into SS0305 values
+    <foreach collection="categoryDicts" separator="," item="item">
+      (#{item.ss03Id,jdbcType=VARCHAR}, #{item.ss05Id,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+</mapper>

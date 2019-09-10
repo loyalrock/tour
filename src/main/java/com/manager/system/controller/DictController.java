@@ -3,6 +3,7 @@ package com.manager.system.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.common.ResultEntry;
+import com.manager.entry.system.Category;
 import com.manager.entry.system.Dict;
 import com.manager.entry.system.DictQuery;
 import com.manager.system.service.DictService;
@@ -11,6 +12,9 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * 数据字典
@@ -89,6 +93,19 @@ public class DictController {
     }
 
     /**
+     * 详情
+     * @param dictUid
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    @RequiresRoles(value = {Role.SYSTEM})
+    public ResultEntry selectPage(@RequestParam("dictUid") String dictUid) throws Exception{
+        Dict dict = dictService.selectDetail(dictUid);
+        return ResultUtil.success(Message.SELECT_SUCCESS, dict);
+    }
+
+    /**
      * 查询下一个新增的字典id
      * @return
      * @throws Exception
@@ -99,5 +116,19 @@ public class DictController {
         String nextId = dictService.getNextId();
         return ResultUtil.success(Message.SELECT_SUCCESS, nextId);
     }
+
+    /**
+     * 查询分类
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/category/list", method = RequestMethod.GET)
+    @RequiresRoles(value = {Role.SYSTEM})
+    public ResultEntry selectCategoryList(@RequestParam("classify") @NotBlank(message = "缺失(dir_exp)") String classify) throws Exception {
+        List<Category> categories = dictService.selectCategoryList(classify);
+        return ResultUtil.success(Message.SELECT_SUCCESS, categories);
+    }
+
+
 
  }

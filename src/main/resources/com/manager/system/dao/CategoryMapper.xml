@@ -3,7 +3,7 @@
 <mapper namespace="com.manager.system.dao.CategoryMapper" >
   <resultMap id="BaseResultMap" type="com.manager.entry.system.Category" >
     <constructor >
-      <arg column="SS0401_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SS05_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="CATEGORY_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="CLASSIFY" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="CATEGORY_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -16,20 +16,20 @@
     </constructor>
   </resultMap>
   <insert id="insert" parameterType="com.manager.entry.system.Category" >
-    insert into SS05 (SS0401_ID, CATEGORY_CODE, CLASSIFY, 
-      CATEGORY_NAME, STATUS, CREATE_USER, 
-      CREATE_TIME, UPDATE_USER, UPDATE_TIME, 
+    insert into SS05 (SS05_ID, CATEGORY_CODE, CLASSIFY,
+      CATEGORY_NAME, STATUS, CREATE_USER,
+      CREATE_TIME, UPDATE_USER, UPDATE_TIME,
       DELETE_FLAG)
-    values (#{ss0401Id,jdbcType=VARCHAR}, #{categoryCode,jdbcType=VARCHAR}, #{classify,jdbcType=VARCHAR}, 
-      #{categoryName,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=DATE}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=DATE}, 
+    values (#{ss05Id,jdbcType=VARCHAR}, #{categoryCode,jdbcType=VARCHAR}, #{classify,jdbcType=VARCHAR},
+      #{categoryName,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR},
+      #{createTime,jdbcType=DATE}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=DATE},
       #{deleteFlag,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.manager.entry.system.Category" >
     insert into SS05
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="ss0401Id != null" >
-        SS0401_ID,
+      <if test="ss05Id != null" >
+        SS05_ID,
       </if>
       <if test="categoryCode != null" >
         CATEGORY_CODE,
@@ -60,8 +60,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="ss0401Id != null" >
-        #{ss0401Id,jdbcType=VARCHAR},
+      <if test="ss05Id != null" >
+        #{ss05Id,jdbcType=VARCHAR},
       </if>
       <if test="categoryCode != null" >
         #{categoryCode,jdbcType=VARCHAR},

@@ -4,8 +4,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.common.UserUtil;
+import com.manager.entry.system.Category;
+import com.manager.entry.system.CategoryDict;
 import com.manager.entry.system.Dict;
 import com.manager.entry.system.DictQuery;
+import com.manager.system.dao.CategoryDictMapper;
+import com.manager.system.dao.CategoryMapper;
 import com.manager.system.dao.DictMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +28,12 @@ public class DictServiceImpl implements DictService{
 
     @Autowired
     private DictMapper dictMapper;
+
+    @Autowired
+    private CategoryDictMapper categoryDictMapper;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     @Override
     public IPage<Dict> selectPage(Page<Dict> page, DictQuery query) throws Exception {
@@ -60,8 +70,23 @@ public class DictServiceImpl implements DictService{
 
     @Override
     public int updateDict(Dict dict) throws Exception {
+        // 删除原有的
+        categoryDictMapper.deleteByDictUid(dict.getSs03Id());
+
+        // 批量新增
+        List<String> categoryUids = dict.getCategoryUids();
+        List<CategoryDict> categoryDicts = new ArrayList<>();
+        for(String categoryUid : categoryUids) {
+            CategoryDict categoryDict = new CategoryDict(dict.getSs03Id(), categoryUid);
+            categoryDicts.add(categoryDict);
+        }
+        categoryDictMapper.insertList(categoryDicts);
+
+        // 获取修改时间 人
         UserUtil.updateData(dict);
+        // 修改数据字典其他参数
         int count = dictMapper.updateByPrimaryKeySelective(dict);
+
         return count;
     }
 
@@ -99,4 +124,16 @@ public class DictServiceImpl implements DictService{
 
         return nextId;
     }
+
+    @Override
+    public List<Category> selectCategoryList(String classify) {
+        return categoryMapper.selectByClassify(classify);
+    }
+
+    @Override
+    public Dict selectDetail(String dictUid) {
+        return dictMapper.selectDetail(dictUid);
+    }
+
+
 }
