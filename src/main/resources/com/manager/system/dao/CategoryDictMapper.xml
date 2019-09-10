@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manager.system.dao.CategoryDictMapper" >
+  <resultMap id="BaseResultMap" type="com.manager.entry.system.CategoryDict" >
+    <constructor >
+      <arg column="SS04_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SS05_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.manager.entry.system.CategoryDict" >
+    insert into SS0405 (SS04_ID, SS05_ID)
+    values (#{ss04Id,jdbcType=VARCHAR}, #{ss05Id,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.manager.entry.system.CategoryDict" >
+    insert into SS0405
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ss04Id != null" >
+        SS04_ID,
+      </if>
+      <if test="ss05Id != null" >
+        SS05_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ss04Id != null" >
+        #{ss04Id,jdbcType=VARCHAR},
+      </if>
+      <if test="ss05Id != null" >
+        #{ss05Id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

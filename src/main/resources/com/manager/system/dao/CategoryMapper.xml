@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manager.system.dao.CategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.manager.entry.system.Category" >
+    <constructor >
+      <arg column="SS0401_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CATEGORY_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CLASSIFY" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CATEGORY_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="STATUS" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CREATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATE_TIME" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="UPDATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="UPDATE_TIME" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="DELETE_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.manager.entry.system.Category" >
+    insert into SS05 (SS0401_ID, CATEGORY_CODE, CLASSIFY, 
+      CATEGORY_NAME, STATUS, CREATE_USER, 
+      CREATE_TIME, UPDATE_USER, UPDATE_TIME, 
+      DELETE_FLAG)
+    values (#{ss0401Id,jdbcType=VARCHAR}, #{categoryCode,jdbcType=VARCHAR}, #{classify,jdbcType=VARCHAR}, 
+      #{categoryName,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=DATE}, 
+      #{deleteFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.manager.entry.system.Category" >
+    insert into SS05
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ss0401Id != null" >
+        SS0401_ID,
+      </if>
+      <if test="categoryCode != null" >
+        CATEGORY_CODE,
+      </if>
+      <if test="classify != null" >
+        CLASSIFY,
+      </if>
+      <if test="categoryName != null" >
+        CATEGORY_NAME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="deleteFlag != null" >
+        DELETE_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ss0401Id != null" >
+        #{ss0401Id,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryCode != null" >
+        #{categoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="classify != null" >
+        #{classify,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
