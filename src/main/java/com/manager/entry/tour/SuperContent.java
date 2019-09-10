@@ -1,41 +1,52 @@
 package com.manager.entry.tour;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.manager.entry.common.CommonEntry;
+import com.manager.util.InsertGroup;
+import com.manager.util.UpdateGroup;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
-public class SuperContent {
+public class SuperContent extends CommonEntry {
+    @NotBlank(message = "缺失主键", groups = {UpdateGroup.class})
     private String sc01Id;
 
+    @NotBlank(message = "缺失编号", groups = {InsertGroup.class, UpdateGroup.class})
     private String superPNo;
 
+    @NotBlank(message = "缺失层级", groups = {InsertGroup.class, UpdateGroup.class})
     private String superPLevel;
 
+    @NotBlank(message = "缺失系统序号", groups = {InsertGroup.class, UpdateGroup.class})
     private String sysNo;
 
+    @NotBlank(message = "缺失内容名称", groups = {InsertGroup.class, UpdateGroup.class})
     private String superPCheck;
 
     private String superPExp;
 
+    @NotBlank(message = "缺失分值", groups = {InsertGroup.class, UpdateGroup.class})
     private String superPScore;
 
+    @NotBlank(message = "缺失默认添加", groups = {InsertGroup.class, UpdateGroup.class})
     private String ifAdd;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+    @NotNull(message = "缺失启用时间", groups = {InsertGroup.class, UpdateGroup.class})
     private Date enableTime;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+    @NotNull(message = "缺失停用时间", groups = {InsertGroup.class, UpdateGroup.class})
     private Date deactiTime;
 
-    private String status;
-
-    private String createUser;
-
-    private Date createTime;
-
-    private String updateUser;
-
-    private Date updateTime;
-
-    private String deleteFlag;
-
     public SuperContent(String sc01Id, String superPNo, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPScore, String ifAdd, Date enableTime, Date deactiTime, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+        super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
         this.sc01Id = sc01Id;
         this.superPNo = superPNo;
         this.superPLevel = superPLevel;
@@ -46,12 +57,6 @@ public class SuperContent {
         this.ifAdd = ifAdd;
         this.enableTime = enableTime;
         this.deactiTime = deactiTime;
-        this.status = status;
-        this.createUser = createUser;
-        this.createTime = createTime;
-        this.updateUser = updateUser;
-        this.updateTime = updateTime;
-        this.deleteFlag = deleteFlag;
     }
 
     public SuperContent() {
@@ -136,53 +141,5 @@ public class SuperContent {
 
     public void setDeactiTime(Date deactiTime) {
         this.deactiTime = deactiTime;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser == null ? null : createUser.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser == null ? null : updateUser.trim();
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(String deleteFlag) {
-        this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
     }
 }

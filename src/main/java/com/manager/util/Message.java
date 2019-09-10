@@ -24,7 +24,10 @@ public enum Message {
     DELETE_SUCCESS("1000", "删除成功"),
     DELETE_FAILED("1005", "删除失败"),
     SELECT_SUCCESS("1000", "查询成功"),
-    SELECT_FAILED("1007", "查询失败");
+    SELECT_FAILED("1007", "查询失败"),
+
+
+    CONTENT_TIME_ERROR("2001", "启用时间不能大于停用时间");
 
     private String code;
 
