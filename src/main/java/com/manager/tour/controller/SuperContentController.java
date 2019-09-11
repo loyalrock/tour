@@ -68,5 +68,18 @@ public class SuperContentController {
         return ResultUtil.success(Message.UPDATE_SUCCESS);
     }
 
+    /**
+     * 下一个code
+     * @param level
+     * @param code
+     * @return
+     */
+    @RequestMapping(value = "/code", method = RequestMethod.GET)
+    @RequiresRoles(value = {Role.SYSTEM})
+    public ResultEntry selectNextCode(@RequestParam(value = "level", required = false) Integer level,
+                                      @RequestParam(value = "code", required = false) String code) {
+        SuperContent superContent = superContentService.getNextCode(level, code);
+        return ResultUtil.success(Message.SELECT_SUCCESS, superContent);
+    }
 
 }

@@ -26,4 +26,6 @@ public interface SuperContentMapper {
      * @return
      */
     IPage<SuperContent> selectPage(Page<SuperContent> page, @Param("query") SuperContentQuery query);
+
+    String selectNextCode(@Param("level") String level, @Param("code") String code);
 }

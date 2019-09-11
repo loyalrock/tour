@@ -28,4 +28,12 @@
     <id column="STATUS" property="status" jdbcType="CHAR"></id>
   </resultMap>
 
+  <select id="selectNextCode" resultType="String">
+    select SUPER_P_NO from SC01 where SUPER_P_LEVEL = #{level,jdbcType=VARCHAR}
+    <if test="code != null and code.trim() != ''">
+      and SUPER_P_NO like concat('', #{code,jdbcType=VARCHAR}, '%')
+    </if>
+    order by SUPER_P_NO desc limit 1
+  </select>
+
 </mapper>

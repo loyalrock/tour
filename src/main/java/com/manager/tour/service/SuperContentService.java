@@ -21,4 +21,12 @@ public interface SuperContentService {
 
     int update(SuperContent superContent);
 
+    /**
+     * 查询下一个新增的code
+     * @param level 0 同级  1下级
+     * @param code 当前code
+     * @return
+     */
+    SuperContent getNextCode(Integer level, String code);
+
 }
