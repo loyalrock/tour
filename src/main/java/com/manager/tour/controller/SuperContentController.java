@@ -11,6 +11,7 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -21,6 +22,13 @@ public class SuperContentController {
 
     @Autowired
     private SuperContentService superContentService;
+
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
+    @RequiresRoles(value = {Role.SYSTEM})
+    public ResultEntry selectPage(@RequestParam("file") MultipartFile file) {
+        // 文件
+        return ResultUtil.success(Message.SELECT_SUCCESS);
+    }
 
     /**
      * 分页查询
