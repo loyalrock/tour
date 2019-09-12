@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -58,6 +59,10 @@ public class SuperContentServiceImpl implements SuperContentService{
             // 计算长度 除以三 + level是否下一级
             String queryLevel = String.valueOf(code.replace("QJ", "").length() / 3 + level);
             String nextCode = superContentMapper.selectNextCode(queryLevel, level == 0 ? null : code);
+            if (nextCode == null) {
+                // 下一级开始
+                nextCode = code + "000";
+            }
             // 取末尾数字
             String end = String.valueOf(Integer.parseInt(nextCode.substring(nextCode.length() - 3)) + 1);
             // 替换末尾的数字
@@ -68,6 +73,11 @@ public class SuperContentServiceImpl implements SuperContentService{
         }
 
         return superContent;
+    }
+
+    @Override
+    public List<SuperContent> selectLevel(String level, String code) {
+        return superContentMapper.selectLevel(level, code);
     }
 
     /**

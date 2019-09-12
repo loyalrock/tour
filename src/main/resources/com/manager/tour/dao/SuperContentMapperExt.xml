@@ -14,7 +14,22 @@
       <if test="query.status != null and query.status.trim() != ''">
         and STATUS = #{query.status,jdbcType=VARCHAR}
       </if>
+      <if test="superPLevel != null and superPLevel.trim() != ''">
+        and SUPER_P_LEVEL = #{superPLevel,jdbcType=VARCHAR}
+      </if>
     </if>
+    order by SUPER_P_NO
+  </select>
+
+  <select id="selectLevel" resultMap="PageResultMap">
+    select SC01_ID, SUPER_P_NO, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE,
+    STATUS from SC01 where DELETE_FLAG = '0'
+      <if test="code != null and code.trim() != ''">
+        and SUPER_P_NO like concat('', #{code,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="level != null and level.trim() != ''">
+        and SUPER_P_LEVEL = #{level,jdbcType=VARCHAR}
+      </if>
     order by SUPER_P_NO
   </select>
 

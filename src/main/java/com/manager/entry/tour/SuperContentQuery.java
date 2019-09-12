@@ -11,6 +11,16 @@ public class SuperContentQuery {
 
     private String status;
 
+    private String superPLevel;
+
+    public String getSuperPLevel() {
+        return superPLevel;
+    }
+
+    public void setSuperPLevel(String superPLevel) {
+        this.superPLevel = superPLevel;
+    }
+
     public String getSuperPNo() {
         return superPNo;
     }

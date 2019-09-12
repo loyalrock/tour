@@ -6,6 +6,8 @@ import com.manager.entry.tour.SuperContent;
 import com.manager.entry.tour.SuperContentQuery;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface SuperContentMapper {
     int deleteByPrimaryKey(String sc01Id);
 
@@ -28,4 +30,6 @@ public interface SuperContentMapper {
     IPage<SuperContent> selectPage(Page<SuperContent> page, @Param("query") SuperContentQuery query);
 
     String selectNextCode(@Param("level") String level, @Param("code") String code);
+
+    List<SuperContent> selectLevel(@Param("level") String level, @Param("code") String code);
 }

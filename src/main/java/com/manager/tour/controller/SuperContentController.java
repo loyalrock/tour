@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.logging.Level;
+
 @RestController
 @RequestMapping("/content")
 public class SuperContentController {
@@ -80,6 +83,14 @@ public class SuperContentController {
                                       @RequestParam(value = "code", required = false) String code) {
         SuperContent superContent = superContentService.getNextCode(level, code);
         return ResultUtil.success(Message.SELECT_SUCCESS, superContent);
+    }
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequiresRoles(value = {Role.SYSTEM})
+    public ResultEntry selectByLevel (@RequestParam(defaultValue = "1", value = "level") String level,
+                                      @RequestParam(value = "code", required = false) String code) {
+        List<SuperContent> superContents = superContentService.selectLevel(level, code);
+        return ResultUtil.success(Message.SELECT_SUCCESS, superContents);
     }
 
 }

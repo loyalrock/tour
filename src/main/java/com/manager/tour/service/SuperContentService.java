@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.tour.SuperContent;
 import com.manager.entry.tour.SuperContentQuery;
 
+import java.util.List;
+
 public interface SuperContentService {
 
     /**
@@ -28,5 +30,7 @@ public interface SuperContentService {
      * @return
      */
     SuperContent getNextCode(Integer level, String code);
+
+    List<SuperContent> selectLevel(String level, String code);
 
 }
