@@ -2,6 +2,9 @@ package com.manager.entry.tour;
 
 import java.util.Date;
 
+/**
+ * 项目任务表
+ */
 public class ProjectJob {
     private String sc02Id;
 

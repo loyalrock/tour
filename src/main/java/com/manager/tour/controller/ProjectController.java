@@ -15,6 +15,9 @@ import java.util.List;
 
 /**
  * 项目
+ * 1.列表查询（项目名称） 修改 删除 新增
+ * 2.暂停、恢复项目
+ * 3.维护创建内容
  * @author zhongyan
  */
 @RestController

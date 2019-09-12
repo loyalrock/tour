@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manager.tour.dao.ProjectJobMapper" >
+  <update id="deleteAll">
+    UPDATE SC02 set DELETE_FLAG = '1' where SC02_ID
+    <foreach collection="ids" open="in (" close=")" separator="," index="id">
+      #{id,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+
+  <update id="deleteOne" parameterType="String">
+    UPDATE SC02 set DELETE_FLAG = '1' where SC02_ID = #{sc02Id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateStatus">
+    UPDATE SC02 set STATUS = #{query.status} where SC02_ID = #{sc02Id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectPage" resultMap="BaseResultMap">
+    select SC02_ID, PROJECT_NO, PROJECT_NAME, STATUS where DELETE_FLAG = '0'
+    <if test="query != null">
+      <if test="query.projectName != null and query.projectName.trim() != ''">
+        and PROJECT_NAME like concat('%', #{query.projectName,jdbcType=VARCHAR}, '%')
+      </if>
+    </if>
+    order by PROJECT_NO
+  </select>
+</mapper>
