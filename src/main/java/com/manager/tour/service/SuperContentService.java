@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.tour.SuperContent;
 import com.manager.entry.tour.SuperContentQuery;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface SuperContentService {
@@ -32,5 +34,9 @@ public interface SuperContentService {
     SuperContent getNextCode(Integer level, String code);
 
     List<SuperContent> selectLevel(String level, String code);
+
+    int importFile(MultipartFile file, HttpServletResponse response);
+
+    int updateAllStatus(List<String> ids, String status);
 
 }

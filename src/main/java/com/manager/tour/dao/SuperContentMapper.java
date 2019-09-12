@@ -32,4 +32,8 @@ public interface SuperContentMapper {
     String selectNextCode(@Param("level") String level, @Param("code") String code);
 
     List<SuperContent> selectLevel(@Param("level") String level, @Param("code") String code);
+
+    int insertAll(@Param("query") List<Object> list);
+
+    int updateAllStatus(@Param("ids") List<String> ids, String status);
 }

@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -25,8 +26,9 @@ public class SuperContentController {
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     @RequiresRoles(value = {Role.SYSTEM})
-    public ResultEntry selectPage(@RequestParam("file") MultipartFile file) {
+    public ResultEntry selectPage(@RequestParam("file") MultipartFile file, HttpServletResponse response) {
         // 文件
+        superContentService.importFile(file, response);
         return ResultUtil.success(Message.SELECT_SUCCESS);
     }
 
@@ -99,6 +101,13 @@ public class SuperContentController {
                                       @RequestParam(value = "code", required = false) String code) {
         List<SuperContent> superContents = superContentService.selectLevel(level, code);
         return ResultUtil.success(Message.SELECT_SUCCESS, superContents);
+    }
+
+    @RequestMapping(value = "/status/update/all", method = RequestMethod.POST)
+    @RequiresRoles(value = {Role.SYSTEM})
+    public ResultEntry updateAllStatus (@Validated(value = {UpdateStatusGroup.class}) @RequestBody SuperContent superContent) {
+        int count = superContentService.updateAllStatus(superContent.getSc01Ids(), superContent.getStatus());
+        return ResultUtil.success(Message.UPDATE_SUCCESS);
     }
 
 }

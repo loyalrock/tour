@@ -4,16 +4,22 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.manager.entry.common.CommonEntry;
 import com.manager.util.InsertGroup;
 import com.manager.util.UpdateGroup;
+import com.manager.util.UpdateStatusGroup;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
+import java.util.List;
 
 public class SuperContent extends CommonEntry {
     @NotBlank(message = "缺失主键", groups = {UpdateGroup.class})
     private String sc01Id;
+
+    @NotEmpty(message = "修改主键缺失", groups = {UpdateStatusGroup.class})
+    private List<String> sc01Ids;
 
     @NotBlank(message = "缺失编号", groups = {InsertGroup.class, UpdateGroup.class})
     private String superPNo;
@@ -57,6 +63,14 @@ public class SuperContent extends CommonEntry {
         this.ifAdd = ifAdd;
         this.enableTime = enableTime;
         this.deactiTime = deactiTime;
+    }
+
+    public List<String> getSc01Ids() {
+        return sc01Ids;
+    }
+
+    public void setSc01Ids(List<String> sc01Ids) {
+        this.sc01Ids = sc01Ids;
     }
 
     public SuperContent() {

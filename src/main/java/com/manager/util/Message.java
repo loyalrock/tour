@@ -27,6 +27,8 @@ public enum Message {
     SELECT_FAILED("1007", "查询失败"),
 
 
+
+    CONTENT_IMPORT_ERROR("2002", "内容维护导入信息有误"),
     CONTENT_TIME_ERROR("2001", "启用时间不能大于停用时间");
 
     private String code;

@@ -14,9 +14,6 @@
       <if test="query.status != null and query.status.trim() != ''">
         and STATUS = #{query.status,jdbcType=VARCHAR}
       </if>
-      <if test="superPLevel != null and superPLevel.trim() != ''">
-        and SUPER_P_LEVEL = #{superPLevel,jdbcType=VARCHAR}
-      </if>
     </if>
     order by SUPER_P_NO
   </select>
@@ -50,5 +47,27 @@
     </if>
     order by SUPER_P_NO desc limit 1
   </select>
+
+  <insert id="insertAll" parameterType="List">
+    insert into SC01 (SC01_ID, SUPER_P_NO, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE,
+    IF_ADD, ENABLE_TIME, DEACTI_TIME, STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER,
+    UPDATE_TIME, DELETE_FLAG) value
+    <foreach collection="query" item="item" separator=",">
+      (#{item.sc01Id,jdbcType=VARCHAR}, #{item.superPNo,jdbcType=VARCHAR}, #{item.superPLevel,jdbcType=VARCHAR},
+      #{item.sysNo,jdbcType=VARCHAR}, #{item.superPCheck,jdbcType=VARCHAR}, #{item.superPExp,jdbcType=VARCHAR},
+      #{item.superPScore,jdbcType=VARCHAR}, #{item.ifAdd,jdbcType=CHAR}, #{item.enableTime,jdbcType=DATE},
+      #{item.deactiTime,jdbcType=DATE}, #{item.status,jdbcType=CHAR}, #{item.createUser,jdbcType=VARCHAR},
+      #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP},
+      #{item.deleteFlag,jdbcType=CHAR})
+    </foreach>
+  </insert>
+
+  <update id="updateAllStatus" parameterType="com.manager.entry.tour.SuperContentQuery">
+    UPDATE SC01 SET STATUS = #{status,jdbcType=VARCHAR}
+    where SC01_ID
+    <foreach collection="ids" separator="," open="in(" close=")" item="id">
+      #{id,jdbcType=VARCHAR}
+    </foreach>
+  </update>
 
 </mapper>

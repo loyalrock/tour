@@ -5,13 +5,20 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.common.CommonException;
 import com.manager.entry.common.UserUtil;
 import com.manager.entry.tour.SuperContent;
+import com.manager.entry.tour.SuperContentExcel;
 import com.manager.entry.tour.SuperContentQuery;
 import com.manager.tour.dao.SuperContentMapper;
+import com.manager.util.Delete;
 import com.manager.util.Message;
+import com.manager.util.excel.ExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -26,6 +33,11 @@ public class SuperContentServiceImpl implements SuperContentService{
     @Override
     public IPage<SuperContent> selectPage(Page<SuperContent> page, SuperContentQuery query) {
         return superContentMapper.selectPage(page, query);
+    }
+
+    @Override
+    public int updateAllStatus(List<String> ids, String status) {
+        return superContentMapper.updateAllStatus(ids, status);
     }
 
     @Override
@@ -47,6 +59,51 @@ public class SuperContentServiceImpl implements SuperContentService{
         UserUtil.updateData(superContent);
         return superContentMapper.updateByPrimaryKeySelective(superContent);
     }
+
+    @Override
+    public int importFile(MultipartFile file, HttpServletResponse response) {
+
+        List<Object> items = ExcelUtil.readExcel(file, new SuperContentExcel(), 1, 1);
+        List<SuperContentExcel> errorItems = new ArrayList<>();
+
+        boolean canInsert = true;
+        int length = items != null ? items.size() : 0;
+
+        for (int i = 0; i < length; i++) {
+
+            StringBuffer errorBuffer = new StringBuffer();
+
+            SuperContentExcel superContentExcel = (SuperContentExcel)items.get(i);
+
+            Date start = superContentExcel.getEnableTime();
+            Date end = superContentExcel.getDeactiTime();
+            if (start == null) {
+                canInsert = false;
+                errorBuffer.append("启用时间不能为空；");
+            }
+            if (end != null && start != null && start.getTime() > end.getTime()) {
+                canInsert = false;
+                errorBuffer.append("启用时间不能早于启用时间；");
+            }
+            String status = superContentExcel.getStatus();
+            if (status == null || "".equals(status.trim())) {
+                superContentExcel.setStatus(Delete.UN_DELETE);
+            }
+            if (errorBuffer.length() > 0) {
+                superContentExcel.setErrorMsg(errorBuffer.toString());
+            }
+            errorItems.add(superContentExcel);
+        }
+
+        if (!canInsert) {
+            // 不能新增 返回
+            ExcelUtil.writeExcel(response, errorItems, "错误提示", "sheet-1", new SuperContentExcel());
+            throw new CommonException(Message.CONTENT_IMPORT_ERROR);
+        }
+
+        return superContentMapper.insertAll(items);
+    }
+
 
     @Override
     public SuperContent getNextCode(Integer level, String code) {
