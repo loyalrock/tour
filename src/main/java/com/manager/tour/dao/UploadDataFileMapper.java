@@ -1,6 +1,8 @@
 package com.manager.tour.dao;
 
 import com.manager.entry.tour.UploadDataFile;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 public interface UploadDataFileMapper {
     int deleteByPrimaryKey(String sfj01Id);
@@ -14,4 +16,7 @@ public interface UploadDataFileMapper {
     int updateByPrimaryKeySelective(UploadDataFile record);
 
     int updateByPrimaryKey(UploadDataFile record);
+
+    @Select("select count(*) from SFJ01 where APP_SOURCE = #{appSource}")
+    int selectCount(@Param("appSource") String appSource);
 }

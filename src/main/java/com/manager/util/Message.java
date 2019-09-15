@@ -13,6 +13,9 @@ public enum Message {
     NO_PERMISSIONS("9005", "没有权限，请联系全域管理员"),
     EXIST_USER("9006", "用户已存在"),
     LOGIN_SUCCESS("1000", "登陆成功"),
+    CODE_UN_UNIQUE("9007", "编号不唯一"),
+    FILE_IS_EMPTY("9008", "文件大小为0"),
+    FILE_SAVE_FAILED("9009", "文件保存失败"),
 
 
 
@@ -29,7 +32,8 @@ public enum Message {
 
 
     CONTENT_IMPORT_ERROR("2002", "内容维护导入信息有误"),
-    CONTENT_TIME_ERROR("2001", "启用时间不能大于停用时间");
+
+    ;
 
     private String code;
 

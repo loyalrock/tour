@@ -33,5 +33,15 @@ public interface ProjectJobMapper {
 
     int updateStatus(@Param("query") ProjectJobQuery query);
 
-    IPage<ProjectJob> selectPage(Page<ProjectJob> page, ProjectJobQuery query);
+    IPage<ProjectJob> selectPage(Page<ProjectJob> page,@Param("query") ProjectJobQuery query);
+
+    @Select("select count(*) from SC02 where PROJECT_NO = #{code}")
+    int checkCodeUnion(@Param("code") String code);
+
+    int updateByProjectNo(ProjectJob projectJob);
+
+    @Select("SELECT COUNT(*) from SC02")
+    int selectCount();
+
+    ProjectJob selectDetail(@Param("sc02Id") String sc02Id);
 }

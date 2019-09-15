@@ -1,21 +1,31 @@
 package com.manager.entry.tour;
 
+import com.manager.entry.common.CommonEntry;
+import com.manager.util.InsertGroup;
+
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 项目任务表
  */
-public class ProjectJob {
+public class ProjectJob extends CommonEntry {
     private String sc02Id;
 
+    @NotBlank(message = "编号缺失", groups = {InsertGroup.class})
     private String projectNo;
 
+    @NotBlank(message = "项目名称缺失", groups = {InsertGroup.class})
     private String projectName;
 
+    @NotBlank(message = "项目简称缺失", groups = {InsertGroup.class})
     private String projectNameJ;
 
+    @NotBlank(message = "地理位置（经度）缺失", groups = {InsertGroup.class})
     private Integer projectLong;
 
+    @NotBlank(message = "地理位置（纬度）缺失", groups = {InsertGroup.class})
     private Integer projectLat;
 
     private String indexPic;
@@ -36,8 +46,6 @@ public class ProjectJob {
 
     private String opUnit;
 
-    private String status;
-
     private String showNo;
 
     private String ifFile;
@@ -54,17 +62,58 @@ public class ProjectJob {
 
     private Date deactiTime;
 
-    private String createUser;
+    private List<UploadDataFile> uploadDataFiles;
 
-    private Date createTime;
+    private List<ImageShow> imageShows;
 
-    private String updateUser;
+    private List<DocumentShow> documentShows;
 
-    private Date updateTime;
+    private List<LineShow> lineShows;
 
-    private String deleteFlag;
+    private List<RegionShow> regionShows;
+
+    public List<UploadDataFile> getUploadDataFiles() {
+        return uploadDataFiles;
+    }
+
+    public void setUploadDataFiles(List<UploadDataFile> uploadDataFiles) {
+        this.uploadDataFiles = uploadDataFiles;
+    }
+
+    public List<ImageShow> getImageShows() {
+        return imageShows;
+    }
+
+    public void setImageShows(List<ImageShow> imageShows) {
+        this.imageShows = imageShows;
+    }
+
+    public List<DocumentShow> getDocumentShows() {
+        return documentShows;
+    }
+
+    public void setDocumentShows(List<DocumentShow> documentShows) {
+        this.documentShows = documentShows;
+    }
+
+    public List<LineShow> getLineShows() {
+        return lineShows;
+    }
+
+    public void setLineShows(List<LineShow> lineShows) {
+        this.lineShows = lineShows;
+    }
+
+    public List<RegionShow> getRegionShows() {
+        return regionShows;
+    }
+
+    public void setRegionShows(List<RegionShow> regionShows) {
+        this.regionShows = regionShows;
+    }
 
     public ProjectJob(String sc02Id, String projectNo, String projectName, String projectNameJ, Integer projectLong, Integer projectLat, String indexPic, String superPNo, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPCont, Integer superPScore, String opUnit, String status, String showNo, String ifFile, String ifPic, String ifLine, String ifDist, Integer score, Date enableTime, Date deactiTime, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+        super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
         this.sc02Id = sc02Id;
         this.projectNo = projectNo;
         this.projectName = projectName;
@@ -80,7 +129,6 @@ public class ProjectJob {
         this.superPCont = superPCont;
         this.superPScore = superPScore;
         this.opUnit = opUnit;
-        this.status = status;
         this.showNo = showNo;
         this.ifFile = ifFile;
         this.ifPic = ifPic;
@@ -89,11 +137,6 @@ public class ProjectJob {
         this.score = score;
         this.enableTime = enableTime;
         this.deactiTime = deactiTime;
-        this.createUser = createUser;
-        this.createTime = createTime;
-        this.updateUser = updateUser;
-        this.updateTime = updateTime;
-        this.deleteFlag = deleteFlag;
     }
 
     public ProjectJob() {
@@ -220,14 +263,6 @@ public class ProjectJob {
         this.opUnit = opUnit == null ? null : opUnit.trim();
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
     public String getShowNo() {
         return showNo;
     }
@@ -290,45 +325,5 @@ public class ProjectJob {
 
     public void setDeactiTime(Date deactiTime) {
         this.deactiTime = deactiTime;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser == null ? null : createUser.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser == null ? null : updateUser.trim();
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(String deleteFlag) {
-        this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
     }
 }

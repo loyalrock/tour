@@ -1,166 +1,201 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.manager.tour.dao.LineShowMapper" >
-  <resultMap id="BaseResultMap" type="com.manager.entry.tour.LineShow" >
-    <constructor >
-      <idArg column="SC0202_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="PIC_SOURCE" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="PIC_NUM" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="PIC_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="APP_URL" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="STATUS" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="CREATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="UPDATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="UPDATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="DELETE_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.tour.dao.LineShowMapper">
+  <resultMap id="BaseResultMap" type="com.manager.entry.tour.LineShow">
+    <constructor>
+      <idArg column="SC0203_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="LINE_SOURCE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="LINE_NUM" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="LINE_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="LINE_START_LONG" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="LINE_START_LAT" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="LINE_END_LONG" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="LINE_END_LAT" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="STATUS" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="CREATE_USER" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="UPDATE_USER" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="UPDATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="DELETE_FLAG" javaType="java.lang.String" jdbcType="CHAR" />
     </constructor>
   </resultMap>
-  <sql id="Base_Column_List" >
-    SC0202_ID, PIC_SOURCE, PIC_NUM, PIC_NAME, APP_URL, STATUS, CREATE_USER, CREATE_TIME, 
-    UPDATE_USER, UPDATE_TIME, DELETE_FLAG
+  <sql id="Base_Column_List">
+    SC0203_ID, LINE_SOURCE, LINE_NUM, LINE_NAME, LINE_START_LONG, LINE_START_LAT, LINE_END_LONG,
+    LINE_END_LAT, STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
-    from SC0202
-    where SC0202_ID = #{sc0202Id,jdbcType=VARCHAR}
+    from SC0203
+    where SC0203_ID = #{sc0203Id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from SC0202
-    where SC0202_ID = #{sc0202Id,jdbcType=VARCHAR}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SC0203
+    where SC0203_ID = #{sc0203Id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.manager.entry.tour.LineShow" >
-    insert into SC0202 (SC0202_ID, PIC_SOURCE, PIC_NUM, 
-      PIC_NAME, APP_URL, STATUS, 
-      CREATE_USER, CREATE_TIME, UPDATE_USER, 
+  <insert id="insert" parameterType="com.manager.entry.tour.LineShow">
+    insert into SC0203 (SC0203_ID, LINE_SOURCE, LINE_NUM,
+      LINE_NAME, LINE_START_LONG, LINE_START_LAT,
+      LINE_END_LONG, LINE_END_LAT, STATUS,
+      CREATE_USER, CREATE_TIME, UPDATE_USER,
       UPDATE_TIME, DELETE_FLAG)
-    values (#{sc0202Id,jdbcType=VARCHAR}, #{picSource,jdbcType=VARCHAR}, #{picNum,jdbcType=VARCHAR}, 
-      #{picName,jdbcType=VARCHAR}, #{appUrl,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
-      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+    values (#{sc0203Id,jdbcType=VARCHAR}, #{lineSource,jdbcType=VARCHAR}, #{lineNum,jdbcType=VARCHAR},
+      #{lineName,jdbcType=VARCHAR}, #{lineStartLong,jdbcType=INTEGER}, #{lineStartLat,jdbcType=INTEGER},
+      #{lineEndLong,jdbcType=INTEGER}, #{lineEndLat,jdbcType=INTEGER}, #{status,jdbcType=CHAR},
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.manager.entry.tour.LineShow" >
-    insert into SC0202
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="sc0202Id != null" >
-        SC0202_ID,
+  <insert id="insertSelective" parameterType="com.manager.entry.tour.LineShow">
+    insert into SC0203
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sc0203Id != null">
+        SC0203_ID,
       </if>
-      <if test="picSource != null" >
-        PIC_SOURCE,
+      <if test="lineSource != null">
+        LINE_SOURCE,
       </if>
-      <if test="picNum != null" >
-        PIC_NUM,
+      <if test="lineNum != null">
+        LINE_NUM,
       </if>
-      <if test="picName != null" >
-        PIC_NAME,
+      <if test="lineName != null">
+        LINE_NAME,
       </if>
-      <if test="appUrl != null" >
-        APP_URL,
+      <if test="lineStartLong != null">
+        LINE_START_LONG,
       </if>
-      <if test="status != null" >
+      <if test="lineStartLat != null">
+        LINE_START_LAT,
+      </if>
+      <if test="lineEndLong != null">
+        LINE_END_LONG,
+      </if>
+      <if test="lineEndLat != null">
+        LINE_END_LAT,
+      </if>
+      <if test="status != null">
         STATUS,
       </if>
-      <if test="createUser != null" >
+      <if test="createUser != null">
         CREATE_USER,
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         CREATE_TIME,
       </if>
-      <if test="updateUser != null" >
+      <if test="updateUser != null">
         UPDATE_USER,
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         UPDATE_TIME,
       </if>
-      <if test="deleteFlag != null" >
+      <if test="deleteFlag != null">
         DELETE_FLAG,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="sc0202Id != null" >
-        #{sc0202Id,jdbcType=VARCHAR},
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sc0203Id != null">
+        #{sc0203Id,jdbcType=VARCHAR},
       </if>
-      <if test="picSource != null" >
-        #{picSource,jdbcType=VARCHAR},
+      <if test="lineSource != null">
+        #{lineSource,jdbcType=VARCHAR},
       </if>
-      <if test="picNum != null" >
-        #{picNum,jdbcType=VARCHAR},
+      <if test="lineNum != null">
+        #{lineNum,jdbcType=VARCHAR},
       </if>
-      <if test="picName != null" >
-        #{picName,jdbcType=VARCHAR},
+      <if test="lineName != null">
+        #{lineName,jdbcType=VARCHAR},
       </if>
-      <if test="appUrl != null" >
-        #{appUrl,jdbcType=VARCHAR},
+      <if test="lineStartLong != null">
+        #{lineStartLong,jdbcType=INTEGER},
       </if>
-      <if test="status != null" >
+      <if test="lineStartLat != null">
+        #{lineStartLat,jdbcType=INTEGER},
+      </if>
+      <if test="lineEndLong != null">
+        #{lineEndLong,jdbcType=INTEGER},
+      </if>
+      <if test="lineEndLat != null">
+        #{lineEndLat,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
         #{status,jdbcType=CHAR},
       </if>
-      <if test="createUser != null" >
+      <if test="createUser != null">
         #{createUser,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateUser != null" >
+      <if test="updateUser != null">
         #{updateUser,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="deleteFlag != null" >
+      <if test="deleteFlag != null">
         #{deleteFlag,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.tour.LineShow" >
-    update SC0202
-    <set >
-      <if test="picSource != null" >
-        PIC_SOURCE = #{picSource,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.tour.LineShow">
+    update SC0203
+    <set>
+      <if test="lineSource != null">
+        LINE_SOURCE = #{lineSource,jdbcType=VARCHAR},
       </if>
-      <if test="picNum != null" >
-        PIC_NUM = #{picNum,jdbcType=VARCHAR},
+      <if test="lineNum != null">
+        LINE_NUM = #{lineNum,jdbcType=VARCHAR},
       </if>
-      <if test="picName != null" >
-        PIC_NAME = #{picName,jdbcType=VARCHAR},
+      <if test="lineName != null">
+        LINE_NAME = #{lineName,jdbcType=VARCHAR},
       </if>
-      <if test="appUrl != null" >
-        APP_URL = #{appUrl,jdbcType=VARCHAR},
+      <if test="lineStartLong != null">
+        LINE_START_LONG = #{lineStartLong,jdbcType=INTEGER},
       </if>
-      <if test="status != null" >
+      <if test="lineStartLat != null">
+        LINE_START_LAT = #{lineStartLat,jdbcType=INTEGER},
+      </if>
+      <if test="lineEndLong != null">
+        LINE_END_LONG = #{lineEndLong,jdbcType=INTEGER},
+      </if>
+      <if test="lineEndLat != null">
+        LINE_END_LAT = #{lineEndLat,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
         STATUS = #{status,jdbcType=CHAR},
       </if>
-      <if test="createUser != null" >
+      <if test="createUser != null">
         CREATE_USER = #{createUser,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateUser != null" >
+      <if test="updateUser != null">
         UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="deleteFlag != null" >
+      <if test="deleteFlag != null">
         DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
       </if>
     </set>
-    where SC0202_ID = #{sc0202Id,jdbcType=VARCHAR}
+    where SC0203_ID = #{sc0203Id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.manager.entry.tour.LineShow" >
-    update SC0202
-    set PIC_SOURCE = #{picSource,jdbcType=VARCHAR},
-      PIC_NUM = #{picNum,jdbcType=VARCHAR},
-      PIC_NAME = #{picName,jdbcType=VARCHAR},
-      APP_URL = #{appUrl,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.manager.entry.tour.LineShow">
+    update SC0203
+    set LINE_SOURCE = #{lineSource,jdbcType=VARCHAR},
+      LINE_NUM = #{lineNum,jdbcType=VARCHAR},
+      LINE_NAME = #{lineName,jdbcType=VARCHAR},
+      LINE_START_LONG = #{lineStartLong,jdbcType=INTEGER},
+      LINE_START_LAT = #{lineStartLat,jdbcType=INTEGER},
+      LINE_END_LONG = #{lineEndLong,jdbcType=INTEGER},
+      LINE_END_LAT = #{lineEndLat,jdbcType=INTEGER},
       STATUS = #{status,jdbcType=CHAR},
       CREATE_USER = #{createUser,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
-    where SC0202_ID = #{sc0202Id,jdbcType=VARCHAR}
+    where SC0203_ID = #{sc0203Id,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -3,15 +3,21 @@ package com.manager.entry.tour;
 import java.util.Date;
 
 public class LineShow {
-    private String sc0202Id;
+    private String sc0203Id;
 
-    private String picSource;
+    private String lineSource;
 
-    private String picNum;
+    private String lineNum;
 
-    private String picName;
+    private String lineName;
 
-    private String appUrl;
+    private Integer lineStartLong;
+
+    private Integer lineStartLat;
+
+    private Integer lineEndLong;
+
+    private Integer lineEndLat;
 
     private String status;
 
@@ -25,12 +31,15 @@ public class LineShow {
 
     private String deleteFlag;
 
-    public LineShow(String sc0202Id, String picSource, String picNum, String picName, String appUrl, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
-        this.sc0202Id = sc0202Id;
-        this.picSource = picSource;
-        this.picNum = picNum;
-        this.picName = picName;
-        this.appUrl = appUrl;
+    public LineShow(String sc0203Id, String lineSource, String lineNum, String lineName, Integer lineStartLong, Integer lineStartLat, Integer lineEndLong, Integer lineEndLat, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+        this.sc0203Id = sc0203Id;
+        this.lineSource = lineSource;
+        this.lineNum = lineNum;
+        this.lineName = lineName;
+        this.lineStartLong = lineStartLong;
+        this.lineStartLat = lineStartLat;
+        this.lineEndLong = lineEndLong;
+        this.lineEndLat = lineEndLat;
         this.status = status;
         this.createUser = createUser;
         this.createTime = createTime;
@@ -43,44 +52,68 @@ public class LineShow {
         super();
     }
 
-    public String getSc0202Id() {
-        return sc0202Id;
+    public String getSc0203Id() {
+        return sc0203Id;
     }
 
-    public void setSc0202Id(String sc0202Id) {
-        this.sc0202Id = sc0202Id == null ? null : sc0202Id.trim();
+    public void setSc0203Id(String sc0203Id) {
+        this.sc0203Id = sc0203Id == null ? null : sc0203Id.trim();
     }
 
-    public String getPicSource() {
-        return picSource;
+    public String getLineSource() {
+        return lineSource;
     }
 
-    public void setPicSource(String picSource) {
-        this.picSource = picSource == null ? null : picSource.trim();
+    public void setLineSource(String lineSource) {
+        this.lineSource = lineSource == null ? null : lineSource.trim();
     }
 
-    public String getPicNum() {
-        return picNum;
+    public String getLineNum() {
+        return lineNum;
     }
 
-    public void setPicNum(String picNum) {
-        this.picNum = picNum == null ? null : picNum.trim();
+    public void setLineNum(String lineNum) {
+        this.lineNum = lineNum == null ? null : lineNum.trim();
     }
 
-    public String getPicName() {
-        return picName;
+    public String getLineName() {
+        return lineName;
     }
 
-    public void setPicName(String picName) {
-        this.picName = picName == null ? null : picName.trim();
+    public void setLineName(String lineName) {
+        this.lineName = lineName == null ? null : lineName.trim();
     }
 
-    public String getAppUrl() {
-        return appUrl;
+    public Integer getLineStartLong() {
+        return lineStartLong;
     }
 
-    public void setAppUrl(String appUrl) {
-        this.appUrl = appUrl == null ? null : appUrl.trim();
+    public void setLineStartLong(Integer lineStartLong) {
+        this.lineStartLong = lineStartLong;
+    }
+
+    public Integer getLineStartLat() {
+        return lineStartLat;
+    }
+
+    public void setLineStartLat(Integer lineStartLat) {
+        this.lineStartLat = lineStartLat;
+    }
+
+    public Integer getLineEndLong() {
+        return lineEndLong;
+    }
+
+    public void setLineEndLong(Integer lineEndLong) {
+        this.lineEndLong = lineEndLong;
+    }
+
+    public Integer getLineEndLat() {
+        return lineEndLat;
+    }
+
+    public void setLineEndLat(Integer lineEndLat) {
+        this.lineEndLat = lineEndLat;
     }
 
     public String getStatus() {

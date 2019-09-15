@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manager.tour.dao.RegionShowMapper" >
+  <resultMap id="BaseResultMap" type="com.manager.entry.tour.RegionShow" >
+    <constructor >
+      <idArg column="SC0204_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DIST_SOURCE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DIST_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DIST_CLASS" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DIST_SEC_CALSS" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DIST_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DIST_START_LONG" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="DIST_START_LAT" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="DIST_ADRES" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DIST_PIC_URL" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="DIST_TEL" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DIST_EXP" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="STATUS" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CREATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="UPDATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="UPDATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="DELETE_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SC0204_ID, DIST_SOURCE, DIST_NO, DIST_CLASS, DIST_SEC_CALSS, DIST_NAME, DIST_START_LONG, 
+    DIST_START_LAT, DIST_ADRES, DIST_PIC_URL, DIST_TEL, DIST_EXP, STATUS, CREATE_USER, 
+    CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SC0204
+    where SC0204_ID = #{sc0204Id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SC0204
+    where SC0204_ID = #{sc0204Id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.manager.entry.tour.RegionShow" >
+    insert into SC0204 (SC0204_ID, DIST_SOURCE, DIST_NO, 
+      DIST_CLASS, DIST_SEC_CALSS, DIST_NAME, 
+      DIST_START_LONG, DIST_START_LAT, DIST_ADRES, 
+      DIST_PIC_URL, DIST_TEL, DIST_EXP, 
+      STATUS, CREATE_USER, CREATE_TIME, 
+      UPDATE_USER, UPDATE_TIME, DELETE_FLAG
+      )
+    values (#{sc0204Id,jdbcType=VARCHAR}, #{distSource,jdbcType=VARCHAR}, #{distNo,jdbcType=VARCHAR}, 
+      #{distClass,jdbcType=VARCHAR}, #{distSecCalss,jdbcType=VARCHAR}, #{distName,jdbcType=VARCHAR}, 
+      #{distStartLong,jdbcType=INTEGER}, #{distStartLat,jdbcType=INTEGER}, #{distAdres,jdbcType=VARCHAR}, 
+      #{distPicUrl,jdbcType=CHAR}, #{distTel,jdbcType=VARCHAR}, #{distExp,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.manager.entry.tour.RegionShow" >
+    insert into SC0204
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sc0204Id != null" >
+        SC0204_ID,
+      </if>
+      <if test="distSource != null" >
+        DIST_SOURCE,
+      </if>
+      <if test="distNo != null" >
+        DIST_NO,
+      </if>
+      <if test="distClass != null" >
+        DIST_CLASS,
+      </if>
+      <if test="distSecCalss != null" >
+        DIST_SEC_CALSS,
+      </if>
+      <if test="distName != null" >
+        DIST_NAME,
+      </if>
+      <if test="distStartLong != null" >
+        DIST_START_LONG,
+      </if>
+      <if test="distStartLat != null" >
+        DIST_START_LAT,
+      </if>
+      <if test="distAdres != null" >
+        DIST_ADRES,
+      </if>
+      <if test="distPicUrl != null" >
+        DIST_PIC_URL,
+      </if>
+      <if test="distTel != null" >
+        DIST_TEL,
+      </if>
+      <if test="distExp != null" >
+        DIST_EXP,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="deleteFlag != null" >
+        DELETE_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sc0204Id != null" >
+        #{sc0204Id,jdbcType=VARCHAR},
+      </if>
+      <if test="distSource != null" >
+        #{distSource,jdbcType=VARCHAR},
+      </if>
+      <if test="distNo != null" >
+        #{distNo,jdbcType=VARCHAR},
+      </if>
+      <if test="distClass != null" >
+        #{distClass,jdbcType=VARCHAR},
+      </if>
+      <if test="distSecCalss != null" >
+        #{distSecCalss,jdbcType=VARCHAR},
+      </if>
+      <if test="distName != null" >
+        #{distName,jdbcType=VARCHAR},
+      </if>
+      <if test="distStartLong != null" >
+        #{distStartLong,jdbcType=INTEGER},
+      </if>
+      <if test="distStartLat != null" >
+        #{distStartLat,jdbcType=INTEGER},
+      </if>
+      <if test="distAdres != null" >
+        #{distAdres,jdbcType=VARCHAR},
+      </if>
+      <if test="distPicUrl != null" >
+        #{distPicUrl,jdbcType=CHAR},
+      </if>
+      <if test="distTel != null" >
+        #{distTel,jdbcType=VARCHAR},
+      </if>
+      <if test="distExp != null" >
+        #{distExp,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.tour.RegionShow" >
+    update SC0204
+    <set >
+      <if test="distSource != null" >
+        DIST_SOURCE = #{distSource,jdbcType=VARCHAR},
+      </if>
+      <if test="distNo != null" >
+        DIST_NO = #{distNo,jdbcType=VARCHAR},
+      </if>
+      <if test="distClass != null" >
+        DIST_CLASS = #{distClass,jdbcType=VARCHAR},
+      </if>
+      <if test="distSecCalss != null" >
+        DIST_SEC_CALSS = #{distSecCalss,jdbcType=VARCHAR},
+      </if>
+      <if test="distName != null" >
+        DIST_NAME = #{distName,jdbcType=VARCHAR},
+      </if>
+      <if test="distStartLong != null" >
+        DIST_START_LONG = #{distStartLong,jdbcType=INTEGER},
+      </if>
+      <if test="distStartLat != null" >
+        DIST_START_LAT = #{distStartLat,jdbcType=INTEGER},
+      </if>
+      <if test="distAdres != null" >
+        DIST_ADRES = #{distAdres,jdbcType=VARCHAR},
+      </if>
+      <if test="distPicUrl != null" >
+        DIST_PIC_URL = #{distPicUrl,jdbcType=CHAR},
+      </if>
+      <if test="distTel != null" >
+        DIST_TEL = #{distTel,jdbcType=VARCHAR},
+      </if>
+      <if test="distExp != null" >
+        DIST_EXP = #{distExp,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where SC0204_ID = #{sc0204Id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.manager.entry.tour.RegionShow" >
+    update SC0204
+    set DIST_SOURCE = #{distSource,jdbcType=VARCHAR},
+      DIST_NO = #{distNo,jdbcType=VARCHAR},
+      DIST_CLASS = #{distClass,jdbcType=VARCHAR},
+      DIST_SEC_CALSS = #{distSecCalss,jdbcType=VARCHAR},
+      DIST_NAME = #{distName,jdbcType=VARCHAR},
+      DIST_START_LONG = #{distStartLong,jdbcType=INTEGER},
+      DIST_START_LAT = #{distStartLat,jdbcType=INTEGER},
+      DIST_ADRES = #{distAdres,jdbcType=VARCHAR},
+      DIST_PIC_URL = #{distPicUrl,jdbcType=CHAR},
+      DIST_TEL = #{distTel,jdbcType=VARCHAR},
+      DIST_EXP = #{distExp,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
+    where SC0204_ID = #{sc0204Id,jdbcType=VARCHAR}
+  </update>
+</mapper>
