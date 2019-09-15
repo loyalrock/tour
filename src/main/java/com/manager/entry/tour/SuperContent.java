@@ -30,25 +30,20 @@ public class SuperContent extends CommonEntry {
     @NotBlank(message = "缺失系统序号", groups = {InsertGroup.class, UpdateGroup.class})
     private String sysNo;
 
-    @NotBlank(message = "缺失内容名称", groups = {InsertGroup.class, UpdateGroup.class})
     private String superPCheck;
 
     private String superPExp;
 
-    @NotBlank(message = "缺失分值", groups = {InsertGroup.class, UpdateGroup.class})
     private String superPScore;
 
-    @NotBlank(message = "缺失默认添加", groups = {InsertGroup.class, UpdateGroup.class})
     private String ifAdd;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
-    @NotNull(message = "缺失启用时间", groups = {InsertGroup.class, UpdateGroup.class})
     private Date enableTime;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
-    @NotNull(message = "缺失停用时间", groups = {InsertGroup.class, UpdateGroup.class})
     private Date deactiTime;
 
     public SuperContent(String sc01Id, String superPNo, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPScore, String ifAdd, Date enableTime, Date deactiTime, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {

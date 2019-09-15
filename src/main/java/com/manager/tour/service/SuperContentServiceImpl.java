@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.common.CommonException;
 import com.manager.entry.common.UserUtil;
+import com.manager.entry.system.User;
 import com.manager.entry.tour.SuperContent;
 import com.manager.entry.tour.SuperContentExcel;
 import com.manager.entry.tour.SuperContentQuery;
@@ -47,15 +48,16 @@ public class SuperContentServiceImpl implements SuperContentService{
 
     @Override
     public int add(SuperContent superContent) {
-        checkTime(superContent);
         superContent.setSc01Id(UUID.randomUUID().toString());
         UserUtil.insertData(superContent);
+        if (User.ENABLE.equals(superContent.getStatus())) {
+            superContent.setEnableTime(superContent.getCreateTime());
+        }
         return superContentMapper.insertSelective(superContent);
     }
 
     @Override
     public int update(SuperContent superContent) {
-        checkTime(superContent);
         UserUtil.updateData(superContent);
         return superContentMapper.updateByPrimaryKeySelective(superContent);
     }
@@ -75,20 +77,16 @@ public class SuperContentServiceImpl implements SuperContentService{
 
             SuperContentExcel superContentExcel = (SuperContentExcel)items.get(i);
 
-            Date start = superContentExcel.getEnableTime();
-            Date end = superContentExcel.getDeactiTime();
-            if (start == null) {
-                canInsert = false;
-                errorBuffer.append("启用时间不能为空；");
+            if (superContentExcel.getSuperPNo() == null || "".equals(superContentExcel.getSuperPNo().trim())) {
+                errorBuffer.append("内容编号缺失；");
             }
-            if (end != null && start != null && start.getTime() > end.getTime()) {
-                canInsert = false;
-                errorBuffer.append("启用时间不能早于启用时间；");
+            if (superContentExcel.getSuperPLevel() == null || "".equals(superContentExcel.getSuperPLevel().trim())) {
+                errorBuffer.append("内容层级缺失；");
             }
-            String status = superContentExcel.getStatus();
-            if (status == null || "".equals(status.trim())) {
-                superContentExcel.setStatus(Delete.UN_DELETE);
+            if (superContentExcel.getSysNo() == null || "".equals(superContentExcel.getSysNo().trim())) {
+                errorBuffer.append("系统序号缺失；");
             }
+
             if (errorBuffer.length() > 0) {
                 superContentExcel.setErrorMsg(errorBuffer.toString());
             }
@@ -155,15 +153,4 @@ public class SuperContentServiceImpl implements SuperContentService{
         return sysNoBuffer.substring(0, sysNoBuffer.length() - 1);
     }
 
-    /**
-     * 校验时间
-     * @param superContent
-     */
-    public void checkTime (SuperContent superContent) {
-        Long start = superContent.getEnableTime().getTime();
-        Long end = superContent.getDeactiTime().getTime();
-        if (start > end) {
-            throw new CommonException(Message.CONTENT_TIME_ERROR);
-        }
-    }
 }

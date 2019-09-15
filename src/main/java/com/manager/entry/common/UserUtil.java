@@ -18,10 +18,8 @@ public class UserUtil {
 
         commonEntry.setCreateTime(now);
         commonEntry.setCreateUser(currentUser.getSs01Id());
-        commonEntry.setUpdateTime(now);
-        commonEntry.setUpdateUser(currentUser.getSs01Id());
-        commonEntry.setStatus(User.ENABLE);
-        commonEntry.setDeleteFlag(Delete.UN_DELETE);
+        commonEntry.setStatus(commonEntry.getStatus() == null || "".equals(commonEntry.getStatus().trim()) ? User.ENABLE : commonEntry.getStatus());
+        commonEntry.setDeleteFlag(commonEntry.getDeleteFlag() == null || "".equals(commonEntry.getDeleteFlag().trim()) ? Delete.UN_DELETE : commonEntry.getDeleteFlag());
 
         return commonEntry;
     }
