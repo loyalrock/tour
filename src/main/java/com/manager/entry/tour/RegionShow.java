@@ -5,7 +5,7 @@ import com.manager.entry.common.CommonEntry;
 import java.util.Date;
 
 public class RegionShow extends CommonEntry {
-    private String sc0204Id;
+    private String sc020104Id;
 
     private String distSource;
 
@@ -29,9 +29,9 @@ public class RegionShow extends CommonEntry {
 
     private String distExp;
 
-    public RegionShow(String sc0204Id, String distSource, String distNo, String distClass, String distSecCalss, String distName, Integer distStartLong, Integer distStartLat, String distAdres, String distPicUrl, String distTel, String distExp, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+    public RegionShow(String sc020104Id, String distSource, String distNo, String distClass, String distSecCalss, String distName, Integer distStartLong, Integer distStartLat, String distAdres, String distPicUrl, String distTel, String distExp, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
         super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
-        this.sc0204Id = sc0204Id;
+        this.sc020104Id = sc020104Id;
         this.distSource = distSource;
         this.distNo = distNo;
         this.distClass = distClass;
@@ -49,12 +49,12 @@ public class RegionShow extends CommonEntry {
         super();
     }
 
-    public String getSc0204Id() {
-        return sc0204Id;
+    public String getSc020104Id() {
+        return sc020104Id;
     }
 
-    public void setSc0204Id(String sc0204Id) {
-        this.sc0204Id = sc0204Id == null ? null : sc0204Id.trim();
+    public void setSc020104Id(String sc020104Id) {
+        this.sc020104Id = sc020104Id == null ? null : sc020104Id.trim();
     }
 
     public String getDistSource() {

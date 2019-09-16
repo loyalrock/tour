@@ -72,21 +72,6 @@ public class ProjectJobController {
     }
 
     /**
-     * 上传文件
-     *
-     * @param file
-     * @param projectNo
-     * @return
-     * @throws Exception
-     */
-    @RequiresRoles(value = {Role.SYSTEM})
-    @RequestMapping(value = "/upload/index", method = RequestMethod.POST)
-    public ResultEntry upload(@RequestParam("file") MultipartFile file,  @RequestParam("projectNo") String projectNo) throws Exception {
-        projectJobService.uploadIndex(file, projectNo);
-        return ResultUtil.success(Message.SUCCESS);
-    }
-
-    /**
      * 删除一个
      *
      * @param sc02Id

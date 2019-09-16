@@ -23,14 +23,14 @@ public interface ProjectJobService {
 
     String getNextCode();
 
-    /**
-     * 上传首页图片
-     * @param file
-     * @param projectNo
-     * @return
-     * @throws Exception
-     */
-    int uploadIndex(MultipartFile file, String projectNo) throws Exception;
+//    /**
+//     * 上传首页图片
+//     * @param file
+//     * @param projectNo
+//     * @return
+//     * @throws Exception
+//     */
+//    int uploadIndex(MultipartFile file, String projectNo) throws Exception;
 
     int deleteAll(List<String> ids);
 

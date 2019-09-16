@@ -4,17 +4,21 @@ import com.alibaba.fastjson.JSONObject;
 import com.manager.entry.common.ResultEntry;
 import com.manager.entry.system.User;
 import com.manager.entry.system.UserRole;
+import com.manager.system.service.SystemService;
 import com.manager.system.service.UserRoleService;
 import com.manager.util.Message;
 import com.manager.util.ResultUtil;
+import com.manager.util.Role;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -27,7 +31,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/system")
-public class LoginController {
+public class SystemController {
+
+    @Autowired
+    private SystemService systemService;
 
     @Autowired
     private UserRoleService userRoleService;
@@ -51,5 +58,18 @@ public class LoginController {
         jsonObject.put("roles", userRoles);
 
         return ResultUtil.success(Message.LOGIN_SUCCESS, jsonObject);
+    }
+
+    /**
+     * 上传文件
+     * @param multipartFile
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT})
+    public ResultEntry upload(@RequestParam("file")MultipartFile multipartFile) throws Exception{
+        String url = systemService.upload(multipartFile);
+        return ResultUtil.success(Message.INSERT_SUCCESS, url);
     }
 }

@@ -5,7 +5,7 @@ import com.manager.entry.common.CommonEntry;
 import java.util.Date;
 
 public class LineShow extends CommonEntry {
-    private String sc0203Id;
+    private String sc020103Id;
 
     private String lineSource;
 
@@ -21,8 +21,8 @@ public class LineShow extends CommonEntry {
 
     private Integer lineEndLat;
 
-    public LineShow(String sc0203Id, String lineSource, String lineNum, String lineName, Integer lineStartLong, Integer lineStartLat, Integer lineEndLong, Integer lineEndLat, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
-        this.sc0203Id = sc0203Id;
+    public LineShow(String sc020103Id, String lineSource, String lineNum, String lineName, Integer lineStartLong, Integer lineStartLat, Integer lineEndLong, Integer lineEndLat, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+        this.sc020103Id = sc020103Id;
         this.lineSource = lineSource;
         this.lineNum = lineNum;
         this.lineName = lineName;
@@ -36,12 +36,12 @@ public class LineShow extends CommonEntry {
         super();
     }
 
-    public String getSc0203Id() {
-        return sc0203Id;
+    public String getSc020103Id() {
+        return sc020103Id;
     }
 
-    public void setSc0203Id(String sc0203Id) {
-        this.sc0203Id = sc0203Id == null ? null : sc0203Id.trim();
+    public void setSc020103Id(String sc020103Id) {
+        this.sc020103Id = sc020103Id == null ? null : sc020103Id.trim();
     }
 
     public String getLineSource() {

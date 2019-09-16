@@ -5,7 +5,7 @@ import com.manager.entry.common.CommonEntry;
 import java.util.Date;
 
 public class ImageShow extends CommonEntry {
-    private String sc0202Id;
+    private String sc020102Id;
 
     private String picSource;
 
@@ -15,9 +15,9 @@ public class ImageShow extends CommonEntry {
 
     private String appUrl;
 
-    public ImageShow(String sc0202Id, String picSource, String picNum, String picName, String appUrl, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+    public ImageShow(String sc020102Id, String picSource, String picNum, String picName, String appUrl, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
         super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
-        this.sc0202Id = sc0202Id;
+        this.sc020102Id = sc020102Id;
         this.picSource = picSource;
         this.picNum = picNum;
         this.picName = picName;
@@ -28,12 +28,12 @@ public class ImageShow extends CommonEntry {
         super();
     }
 
-    public String getSc0202Id() {
-        return sc0202Id;
+    public String getSc020102Id() {
+        return sc020102Id;
     }
 
-    public void setSc0202Id(String sc0202Id) {
-        this.sc0202Id = sc0202Id == null ? null : sc0202Id.trim();
+    public void setSc020102Id(String sc020102Id) {
+        this.sc020102Id = sc020102Id == null ? null : sc020102Id.trim();
     }
 
     public String getPicSource() {

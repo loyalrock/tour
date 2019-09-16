@@ -3,7 +3,7 @@
 <mapper namespace="com.manager.tour.dao.ImageShowMapper">
   <resultMap id="BaseResultMap" type="com.manager.entry.tour.ImageShow">
     <constructor>
-      <idArg column="SC0202_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="SC020102_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="PIC_SOURCE" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="PIC_NUM" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="PIC_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -17,25 +17,25 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    SC0202_ID, PIC_SOURCE, PIC_NUM, PIC_NAME, APP_URL, STATUS, CREATE_USER, CREATE_TIME,
+    SC020102_ID, PIC_SOURCE, PIC_NUM, PIC_NAME, APP_URL, STATUS, CREATE_USER, CREATE_TIME,
     UPDATE_USER, UPDATE_TIME, DELETE_FLAG
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from SC020102
-    where SC0202_ID = #{sc0202Id,jdbcType=VARCHAR}
+    where SC020102_ID = #{sc020102Id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from SC020102
-    where SC0202_ID = #{sc0202Id,jdbcType=VARCHAR}
+    where SC020102_ID = #{sc020102Id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.manager.entry.tour.ImageShow">
-    insert into SC020102 (SC0202_ID, PIC_SOURCE, PIC_NUM,
+    insert into SC020102 (SC020102_ID, PIC_SOURCE, PIC_NUM,
       PIC_NAME, APP_URL, STATUS,
       CREATE_USER, CREATE_TIME, UPDATE_USER,
       UPDATE_TIME, DELETE_FLAG)
-    values (#{sc0202Id,jdbcType=VARCHAR}, #{picSource,jdbcType=VARCHAR}, #{picNum,jdbcType=VARCHAR},
+    values (#{sc020102Id,jdbcType=VARCHAR}, #{picSource,jdbcType=VARCHAR}, #{picNum,jdbcType=VARCHAR},
       #{picName,jdbcType=VARCHAR}, #{appUrl,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
       #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
@@ -43,8 +43,8 @@
   <insert id="insertSelective" parameterType="com.manager.entry.tour.ImageShow">
     insert into SC020102
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="sc0202Id != null">
-        SC0202_ID,
+      <if test="sc020102Id != null">
+        SC020102_ID,
       </if>
       <if test="picSource != null">
         PIC_SOURCE,
@@ -78,8 +78,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="sc0202Id != null">
-        #{sc0202Id,jdbcType=VARCHAR},
+      <if test="sc020102Id != null">
+        #{sc020102Id,jdbcType=VARCHAR},
       </if>
       <if test="picSource != null">
         #{picSource,jdbcType=VARCHAR},
@@ -147,7 +147,7 @@
         DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
       </if>
     </set>
-    where SC0202_ID = #{sc0202Id,jdbcType=VARCHAR}
+    where SC020102_ID = #{sc020102Id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.manager.entry.tour.ImageShow">
     update SC020102
@@ -161,6 +161,6 @@
       UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
-    where SC0202_ID = #{sc0202Id,jdbcType=VARCHAR}
+    where SC020102_ID = #{sc020102Id,jdbcType=VARCHAR}
   </update>
 </mapper>

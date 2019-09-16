@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.tour.dao.ImageShowMapper">
+  <insert id="insertAll" parameterType="List">
+    insert into SC020102 (SC020102_ID, PIC_SOURCE, PIC_NUM,
+      PIC_NAME, APP_URL, STATUS,
+      CREATE_USER, CREATE_TIME, UPDATE_USER,
+      UPDATE_TIME, DELETE_FLAG)
+    values 
+    <foreach collection="imageShows" separator="," item="item">
+      (#{item.sc020102Id,jdbcType=VARCHAR}, #{item.picSource,jdbcType=VARCHAR}, #{item.picNum,jdbcType=VARCHAR},
+      #{item.picName,jdbcType=VARCHAR}, #{item.appUrl,jdbcType=VARCHAR}, #{item.status,jdbcType=CHAR},
+      #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR},
+      #{item.updateTime,jdbcType=TIMESTAMP}, #{item.deleteFlag,jdbcType=CHAR})
+    </foreach>
+  </insert>
+</mapper>

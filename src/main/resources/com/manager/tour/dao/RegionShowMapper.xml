@@ -3,7 +3,7 @@
 <mapper namespace="com.manager.tour.dao.RegionShowMapper">
   <resultMap id="BaseResultMap" type="com.manager.entry.tour.RegionShow">
     <constructor>
-      <idArg column="SC0204_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="SC020104_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="DIST_SOURCE" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="DIST_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="DIST_CLASS" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -24,7 +24,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    SC0204_ID, DIST_SOURCE, DIST_NO, DIST_CLASS, DIST_SEC_CALSS, DIST_NAME, DIST_START_LONG,
+    SC020104_ID, DIST_SOURCE, DIST_NO, DIST_CLASS, DIST_SEC_CALSS, DIST_NAME, DIST_START_LONG,
     DIST_START_LAT, DIST_ADRES, DIST_PIC_URL, DIST_TEL, DIST_EXP, STATUS, CREATE_USER,
     CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG
   </sql>
@@ -32,21 +32,21 @@
     select
     <include refid="Base_Column_List" />
     from SC020104
-    where SC0204_ID = #{sc0204Id,jdbcType=VARCHAR}
+    where SC020104_ID = #{sc020104Id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from SC020104
-    where SC0204_ID = #{sc0204Id,jdbcType=VARCHAR}
+    where SC020104_ID = #{sc020104Id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.manager.entry.tour.RegionShow">
-    insert into SC020104 (SC0204_ID, DIST_SOURCE, DIST_NO,
+    insert into SC020104 (SC020104_ID, DIST_SOURCE, DIST_NO,
       DIST_CLASS, DIST_SEC_CALSS, DIST_NAME,
       DIST_START_LONG, DIST_START_LAT, DIST_ADRES,
       DIST_PIC_URL, DIST_TEL, DIST_EXP,
       STATUS, CREATE_USER, CREATE_TIME,
       UPDATE_USER, UPDATE_TIME, DELETE_FLAG
       )
-    values (#{sc0204Id,jdbcType=VARCHAR}, #{distSource,jdbcType=VARCHAR}, #{distNo,jdbcType=VARCHAR},
+    values (#{sc020104Id,jdbcType=VARCHAR}, #{distSource,jdbcType=VARCHAR}, #{distNo,jdbcType=VARCHAR},
       #{distClass,jdbcType=VARCHAR}, #{distSecCalss,jdbcType=VARCHAR}, #{distName,jdbcType=VARCHAR},
       #{distStartLong,jdbcType=INTEGER}, #{distStartLat,jdbcType=INTEGER}, #{distAdres,jdbcType=VARCHAR},
       #{distPicUrl,jdbcType=CHAR}, #{distTel,jdbcType=VARCHAR}, #{distExp,jdbcType=VARCHAR},
@@ -57,8 +57,8 @@
   <insert id="insertSelective" parameterType="com.manager.entry.tour.RegionShow">
     insert into SC020104
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="sc0204Id != null">
-        SC0204_ID,
+      <if test="sc020104Id != null">
+        SC020104_ID,
       </if>
       <if test="distSource != null">
         DIST_SOURCE,
@@ -113,8 +113,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="sc0204Id != null">
-        #{sc0204Id,jdbcType=VARCHAR},
+      <if test="sc020104Id != null">
+        #{sc020104Id,jdbcType=VARCHAR},
       </if>
       <if test="distSource != null">
         #{distSource,jdbcType=VARCHAR},
@@ -224,6 +224,6 @@
         DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
       </if>
     </set>
-    where SC0204_ID = #{sc0204Id,jdbcType=VARCHAR}
+    where SC020104_ID = #{sc020104Id,jdbcType=VARCHAR}
   </update>
 </mapper>

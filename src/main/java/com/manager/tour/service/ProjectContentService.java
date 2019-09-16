@@ -10,5 +10,12 @@ import com.manager.entry.tour.ProjectContent;
  */
 public interface ProjectContentService {
 
-    int add(ProjectContent projectContent);
+    /**
+     * 查询当前项目下关联内容的详情
+     * @param sc0201Id
+     * @return
+     */
+    ProjectContent selectDetail(String sc0201Id);
+
+    int update(ProjectContent projectContent);
 }

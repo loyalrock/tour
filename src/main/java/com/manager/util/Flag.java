@@ -9,5 +9,5 @@ public class Flag {
     /**
      * 无
      */
-    public static final String NOT_HOVE = "0";
+    public static final String NOT_HAVE = "0";
 }

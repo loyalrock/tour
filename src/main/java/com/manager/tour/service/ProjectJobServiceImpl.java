@@ -10,7 +10,6 @@ import com.manager.tour.dao.*;
 import com.manager.util.FileType;
 import com.manager.util.Flag;
 import com.manager.util.Message;
-import com.manager.util.Upload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -57,15 +56,31 @@ public class ProjectJobServiceImpl implements ProjectJobService {
             throw new CommonException(Message.CODE_UN_UNIQUE);
         }
 
-        List<ProjectContent> projectContents = projectJob.getProjectContents();
-        for(ProjectContent projectContent : projectContents) {
-            UserUtil.insertData(projectContent);
-            projectContent.setSc0201Id(UUID.randomUUID().toString());
-            projectContent.setProjectNo(projectJob.getProjectNo());
+        int currentNo = uploadDataFileMapper.selectCount(projectJob.getProjectNo());
+        List<UploadDataFile> uploadDataFiles = projectJob.getUploadDataFiles();
+        if (uploadDataFiles != null && uploadDataFiles.size() > 0) {
+            for (UploadDataFile uploadDataFile : uploadDataFiles) {
+                uploadDataFile.setSfj01Id(UUID.randomUUID().toString());
+                uploadDataFile.setAppSource(projectJob.getProjectNo());
+                uploadDataFile.setAppNum(String.valueOf(++currentNo));
+                UserUtil.insertData(uploadDataFile);
+            }
+            // 批量新增
+            count = uploadDataFileMapper.insertAll(uploadDataFiles);
         }
 
-        // 添加项目和内容的维护关系
-        count = projectContentMapper.insertAll(projectContents);
+
+        List<ProjectContent> projectContents = projectJob.getProjectContents();
+        if (projectContents != null && projectContents.size() > 0) {
+            for(ProjectContent projectContent : projectContents) {
+                UserUtil.insertData(projectContent);
+                projectContent.setSc0201Id(UUID.randomUUID().toString());
+                projectContent.setProjectNo(projectJob.getProjectNo());
+            }
+
+            // 添加项目和内容的维护关系
+            count = projectContentMapper.insertAll(projectContents);
+        }
 
         // 添加项目
         count = projectJobMapper.insertSelective(projectJob);
@@ -78,61 +93,61 @@ public class ProjectJobServiceImpl implements ProjectJobService {
         return projectJobMapper.selectDetail(sc02Id);
     }
 
-    @Override
-    public int uploadIndex(MultipartFile file, String projectNo) throws Exception {
-        // 保存图片
-        String filePath = Upload.saveFile(file);
-        ProjectJob projectJob = new ProjectJob();
-        projectJob.setProjectNo(projectNo);
-        UserUtil.updateData(projectJob);
-
-        // 显示首页图片
-        projectJob.setIndexPic(Flag.HAVE);
-        UploadDataFile uploadDataFile = new UploadDataFile();
-        // 新增数据
-        UserUtil.insertData(uploadDataFile);
-
-        uploadDataFile.setSfj01Id(UUID.randomUUID().toString());
-        uploadDataFile.setAppSource(projectNo);
-        uploadDataFile.setAppUrl(filePath);
-        uploadDataFile.setAppName(file.getOriginalFilename());
-        int num = uploadDataFileMapper.selectCount(projectNo);
-        uploadDataFile.setAppNum(String.valueOf(num + 1));
-        uploadDataFileMapper.insertSelective(uploadDataFile);
-
-//        } else if (FileType.SHOW_PIC.equals(type)) {
-//            projectJob.setIfPic(Flag.HAVE);
-//            ImageShow imageShow = new ImageShow();
-//            // 新增数据
-//            UserUtil.insertData(imageShow);
+//    @Override
+//    public int uploadIndex(MultipartFile file, String projectNo) throws Exception {
+//        // 保存图片
+//        String filePath = Upload.saveFile(file);
+//        ProjectJob projectJob = new ProjectJob();
+//        projectJob.setProjectNo(projectNo);
+//        UserUtil.updateData(projectJob);
 //
-//            imageShow.setSc0202Id(UUID.randomUUID().toString());
-//            imageShow.setPicSource(projectNo);
-//            imageShow.setAppUrl(filePath);
-//            imageShow.setPicName(file.getOriginalFilename());
-//            int num = imageShowMapper.selectCount(projectNo);
-//            imageShow.setPicNum(String.valueOf(num + 1));
-//            imageShowMapper.insertSelective(imageShow);
-//            projectJob.setIfPic(Flag.HAVE);
-//        } else if (FileType.SHOW_FILE.equals(type)) {
-//            projectJob.setIfFile(Flag.HAVE);
-//            DocumentShow documentShow = new DocumentShow();
-//            // 新增数据
-//            UserUtil.insertData(documentShow);
+//        // 显示首页图片
+//        projectJob.setIndexPic(Flag.HAVE);
+//        UploadDataFile uploadDataFile = new UploadDataFile();
+//        // 新增数据
+//        UserUtil.insertData(uploadDataFile);
 //
-//            documentShow.setSc0201Id(UUID.randomUUID().toString());
-//            documentShow.setFileSource(projectNo);
-//            documentShow.setFileUrl(filePath);
-//            documentShow.setFileName(file.getOriginalFilename());
-//            int num = documentShowMapper.selectCount(projectNo);
-//            documentShow.setFileNum(String.valueOf(num + 1));
-//            documentShowMapper.insertSelective(documentShow);
-//            projectJob.setIfPic(Flag.HAVE);
-//        }
-
-        int count = projectJobMapper.updateByProjectNo(projectJob);
-        return count;
-    }
+//        uploadDataFile.setSfj01Id(UUID.randomUUID().toString());
+//        uploadDataFile.setAppSource(projectNo);
+//        uploadDataFile.setAppUrl(filePath);
+//        uploadDataFile.setAppName(file.getOriginalFilename());
+//        int num = uploadDataFileMapper.selectCount(projectNo);
+//        uploadDataFile.setAppNum(String.valueOf(num + 1));
+//        uploadDataFileMapper.insertSelective(uploadDataFile);
+//
+////        } else if (FileType.SHOW_PIC.equals(type)) {
+////            projectJob.setIfPic(Flag.HAVE);
+////            ImageShow imageShow = new ImageShow();
+////            // 新增数据
+////            UserUtil.insertData(imageShow);
+////
+////            imageShow.setSc0202Id(UUID.randomUUID().toString());
+////            imageShow.setPicSource(projectNo);
+////            imageShow.setAppUrl(filePath);
+////            imageShow.setPicName(file.getOriginalFilename());
+////            int num = imageShowMapper.selectCount(projectNo);
+////            imageShow.setPicNum(String.valueOf(num + 1));
+////            imageShowMapper.insertSelective(imageShow);
+////            projectJob.setIfPic(Flag.HAVE);
+////        } else if (FileType.SHOW_FILE.equals(type)) {
+////            projectJob.setIfFile(Flag.HAVE);
+////            DocumentShow documentShow = new DocumentShow();
+////            // 新增数据
+////            UserUtil.insertData(documentShow);
+////
+////            documentShow.setSc0201Id(UUID.randomUUID().toString());
+////            documentShow.setFileSource(projectNo);
+////            documentShow.setFileUrl(filePath);
+////            documentShow.setFileName(file.getOriginalFilename());
+////            int num = documentShowMapper.selectCount(projectNo);
+////            documentShow.setFileNum(String.valueOf(num + 1));
+////            documentShowMapper.insertSelective(documentShow);
+////            projectJob.setIfPic(Flag.HAVE);
+////        }
+//
+//        int count = projectJobMapper.updateByProjectNo(projectJob);
+//        return count;
+//    }
 
     private final static String PROJECT_NO_PREFIX = "XM";
     private int codeLength = 5;

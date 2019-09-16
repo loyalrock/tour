@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.tour.dao.RegionShowMapper">
+  <insert id="insertAll" parameterType="List">
+    insert into SC020104 (SC020104_ID, DIST_SOURCE, DIST_NO,
+      DIST_CLASS, DIST_SEC_CALSS, DIST_NAME,
+      DIST_START_LONG, DIST_START_LAT, DIST_ADRES,
+      DIST_PIC_URL, DIST_TEL, DIST_EXP,
+      STATUS, CREATE_USER, CREATE_TIME,
+      UPDATE_USER, UPDATE_TIME, DELETE_FLAG)
+    values
+    <foreach collection="regionShows" separator="," item="item">
+      (#{item.sc020104Id,jdbcType=VARCHAR}, #{item.distSource,jdbcType=VARCHAR}, #{item.distNo,jdbcType=VARCHAR},
+      #{item.distClass,jdbcType=VARCHAR}, #{item.distSecCalss,jdbcType=VARCHAR}, #{item.distName,jdbcType=VARCHAR},
+      #{item.distStartLong,jdbcType=INTEGER}, #{item.distStartLat,jdbcType=INTEGER}, #{item.distAdres,jdbcType=VARCHAR},
+      #{item.distPicUrl,jdbcType=CHAR}, #{item.distTel,jdbcType=VARCHAR}, #{item.distExp,jdbcType=VARCHAR},
+      #{item.status,jdbcType=CHAR}, #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP},
+      #{item.updateUser,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.deleteFlag,jdbcType=CHAR})
+    </foreach>
+  </insert>
+</mapper>

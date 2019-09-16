@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.tour.dao.DocumentShowMapper">
+  <insert id="insertAll" parameterType="List">
+    insert into SC020101 (SC020101_ID, FILE_SOURCE, FILE_NUM,
+      FILE_NAME, FILE_URL, STATUS,
+      CREATE_USER, CREATE_TIME, UPDATE_USER,
+      UPDATE_TIME, DELETE_FLAG)
+    values 
+    <foreach collection="documentShows" item="item" separator=",">
+      (#{item.sc020101Id,jdbcType=VARCHAR}, #{item.fileSource,jdbcType=VARCHAR}, #{item.fileNum,jdbcType=VARCHAR},
+      #{item.fileName,jdbcType=VARCHAR}, #{item.fileUrl,jdbcType=VARCHAR}, #{item.status,jdbcType=CHAR},
+      #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR},
+      #{item.updateTime,jdbcType=TIMESTAMP}, #{item.deleteFlag,jdbcType=CHAR})
+    </foreach>
+
+  </insert>
+</mapper>

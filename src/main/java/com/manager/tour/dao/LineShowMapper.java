@@ -4,6 +4,8 @@ import com.manager.entry.tour.LineShow;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 public interface LineShowMapper {
     int deleteByPrimaryKey(String sc020103Id);
 
@@ -19,4 +21,6 @@ public interface LineShowMapper {
 
     @Select("select count(*) from SC020103 where LINE_SOURCE = #{lineSource}")
     int selectCount(@Param("lineSource") String lineSource);
+
+    int insertAll(@Param("lineShows")List<LineShow> lineShows);
 }

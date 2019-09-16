@@ -3,7 +3,7 @@
 <mapper namespace="com.manager.tour.dao.LineShowMapper">
   <resultMap id="BaseResultMap" type="com.manager.entry.tour.LineShow">
     <constructor>
-      <idArg column="SC0203_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="SC020103_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="LINE_SOURCE" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="LINE_NUM" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="LINE_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -20,26 +20,26 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    SC0203_ID, LINE_SOURCE, LINE_NUM, LINE_NAME, LINE_START_LONG, LINE_START_LAT, LINE_END_LONG,
+    SC020103_ID, LINE_SOURCE, LINE_NUM, LINE_NAME, LINE_START_LONG, LINE_START_LAT, LINE_END_LONG,
     LINE_END_LAT, STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from SC020103
-    where SC0203_ID = #{sc0203Id,jdbcType=VARCHAR}
+    where SC020103_ID = #{sc020103Id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from SC020103
-    where SC0203_ID = #{sc0203Id,jdbcType=VARCHAR}
+    where SC020103_ID = #{sc020103Id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.manager.entry.tour.LineShow">
-    insert into SC020103 (SC0203_ID, LINE_SOURCE, LINE_NUM,
+    insert into SC020103 (SC020103_ID, LINE_SOURCE, LINE_NUM,
       LINE_NAME, LINE_START_LONG, LINE_START_LAT,
       LINE_END_LONG, LINE_END_LAT, STATUS,
       CREATE_USER, CREATE_TIME, UPDATE_USER,
       UPDATE_TIME, DELETE_FLAG)
-    values (#{sc0203Id,jdbcType=VARCHAR}, #{lineSource,jdbcType=VARCHAR}, #{lineNum,jdbcType=VARCHAR},
+    values (#{sc020103Id,jdbcType=VARCHAR}, #{lineSource,jdbcType=VARCHAR}, #{lineNum,jdbcType=VARCHAR},
       #{lineName,jdbcType=VARCHAR}, #{lineStartLong,jdbcType=INTEGER}, #{lineStartLat,jdbcType=INTEGER},
       #{lineEndLong,jdbcType=INTEGER}, #{lineEndLat,jdbcType=INTEGER}, #{status,jdbcType=CHAR},
       #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR},
@@ -48,8 +48,8 @@
   <insert id="insertSelective" parameterType="com.manager.entry.tour.LineShow">
     insert into SC020103
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="sc0203Id != null">
-        SC0203_ID,
+      <if test="sc020103Id != null">
+        SC020103_ID,
       </if>
       <if test="lineSource != null">
         LINE_SOURCE,
@@ -92,8 +92,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="sc0203Id != null">
-        #{sc0203Id,jdbcType=VARCHAR},
+      <if test="sc020103Id != null">
+        #{sc020103Id,jdbcType=VARCHAR},
       </if>
       <if test="lineSource != null">
         #{lineSource,jdbcType=VARCHAR},
@@ -179,7 +179,7 @@
         DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
       </if>
     </set>
-    where SC0203_ID = #{sc0203Id,jdbcType=VARCHAR}
+    where SC020103_ID = #{sc020103Id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.manager.entry.tour.LineShow">
     update SC020103
@@ -196,6 +196,6 @@
       UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
-    where SC0203_ID = #{sc0203Id,jdbcType=VARCHAR}
+    where SC020103_ID = #{sc020103Id,jdbcType=VARCHAR}
   </update>
 </mapper>

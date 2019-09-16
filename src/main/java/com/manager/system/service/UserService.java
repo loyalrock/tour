@@ -7,6 +7,7 @@ import com.manager.entry.system.User;
 import com.manager.entry.system.UserManager;
 import com.manager.entry.system.UserManagerQuery;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -36,4 +37,5 @@ public interface UserService {
     int updateStatus(String userUid, String status) throws Exception;
 
     int updateUser(UserManager userManager) throws Exception;
+
 }

@@ -4,6 +4,8 @@ import com.manager.entry.tour.ImageShow;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 public interface ImageShowMapper {
     int deleteByPrimaryKey(String sc020102Id);
 
@@ -19,4 +21,6 @@ public interface ImageShowMapper {
 
     @Select("select count(*) from SC020102 where PIC_SOURCE = #{picSource}")
     int selectCount(@Param("picSource") String picSource);
+
+    int insertAll(@Param("imageShows")List<ImageShow> imageShows);
 }

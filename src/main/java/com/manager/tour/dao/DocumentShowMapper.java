@@ -4,6 +4,8 @@ import com.manager.entry.tour.DocumentShow;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 public interface DocumentShowMapper {
     int deleteByPrimaryKey(String sc020101Id);
 
@@ -19,4 +21,6 @@ public interface DocumentShowMapper {
 
     @Select("select count(*) from SC020101 where FILE_SOURCE = #{fileSource}")
     int selectCount(@Param("fileSource") String fileSource);
+
+    int insertAll(@Param("documentShows")List<DocumentShow> documentShows);
 }

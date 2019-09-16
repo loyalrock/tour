@@ -18,5 +18,12 @@ public interface ProjectContentMapper {
 
     int updateByPrimaryKey(ProjectContent record);
 
+    /**
+     * 批量新增
+     * @param projectContents
+     * @return
+     */
     int insertAll(@Param("projectContents") List<ProjectContent> projectContents);
+
+    ProjectContent selectDetail(@Param("sc0201Id") String sc0201Id);
 }
