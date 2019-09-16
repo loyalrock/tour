@@ -69,12 +69,7 @@
         </javaClientGenerator>
 
          <!--需要生成的表名以及实体类命名 -->
-        <!--<table tableName="SC0204" domainObjectName="RegionShow"-->
-               <!--enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"-->
-               <!--enableDeleteByPrimaryKey="true">-->
-        <!--</table>-->
+
         <!--<table tableName="SS05" domainObjectName="Category"-->
             <!--enableCountByExample="false" enableUpdateByExample="false"-->
             <!--enableDeleteByExample="false" enableSelectByExample="false"-->
@@ -93,25 +88,37 @@
                <!--selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"-->
                <!--enableDeleteByPrimaryKey="true">-->
         <!--</table>-->
-        <!--<table tableName="SC02" domainObjectName="ProjectJob"-->
-               <!--enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"-->
-               <!--enableDeleteByPrimaryKey="true">-->
-        <!--</table>-->
-        <!--<table tableName="SC0201" domainObjectName="DocumentShow"-->
-               <!--enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"-->
-               <!--enableDeleteByPrimaryKey="true">-->
-        <!--</table>-->
-        <!--<table tableName="SC0202" domainObjectName="ImageShow"-->
-               <!--enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"-->
-               <!--enableDeleteByPrimaryKey="true">-->
-        <!--</table>-->
-        <table tableName="SC0203" domainObjectName="LineShow"
+        <table tableName="SC02" domainObjectName="ProjectJob"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true">
+        </table>
+        <table tableName="SC0201" domainObjectName="ProjectContent"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true">
+        </table>
+        <table tableName="SC020101" domainObjectName="DocumentShow"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true">
+        </table>
+        <table tableName="SC020102" domainObjectName="ImageShow"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true">
+        </table>
+        <table tableName="SC020103" domainObjectName="LineShow"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true">
+        </table>
+        <table tableName="SC020104" domainObjectName="RegionShow"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false" enableUpdateByPrimaryKey="true"

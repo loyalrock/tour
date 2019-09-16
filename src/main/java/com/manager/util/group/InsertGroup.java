@@ -1,4 +1,4 @@
-package com.manager.util;
+package com.manager.util.group;
 
 /**
  * 新增校验

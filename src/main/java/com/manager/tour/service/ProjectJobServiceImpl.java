@@ -10,9 +10,11 @@ import com.manager.tour.dao.*;
 import com.manager.util.FileType;
 import com.manager.util.Flag;
 import com.manager.util.Message;
+import com.manager.util.Upload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -25,25 +27,17 @@ import java.util.UUID;
  * project Service Impl
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class ProjectJobServiceImpl implements ProjectJobService {
-
-    @Value("${project.upload.folderName}")
-    private String folderName;
 
     @Autowired
     private ProjectJobMapper projectJobMapper;
 
     @Autowired
-    private DocumentShowMapper documentShowMapper;
-
-    @Autowired
-    private ImageShowMapper imageShowMapper;
-
-    @Autowired
-    private LineShowMapper lineShowMapper;
-
-    @Autowired
     private UploadDataFileMapper uploadDataFileMapper;
+
+    @Autowired
+    private ProjectContentMapper projectContentMapper;
 
     @Override
     public List<ProjectJob> selectList() {
@@ -63,6 +57,17 @@ public class ProjectJobServiceImpl implements ProjectJobService {
             throw new CommonException(Message.CODE_UN_UNIQUE);
         }
 
+        List<ProjectContent> projectContents = projectJob.getProjectContents();
+        for(ProjectContent projectContent : projectContents) {
+            UserUtil.insertData(projectContent);
+            projectContent.setSc0201Id(UUID.randomUUID().toString());
+            projectContent.setProjectNo(projectJob.getProjectNo());
+        }
+
+        // 添加项目和内容的维护关系
+        count = projectContentMapper.insertAll(projectContents);
+
+        // 添加项目
         count = projectJobMapper.insertSelective(projectJob);
 
         return count;
@@ -74,106 +79,59 @@ public class ProjectJobServiceImpl implements ProjectJobService {
     }
 
     @Override
-    public int uploadFile(MultipartFile file, String projectNo, String type) throws Exception {
-        String filePath = saveFile(file);
+    public int uploadIndex(MultipartFile file, String projectNo) throws Exception {
+        // 保存图片
+        String filePath = Upload.saveFile(file);
         ProjectJob projectJob = new ProjectJob();
         projectJob.setProjectNo(projectNo);
         UserUtil.updateData(projectJob);
-        if (FileType.INDEX_PIC.equals(type)) {
 
-            projectJob.setIndexPic(Flag.HAVE);
-            UploadDataFile uploadDataFile = new UploadDataFile();
-            // 新增数据
-            UserUtil.insertData(uploadDataFile);
+        // 显示首页图片
+        projectJob.setIndexPic(Flag.HAVE);
+        UploadDataFile uploadDataFile = new UploadDataFile();
+        // 新增数据
+        UserUtil.insertData(uploadDataFile);
 
-            uploadDataFile.setSfj01Id(UUID.randomUUID().toString());
-            uploadDataFile.setAppSource(projectNo);
-            uploadDataFile.setAppUrl(filePath);
-            uploadDataFile.setAppName(file.getOriginalFilename());
-            int num = uploadDataFileMapper.selectCount(projectNo);
-            uploadDataFile.setAppNum(String.valueOf(num + 1));
-            uploadDataFileMapper.insertSelective(uploadDataFile);
+        uploadDataFile.setSfj01Id(UUID.randomUUID().toString());
+        uploadDataFile.setAppSource(projectNo);
+        uploadDataFile.setAppUrl(filePath);
+        uploadDataFile.setAppName(file.getOriginalFilename());
+        int num = uploadDataFileMapper.selectCount(projectNo);
+        uploadDataFile.setAppNum(String.valueOf(num + 1));
+        uploadDataFileMapper.insertSelective(uploadDataFile);
 
-        } else if (FileType.SHOW_PIC.equals(type)) {
-            projectJob.setIfPic(Flag.HAVE);
-            ImageShow imageShow = new ImageShow();
-            // 新增数据
-            UserUtil.insertData(imageShow);
-
-            imageShow.setSc0202Id(UUID.randomUUID().toString());
-            imageShow.setPicSource(projectNo);
-            imageShow.setAppUrl(filePath);
-            imageShow.setPicName(file.getOriginalFilename());
-            int num = imageShowMapper.selectCount(projectNo);
-            imageShow.setPicNum(String.valueOf(num + 1));
-            imageShowMapper.insertSelective(imageShow);
-            projectJob.setIfPic(Flag.HAVE);
-        } else if (FileType.SHOW_FILE.equals(type)) {
-            projectJob.setIfFile(Flag.HAVE);
-            DocumentShow documentShow = new DocumentShow();
-            // 新增数据
-            UserUtil.insertData(documentShow);
-
-            documentShow.setSc0201Id(UUID.randomUUID().toString());
-            documentShow.setFileSource(projectNo);
-            documentShow.setFileUrl(filePath);
-            documentShow.setFileName(file.getOriginalFilename());
-            int num = documentShowMapper.selectCount(projectNo);
-            documentShow.setFileNum(String.valueOf(num + 1));
-            documentShowMapper.insertSelective(documentShow);
-            projectJob.setIfPic(Flag.HAVE);
-        }
+//        } else if (FileType.SHOW_PIC.equals(type)) {
+//            projectJob.setIfPic(Flag.HAVE);
+//            ImageShow imageShow = new ImageShow();
+//            // 新增数据
+//            UserUtil.insertData(imageShow);
+//
+//            imageShow.setSc0202Id(UUID.randomUUID().toString());
+//            imageShow.setPicSource(projectNo);
+//            imageShow.setAppUrl(filePath);
+//            imageShow.setPicName(file.getOriginalFilename());
+//            int num = imageShowMapper.selectCount(projectNo);
+//            imageShow.setPicNum(String.valueOf(num + 1));
+//            imageShowMapper.insertSelective(imageShow);
+//            projectJob.setIfPic(Flag.HAVE);
+//        } else if (FileType.SHOW_FILE.equals(type)) {
+//            projectJob.setIfFile(Flag.HAVE);
+//            DocumentShow documentShow = new DocumentShow();
+//            // 新增数据
+//            UserUtil.insertData(documentShow);
+//
+//            documentShow.setSc0201Id(UUID.randomUUID().toString());
+//            documentShow.setFileSource(projectNo);
+//            documentShow.setFileUrl(filePath);
+//            documentShow.setFileName(file.getOriginalFilename());
+//            int num = documentShowMapper.selectCount(projectNo);
+//            documentShow.setFileNum(String.valueOf(num + 1));
+//            documentShowMapper.insertSelective(documentShow);
+//            projectJob.setIfPic(Flag.HAVE);
+//        }
 
         int count = projectJobMapper.updateByProjectNo(projectJob);
         return count;
-    }
-
-    public String saveFile(MultipartFile file) throws Exception {
-
-        FileOutputStream out = null;
-        InputStream in = null;
-        String filePath;
-        // 检测文件大小
-        if (file.isEmpty()) {
-            throw new CommonException(Message.FILE_IS_EMPTY);
-        }
-
-        try {
-            // 检测文件目录是否存在
-            String systemPath = System.getProperty("user.dir");
-            File folder = new File(systemPath + "/files");
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
-
-            // 获取前缀
-            String Suffix;
-            String fileName = file.getOriginalFilename();
-            Suffix = fileName.substring(fileName.indexOf("."));
-            // 文件路径
-            filePath = systemPath + "/files/" + UUID.randomUUID().toString() + Suffix;
-            out = new FileOutputStream(filePath);
-            in = file.getInputStream();
-            byte[] buffer = new byte[1024];
-            int length = 0;
-            while ((length = in.read(buffer)) != -1) {
-                out.write(buffer, 0, length);
-                out.flush();
-            }
-            in.close();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new CommonException(Message.FILE_SAVE_FAILED);
-        } finally {
-            if (in != null) {
-                in.close();
-            }
-            if (out != null) {
-                out.close();
-            }
-        }
-        return filePath;
     }
 
     private final static String PROJECT_NO_PREFIX = "XM";

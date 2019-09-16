@@ -1,8 +1,7 @@
 package com.manager.entry.system;
 
-import com.manager.util.InsertGroup;
-import com.manager.util.UpdateGroup;
-import org.apache.ibatis.annotations.Update;
+import com.manager.util.group.InsertGroup;
+import com.manager.util.group.UpdateGroup;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;

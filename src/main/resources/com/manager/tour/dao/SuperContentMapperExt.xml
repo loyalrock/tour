@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.manager.tour.dao.SuperContentMapper">
   <select id="selectPage" resultMap="PageResultMap">
-    select SC01_ID, SUPER_P_NO, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE,
+    select SC01_ID, SUPER_P_NO, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE, SUPER_P_LEVEL,
     STATUS from SC01 where DELETE_FLAG = '0'
     <if test="query != null">
       <if test="query.superPNo != null and query.superPNo.trim() != ''">
@@ -22,7 +22,7 @@
   </select>
 
   <select id="selectLevel" resultMap="PageResultMap">
-    select SC01_ID, SUPER_P_NO, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE,
+    select SC01_ID, SUPER_P_NO, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE, SUPER_P_LEVEL,
     STATUS from SC01 where DELETE_FLAG = '0'
       <if test="code != null and code.trim() != ''">
         and SUPER_P_NO like concat('', #{code,jdbcType=VARCHAR}, '%')
@@ -35,12 +35,13 @@
 
   <resultMap id="PageResultMap" type="com.manager.entry.tour.SuperContent">
     <id column="SC01_ID" property="sc01Id" jdbcType="VARCHAR"></id>
-    <id column="SUPER_P_NO" property="superPNo" jdbcType="VARCHAR"></id>
-    <id column="SYS_NO" property="sysNo" jdbcType="VARCHAR"></id>
-    <id column="SUPER_P_CHECK" property="superPCheck" jdbcType="VARCHAR"></id>
-    <id column="SUPER_P_EXP" property="superPExp" jdbcType="VARCHAR"></id>
-    <id column="SUPER_P_SCORE" property="superPScore" jdbcType="VARCHAR"></id>
-    <id column="STATUS" property="status" jdbcType="CHAR"></id>
+    <result column="SUPER_P_NO" property="superPNo" jdbcType="VARCHAR"></result>
+    <result column="SYS_NO" property="sysNo" jdbcType="VARCHAR"></result>
+    <result column="SUPER_P_CHECK" property="superPCheck" jdbcType="VARCHAR"></result>
+    <result column="SUPER_P_EXP" property="superPExp" jdbcType="VARCHAR"></result>
+    <result column="SUPER_P_SCORE" property="superPScore" jdbcType="VARCHAR"></result>
+    <result column="SUPER_P_LEVEL" property="superPLevel" jdbcType="VARCHAR"></result>
+    <result column="STATUS" property="status" jdbcType="CHAR"></result>
   </resultMap>
 
   <select id="selectNextCode" resultType="String">

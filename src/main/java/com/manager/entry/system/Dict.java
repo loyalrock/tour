@@ -1,10 +1,9 @@
 package com.manager.entry.system;
 
 import com.manager.entry.common.CommonEntry;
-import com.manager.util.InsertGroup;
-import com.manager.util.UpdateGroup;
-import com.manager.util.UpdateStatusGroup;
-import org.apache.ibatis.annotations.Update;
+import com.manager.util.group.InsertGroup;
+import com.manager.util.group.UpdateGroup;
+import com.manager.util.group.UpdateStatusGroup;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;

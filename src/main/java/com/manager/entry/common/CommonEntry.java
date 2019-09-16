@@ -1,11 +1,9 @@
 package com.manager.entry.common;
 
-import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.manager.entry.system.User;
 import com.manager.util.Delete;
-import com.manager.util.UpdateStatusGroup;
+import com.manager.util.group.UpdateStatusGroup;
 import org.apache.shiro.SecurityUtils;
 
 import javax.validation.constraints.NotBlank;

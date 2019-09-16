@@ -13,7 +13,16 @@
   </update>
 
     <update id="updateStatus">
-    UPDATE SC02 set STATUS = #{query.status} where SC02_ID = #{query.sc02Id,jdbcType=VARCHAR}
+    UPDATE SC02 set STATUS = #{query.status},
+        <choose>
+            <when test="query.status == '1'">
+                ENABLE_TIME = now()
+            </when>
+            <otherwise>
+                DEACTI_TIME = now()
+            </otherwise>
+        </choose>
+     where SC02_ID = #{query.sc02Id,jdbcType=VARCHAR}
   </update>
 
     <select id="selectPage" resultMap="PageResultMap">
@@ -51,50 +60,8 @@
             <if test="indexPic != null">
                 INDEX_PIC = #{indexPic,jdbcType=CHAR},
             </if>
-            <if test="superPNo != null">
-                SUPER_P_NO = #{superPNo,jdbcType=VARCHAR},
-            </if>
-            <if test="superPLevel != null">
-                SUPER_P_LEVEL = #{superPLevel,jdbcType=VARCHAR},
-            </if>
-            <if test="sysNo != null">
-                SYS_NO = #{sysNo,jdbcType=VARCHAR},
-            </if>
-            <if test="superPCheck != null">
-                SUPER_P_CHECK = #{superPCheck,jdbcType=VARCHAR},
-            </if>
-            <if test="superPExp != null">
-                SUPER_P_EXP = #{superPExp,jdbcType=VARCHAR},
-            </if>
-            <if test="superPCont != null">
-                SUPER_P_CONT = #{superPCont,jdbcType=VARCHAR},
-            </if>
-            <if test="superPScore != null">
-                SUPER_P_SCORE = #{superPScore,jdbcType=INTEGER},
-            </if>
-            <if test="opUnit != null">
-                OP_UNIT = #{opUnit,jdbcType=VARCHAR},
-            </if>
             <if test="status != null">
                 STATUS = #{status,jdbcType=CHAR},
-            </if>
-            <if test="showNo != null">
-                SHOW_NO = #{showNo,jdbcType=VARCHAR},
-            </if>
-            <if test="ifFile != null">
-                IF_FILE = #{ifFile,jdbcType=CHAR},
-            </if>
-            <if test="ifPic != null">
-                IF_PIC = #{ifPic,jdbcType=CHAR},
-            </if>
-            <if test="ifLine != null">
-                IF_LINE = #{ifLine,jdbcType=CHAR},
-            </if>
-            <if test="ifDist != null">
-                IF_DIST = #{ifDist,jdbcType=CHAR},
-            </if>
-            <if test="score != null">
-                SCORE = #{score,jdbcType=INTEGER},
             </if>
             <if test="enableTime != null">
                 ENABLE_TIME = #{enableTime,jdbcType=DATE},
@@ -116,28 +83,16 @@
     </update>
 
     <select id="selectDetail" parameterType="String" resultMap="DetailResultMap">
-        select t1.*,
-           t2.SC0201_ID,
-           t2.FILE_URL,
-           t2.FILE_NAME,
-           t2.FILE_NUM,
-           t3.SC0202_ID,
-           t3.APP_URL,
-           t3.PIC_NAME,
-           t3.PIC_NUM,
-           t4.*,
-           t5.*,
-           t6.SFJ01_ID,
-           t6.APP_URL    as index_url,
-           t6.APP_NUM    as index_num,
-           t6.APP_NAME   as index_name
+        select t1.SC02_ID, t1.PROJECT_NO, t1.PROJECT_NAME, t1.PROJECT_NAME_J, t1.PROJECT_LONG, t1.PROJECT_LAT, t1.INDEX_PIC,
+        pc.SC0201_ID, pc.PROJECT_NO, pc.SUPER_P_NO, pc.SUPER_P_LEVEL, pc.SYS_NO, pc.SUPER_P_CHECK, pc.SUPER_P_EXP, pc.SUPER_P_CONT, pc.SUPER_P_SCORE, pc.OP_UNIT,
+        t2.SFJ01_ID,
+        t2.APP_URL    as index_url,
+        t2.APP_NUM    as index_num,
+        t2.APP_NAME   as index_name
         from SC02 t1
-               left join SC0201 t2 on t1.PROJECT_NO = t2.FILE_SOURCE and t2.STATUS = '1' and t2.DELETE_FLAG = '0'
-               left join SC0202 t3 on t3.PIC_SOURCE = t1.PROJECT_NO and t3.STATUS = '1' and t3.DELETE_FLAG = '0'
-               left join SC0203 t4 on t4.LINE_SOURCE = t1.PROJECT_NO and t4.STATUS = '1' and t4.DELETE_FLAG = '0'
-               left join SC0204 t5 on t5.DIST_SOURCE = t1.PROJECT_NO and t5.STATUS = '1' and t5.DELETE_FLAG = '0'
-               left join SFJ01 t6 on t6.APP_SOURCE = t1.PROJECT_NO and t6.STATUS = '1' and t6.DELETE_FLAG = '0'
-        where t1.SC02_ID = #{sc02Id,jdbcType=VARCHAR} and t1.DELETE_FLAG = '0' order by t2.CREATE_TIME, t3.CREATE_TIME, t4.CREATE_TIME, t5.CREATE_TIME, t6.CREATE_TIME
+                left join SC0201 pc on t1.PROJECT_NO = pc.PROJECT_NO and pc.STATUS = '1' and pc.DELETE_FLAG = '0'
+                left join SFJ01 t2 on t2.APP_SOURCE = t1.PROJECT_NO and t2.STATUS = '1' and t2.DELETE_FLAG = '0'
+        where t1.SC02_ID = #{sc02Id,jdbcType=VARCHAR} and t1.DELETE_FLAG = '0' order by t1.CREATE_TIME, t2.CREATE_TIME
   </select>
     <resultMap id="DetailResultMap" type="com.manager.entry.tour.ProjectJob">
         <id column="SC02_ID" jdbcType="VARCHAR" property="sc02Id"/>
@@ -147,56 +102,23 @@
         <result column="PROJECT_LONG" jdbcType="INTEGER" property="projectLong"/>
         <result column="PROJECT_LAT" jdbcType="INTEGER" property="projectLat"/>
         <result column="INDEX_PIC" jdbcType="CHAR" property="indexPic"/>
-        <result column="SUPER_P_NO" jdbcType="VARCHAR" property="superPNo"/>
-        <result column="SUPER_P_LEVEL" jdbcType="VARCHAR" property="superPLevel"/>
-        <result column="SYS_NO" jdbcType="VARCHAR" property="sysNo"/>
-        <result column="SUPER_P_CHECK" jdbcType="VARCHAR" property="superPCheck"/>
-        <result column="SUPER_P_EXP" jdbcType="VARCHAR" property="superPExp"/>
-        <result column="SUPER_P_CONT" jdbcType="VARCHAR" property="superPCont"/>
-        <result column="SUPER_P_SCORE" jdbcType="INTEGER" property="superPScore"/>
-        <result column="OP_UNIT" jdbcType="VARCHAR" property="opUnit"/>
-        <result column="STATUS" jdbcType="CHAR" property="status"/>
-        <result column="SHOW_NO" jdbcType="VARCHAR" property="showNo"/>
-        <result column="SCORE" jdbcType="INTEGER" property="score"/>
         <collection property="uploadDataFiles" ofType="com.manager.entry.tour.UploadDataFile">
             <id column="SFJ01_ID" jdbcType="VARCHAR" property="sfj01Id"/>
             <result column="index_num" jdbcType="VARCHAR" property="appNum"/>
             <result column="index_name" jdbcType="VARCHAR" property="appName"/>
             <result column="index_url" jdbcType="VARCHAR" property="appUrl"/>
         </collection>
-        <collection property="imageShows" ofType="com.manager.entry.tour.ImageShow">
-            <id column="SC0202_ID" jdbcType="VARCHAR" property="sc0202Id"/>
-            <result column="PIC_NUM" jdbcType="VARCHAR" property="picNum"/>
-            <result column="PIC_NAME" jdbcType="VARCHAR" property="picName"/>
-            <result column="APP_URL" jdbcType="VARCHAR" property="appUrl"/>
-        </collection>
-        <collection property="documentShows" ofType="com.manager.entry.tour.DocumentShow">
-            <id column="SC0201_ID" jdbcType="VARCHAR" property="sc0201Id"/>
-            <result column="FILE_NUM" jdbcType="VARCHAR" property="fileNum"/>
-            <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName"/>
-            <result column="FILE_URL" jdbcType="VARCHAR" property="fileUrl"/>
-        </collection>
-        <collection property="lineShows" ofType="com.manager.entry.tour.LineShow">
-            <id column="SC0203_ID" property="sc0203Id" jdbcType="VARCHAR"/>
-            <result column="LINE_NUM" property="lineNum" jdbcType="VARCHAR"/>
-            <result column="LINE_NAME" property="lineName" jdbcType="VARCHAR"/>
-            <result column="LINE_START_LONG" property="lineStartLong" jdbcType="INTEGER"/>
-            <result column="LINE_START_LAT" property="lineStartLat" jdbcType="INTEGER"/>
-            <result column="LINE_END_LONG" property="lineEndLong" jdbcType="INTEGER"/>
-            <result column="LINE_END_LAT" property="lineEndLat" jdbcType="INTEGER"/>
-        </collection>
-        <collection property="regionShows" ofType="com.manager.entry.tour.RegionShow">
-            <id column="SC0204_ID" jdbcType="VARCHAR" property="sc0204Id"/>
-            <result column="DIST_NO" jdbcType="VARCHAR" property="distNo"/>
-            <result column="DIST_CLASS" jdbcType="VARCHAR" property="distClass"/>
-            <result column="DIST_SEC_CALSS" jdbcType="VARCHAR" property="distSecCalss"/>
-            <result column="DIST_NAME" jdbcType="VARCHAR" property="distName"/>
-            <result column="DIST_START_LONG" jdbcType="INTEGER" property="distStartLong"/>
-            <result column="DIST_START_LAT" jdbcType="INTEGER" property="distStartLat"/>
-            <result column="DIST_ADRES" jdbcType="VARCHAR" property="distAdres"/>
-            <result column="DIST_PIC_URL" jdbcType="CHAR" property="distPicUrl"/>
-            <result column="DIST_TEL" jdbcType="VARCHAR" property="distTel"/>
-            <result column="DIST_EXP" jdbcType="VARCHAR" property="distExp"/>
+        <collection property="projectContents" ofType="com.manager.entry.tour.ProjectContent">
+            <id column="SC0201_ID" jdbcType="VARCHAR" property="sc0201Id" />
+            <result column="PROJECT_NO" jdbcType="VARCHAR" property="projectNo" />
+            <result column="SUPER_P_NO" jdbcType="VARCHAR" property="superPNo" />
+            <result column="SUPER_P_LEVEL" jdbcType="VARCHAR" property="superPLevel" />
+            <result column="SYS_NO" jdbcType="VARCHAR" property="sysNo" />
+            <result column="SUPER_P_CHECK" jdbcType="VARCHAR" property="superPCheck" />
+            <result column="SUPER_P_EXP" jdbcType="VARCHAR" property="superPExp" />
+            <result column="SUPER_P_CONT" jdbcType="VARCHAR" property="superPCont" />
+            <result column="SUPER_P_SCORE" jdbcType="INTEGER" property="superPScore" />
+            <result column="OP_UNIT" jdbcType="VARCHAR" property="opUnit" />
         </collection>
     </resultMap>
 </mapper>

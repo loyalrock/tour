@@ -1,4 +1,4 @@
-package com.manager.util;
+package com.manager.util.group;
 
 public interface UpdateStatusGroup {
 }

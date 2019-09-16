@@ -28,7 +28,7 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/project")
-public class ProjectController {
+public class ProjectJobController {
 
     @Autowired
     private ProjectJobService projectJobService;
@@ -75,15 +75,14 @@ public class ProjectController {
      * 上传文件
      *
      * @param file
-     * @param type
      * @param projectNo
      * @return
      * @throws Exception
      */
     @RequiresRoles(value = {Role.SYSTEM})
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ResultEntry upload(@RequestParam("file") MultipartFile file, @RequestParam("type") String type, @RequestParam("projectNo") String projectNo) throws Exception {
-        projectJobService.uploadFile(file, projectNo, type);
+    @RequestMapping(value = "/upload/index", method = RequestMethod.POST)
+    public ResultEntry upload(@RequestParam("file") MultipartFile file,  @RequestParam("projectNo") String projectNo) throws Exception {
+        projectJobService.uploadIndex(file, projectNo);
         return ResultUtil.success(Message.SUCCESS);
     }
 

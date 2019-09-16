@@ -5,18 +5,18 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 public interface ImageShowMapper {
-    int deleteByPrimaryKey(String sc0202Id);
+    int deleteByPrimaryKey(String sc020102Id);
 
     int insert(ImageShow record);
 
     int insertSelective(ImageShow record);
 
-    ImageShow selectByPrimaryKey(String sc0202Id);
+    ImageShow selectByPrimaryKey(String sc020102Id);
 
     int updateByPrimaryKeySelective(ImageShow record);
 
     int updateByPrimaryKey(ImageShow record);
 
-    @Select("select count(*) from SC0202 where PIC_SOURCE = #{picSource}")
+    @Select("select count(*) from SC020102 where PIC_SOURCE = #{picSource}")
     int selectCount(@Param("picSource") String picSource);
 }

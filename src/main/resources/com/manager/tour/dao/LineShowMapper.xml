@@ -26,15 +26,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from SC0203
+    from SC020103
     where SC0203_ID = #{sc0203Id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from SC0203
+    delete from SC020103
     where SC0203_ID = #{sc0203Id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.manager.entry.tour.LineShow">
-    insert into SC0203 (SC0203_ID, LINE_SOURCE, LINE_NUM,
+    insert into SC020103 (SC0203_ID, LINE_SOURCE, LINE_NUM,
       LINE_NAME, LINE_START_LONG, LINE_START_LAT,
       LINE_END_LONG, LINE_END_LAT, STATUS,
       CREATE_USER, CREATE_TIME, UPDATE_USER,
@@ -46,7 +46,7 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.manager.entry.tour.LineShow">
-    insert into SC0203
+    insert into SC020103
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="sc0203Id != null">
         SC0203_ID,
@@ -137,7 +137,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.tour.LineShow">
-    update SC0203
+    update SC020103
     <set>
       <if test="lineSource != null">
         LINE_SOURCE = #{lineSource,jdbcType=VARCHAR},
@@ -182,7 +182,7 @@
     where SC0203_ID = #{sc0203Id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.manager.entry.tour.LineShow">
-    update SC0203
+    update SC020103
     set LINE_SOURCE = #{lineSource,jdbcType=VARCHAR},
       LINE_NUM = #{lineNum,jdbcType=VARCHAR},
       LINE_NAME = #{lineName,jdbcType=VARCHAR},

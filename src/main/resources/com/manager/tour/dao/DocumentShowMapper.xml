@@ -1,156 +1,156 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.manager.tour.dao.DocumentShowMapper" >
-  <resultMap id="BaseResultMap" type="com.manager.entry.tour.DocumentShow" >
-    <constructor >
-      <idArg column="SC0201_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="FILE_SOURCE" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="FILE_NUM" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="FILE_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="FILE_URL" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="STATUS" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="CREATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="UPDATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="UPDATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="DELETE_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manager.tour.dao.DocumentShowMapper">
+  <resultMap id="BaseResultMap" type="com.manager.entry.tour.DocumentShow">
+    <constructor>
+      <idArg column="SC0201_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FILE_SOURCE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FILE_NUM" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FILE_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FILE_URL" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="STATUS" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="CREATE_USER" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="UPDATE_USER" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="UPDATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="DELETE_FLAG" javaType="java.lang.String" jdbcType="CHAR" />
     </constructor>
   </resultMap>
-  <sql id="Base_Column_List" >
-    SC0201_ID, FILE_SOURCE, FILE_NUM, FILE_NAME, FILE_URL, STATUS, CREATE_USER, CREATE_TIME, 
+  <sql id="Base_Column_List">
+    SC0201_ID, FILE_SOURCE, FILE_NUM, FILE_NAME, FILE_URL, STATUS, CREATE_USER, CREATE_TIME,
     UPDATE_USER, UPDATE_TIME, DELETE_FLAG
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
-    from SC0201
+    from SC020101
     where SC0201_ID = #{sc0201Id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from SC0201
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SC020101
     where SC0201_ID = #{sc0201Id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.manager.entry.tour.DocumentShow" >
-    insert into SC0201 (SC0201_ID, FILE_SOURCE, FILE_NUM, 
-      FILE_NAME, FILE_URL, STATUS, 
-      CREATE_USER, CREATE_TIME, UPDATE_USER, 
+  <insert id="insert" parameterType="com.manager.entry.tour.DocumentShow">
+    insert into SC020101 (SC0201_ID, FILE_SOURCE, FILE_NUM,
+      FILE_NAME, FILE_URL, STATUS,
+      CREATE_USER, CREATE_TIME, UPDATE_USER,
       UPDATE_TIME, DELETE_FLAG)
-    values (#{sc0201Id,jdbcType=VARCHAR}, #{fileSource,jdbcType=VARCHAR}, #{fileNum,jdbcType=VARCHAR}, 
-      #{fileName,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
-      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+    values (#{sc0201Id,jdbcType=VARCHAR}, #{fileSource,jdbcType=VARCHAR}, #{fileNum,jdbcType=VARCHAR},
+      #{fileName,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.manager.entry.tour.DocumentShow" >
-    insert into SC0201
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="sc0201Id != null" >
+  <insert id="insertSelective" parameterType="com.manager.entry.tour.DocumentShow">
+    insert into SC020101
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sc0201Id != null">
         SC0201_ID,
       </if>
-      <if test="fileSource != null" >
+      <if test="fileSource != null">
         FILE_SOURCE,
       </if>
-      <if test="fileNum != null" >
+      <if test="fileNum != null">
         FILE_NUM,
       </if>
-      <if test="fileName != null" >
+      <if test="fileName != null">
         FILE_NAME,
       </if>
-      <if test="fileUrl != null" >
+      <if test="fileUrl != null">
         FILE_URL,
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         STATUS,
       </if>
-      <if test="createUser != null" >
+      <if test="createUser != null">
         CREATE_USER,
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         CREATE_TIME,
       </if>
-      <if test="updateUser != null" >
+      <if test="updateUser != null">
         UPDATE_USER,
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         UPDATE_TIME,
       </if>
-      <if test="deleteFlag != null" >
+      <if test="deleteFlag != null">
         DELETE_FLAG,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="sc0201Id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sc0201Id != null">
         #{sc0201Id,jdbcType=VARCHAR},
       </if>
-      <if test="fileSource != null" >
+      <if test="fileSource != null">
         #{fileSource,jdbcType=VARCHAR},
       </if>
-      <if test="fileNum != null" >
+      <if test="fileNum != null">
         #{fileNum,jdbcType=VARCHAR},
       </if>
-      <if test="fileName != null" >
+      <if test="fileName != null">
         #{fileName,jdbcType=VARCHAR},
       </if>
-      <if test="fileUrl != null" >
+      <if test="fileUrl != null">
         #{fileUrl,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         #{status,jdbcType=CHAR},
       </if>
-      <if test="createUser != null" >
+      <if test="createUser != null">
         #{createUser,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateUser != null" >
+      <if test="updateUser != null">
         #{updateUser,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="deleteFlag != null" >
+      <if test="deleteFlag != null">
         #{deleteFlag,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.tour.DocumentShow" >
-    update SC0201
-    <set >
-      <if test="fileSource != null" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.tour.DocumentShow">
+    update SC020101
+    <set>
+      <if test="fileSource != null">
         FILE_SOURCE = #{fileSource,jdbcType=VARCHAR},
       </if>
-      <if test="fileNum != null" >
+      <if test="fileNum != null">
         FILE_NUM = #{fileNum,jdbcType=VARCHAR},
       </if>
-      <if test="fileName != null" >
+      <if test="fileName != null">
         FILE_NAME = #{fileName,jdbcType=VARCHAR},
       </if>
-      <if test="fileUrl != null" >
+      <if test="fileUrl != null">
         FILE_URL = #{fileUrl,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         STATUS = #{status,jdbcType=CHAR},
       </if>
-      <if test="createUser != null" >
+      <if test="createUser != null">
         CREATE_USER = #{createUser,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="createTime != null">
         CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateUser != null" >
+      <if test="updateUser != null">
         UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null" >
+      <if test="updateTime != null">
         UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="deleteFlag != null" >
+      <if test="deleteFlag != null">
         DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
       </if>
     </set>
     where SC0201_ID = #{sc0201Id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.manager.entry.tour.DocumentShow" >
-    update SC0201
+  <update id="updateByPrimaryKey" parameterType="com.manager.entry.tour.DocumentShow">
+    update SC020101
     set FILE_SOURCE = #{fileSource,jdbcType=VARCHAR},
       FILE_NUM = #{fileNum,jdbcType=VARCHAR},
       FILE_NAME = #{fileName,jdbcType=VARCHAR},

@@ -7,6 +7,9 @@ import com.manager.entry.tour.SuperContent;
 import com.manager.entry.tour.SuperContentQuery;
 import com.manager.tour.service.SuperContentService;
 import com.manager.util.*;
+import com.manager.util.group.InsertGroup;
+import com.manager.util.group.UpdateGroup;
+import com.manager.util.group.UpdateStatusGroup;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -15,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.logging.Level;
 
 @RestController
 @RequestMapping("/content")
@@ -74,7 +76,7 @@ public class SuperContentController {
      * @param superContent
      * @return
      */
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/update/index", method = RequestMethod.POST)
     @RequiresRoles(value = {Role.SYSTEM})
     public ResultEntry update(@Validated(value = {UpdateGroup.class}) @RequestBody SuperContent superContent) {
         int count = superContentService.update(superContent);

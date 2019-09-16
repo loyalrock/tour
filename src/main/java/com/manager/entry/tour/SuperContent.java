@@ -2,15 +2,13 @@ package com.manager.entry.tour;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.manager.entry.common.CommonEntry;
-import com.manager.util.InsertGroup;
-import com.manager.util.UpdateGroup;
-import com.manager.util.UpdateStatusGroup;
+import com.manager.util.group.InsertGroup;
+import com.manager.util.group.UpdateGroup;
+import com.manager.util.group.UpdateStatusGroup;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.Date;
 import java.util.List;
 

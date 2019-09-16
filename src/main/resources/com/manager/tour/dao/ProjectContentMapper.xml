@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manager.tour.dao.ProjectContentMapper" >
+  <resultMap id="BaseResultMap" type="com.manager.entry.tour.ProjectContent" >
+    <constructor >
+      <idArg column="SC0201_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PROJECT_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SUPER_P_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SUPER_P_LEVEL" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SYS_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SUPER_P_CHECK" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SUPER_P_EXP" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SUPER_P_CONT" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="SUPER_P_SCORE" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="OP_UNIT" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="STATUS" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="SHOW_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="IF_FILE" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IF_PIC" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IF_LINE" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IF_DIST" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="SCORE" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="CREATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="UPDATE_USER" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="UPDATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="DELETE_FLAG" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SC0201_ID, PROJECT_NO, SUPER_P_NO, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, 
+    SUPER_P_CONT, SUPER_P_SCORE, OP_UNIT, STATUS, SHOW_NO, IF_FILE, IF_PIC, IF_LINE, 
+    IF_DIST, SCORE, CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SC0201
+    where SC0201_ID = #{sc0201Id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SC0201
+    where SC0201_ID = #{sc0201Id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.manager.entry.tour.ProjectContent" >
+    insert into SC0201 (SC0201_ID, PROJECT_NO, SUPER_P_NO, 
+      SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, 
+      SUPER_P_EXP, SUPER_P_CONT, SUPER_P_SCORE, 
+      OP_UNIT, STATUS, SHOW_NO, 
+      IF_FILE, IF_PIC, IF_LINE, IF_DIST, 
+      SCORE, CREATE_USER, CREATE_TIME, 
+      UPDATE_USER, UPDATE_TIME, DELETE_FLAG
+      )
+    values (#{sc0201Id,jdbcType=VARCHAR}, #{projectNo,jdbcType=VARCHAR}, #{superPNo,jdbcType=VARCHAR}, 
+      #{superPLevel,jdbcType=VARCHAR}, #{sysNo,jdbcType=VARCHAR}, #{superPCheck,jdbcType=VARCHAR}, 
+      #{superPExp,jdbcType=VARCHAR}, #{superPCont,jdbcType=VARCHAR}, #{superPScore,jdbcType=INTEGER}, 
+      #{opUnit,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{showNo,jdbcType=VARCHAR}, 
+      #{ifFile,jdbcType=CHAR}, #{ifPic,jdbcType=CHAR}, #{ifLine,jdbcType=CHAR}, #{ifDist,jdbcType=CHAR}, 
+      #{score,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.manager.entry.tour.ProjectContent" >
+    insert into SC0201
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sc0201Id != null" >
+        SC0201_ID,
+      </if>
+      <if test="projectNo != null" >
+        PROJECT_NO,
+      </if>
+      <if test="superPNo != null" >
+        SUPER_P_NO,
+      </if>
+      <if test="superPLevel != null" >
+        SUPER_P_LEVEL,
+      </if>
+      <if test="sysNo != null" >
+        SYS_NO,
+      </if>
+      <if test="superPCheck != null" >
+        SUPER_P_CHECK,
+      </if>
+      <if test="superPExp != null" >
+        SUPER_P_EXP,
+      </if>
+      <if test="superPCont != null" >
+        SUPER_P_CONT,
+      </if>
+      <if test="superPScore != null" >
+        SUPER_P_SCORE,
+      </if>
+      <if test="opUnit != null" >
+        OP_UNIT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="showNo != null" >
+        SHOW_NO,
+      </if>
+      <if test="ifFile != null" >
+        IF_FILE,
+      </if>
+      <if test="ifPic != null" >
+        IF_PIC,
+      </if>
+      <if test="ifLine != null" >
+        IF_LINE,
+      </if>
+      <if test="ifDist != null" >
+        IF_DIST,
+      </if>
+      <if test="score != null" >
+        SCORE,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="deleteFlag != null" >
+        DELETE_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sc0201Id != null" >
+        #{sc0201Id,jdbcType=VARCHAR},
+      </if>
+      <if test="projectNo != null" >
+        #{projectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="superPNo != null" >
+        #{superPNo,jdbcType=VARCHAR},
+      </if>
+      <if test="superPLevel != null" >
+        #{superPLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="sysNo != null" >
+        #{sysNo,jdbcType=VARCHAR},
+      </if>
+      <if test="superPCheck != null" >
+        #{superPCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="superPExp != null" >
+        #{superPExp,jdbcType=VARCHAR},
+      </if>
+      <if test="superPCont != null" >
+        #{superPCont,jdbcType=VARCHAR},
+      </if>
+      <if test="superPScore != null" >
+        #{superPScore,jdbcType=INTEGER},
+      </if>
+      <if test="opUnit != null" >
+        #{opUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="showNo != null" >
+        #{showNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ifFile != null" >
+        #{ifFile,jdbcType=CHAR},
+      </if>
+      <if test="ifPic != null" >
+        #{ifPic,jdbcType=CHAR},
+      </if>
+      <if test="ifLine != null" >
+        #{ifLine,jdbcType=CHAR},
+      </if>
+      <if test="ifDist != null" >
+        #{ifDist,jdbcType=CHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.manager.entry.tour.ProjectContent" >
+    update SC0201
+    <set >
+      <if test="projectNo != null" >
+        PROJECT_NO = #{projectNo,jdbcType=VARCHAR},
+      </if>
+      <if test="superPNo != null" >
+        SUPER_P_NO = #{superPNo,jdbcType=VARCHAR},
+      </if>
+      <if test="superPLevel != null" >
+        SUPER_P_LEVEL = #{superPLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="sysNo != null" >
+        SYS_NO = #{sysNo,jdbcType=VARCHAR},
+      </if>
+      <if test="superPCheck != null" >
+        SUPER_P_CHECK = #{superPCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="superPExp != null" >
+        SUPER_P_EXP = #{superPExp,jdbcType=VARCHAR},
+      </if>
+      <if test="superPCont != null" >
+        SUPER_P_CONT = #{superPCont,jdbcType=VARCHAR},
+      </if>
+      <if test="superPScore != null" >
+        SUPER_P_SCORE = #{superPScore,jdbcType=INTEGER},
+      </if>
+      <if test="opUnit != null" >
+        OP_UNIT = #{opUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="showNo != null" >
+        SHOW_NO = #{showNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ifFile != null" >
+        IF_FILE = #{ifFile,jdbcType=CHAR},
+      </if>
+      <if test="ifPic != null" >
+        IF_PIC = #{ifPic,jdbcType=CHAR},
+      </if>
+      <if test="ifLine != null" >
+        IF_LINE = #{ifLine,jdbcType=CHAR},
+      </if>
+      <if test="ifDist != null" >
+        IF_DIST = #{ifDist,jdbcType=CHAR},
+      </if>
+      <if test="score != null" >
+        SCORE = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null" >
+        DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where SC0201_ID = #{sc0201Id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.manager.entry.tour.ProjectContent" >
+    update SC0201
+    set PROJECT_NO = #{projectNo,jdbcType=VARCHAR},
+      SUPER_P_NO = #{superPNo,jdbcType=VARCHAR},
+      SUPER_P_LEVEL = #{superPLevel,jdbcType=VARCHAR},
+      SYS_NO = #{sysNo,jdbcType=VARCHAR},
+      SUPER_P_CHECK = #{superPCheck,jdbcType=VARCHAR},
+      SUPER_P_EXP = #{superPExp,jdbcType=VARCHAR},
+      SUPER_P_CONT = #{superPCont,jdbcType=VARCHAR},
+      SUPER_P_SCORE = #{superPScore,jdbcType=INTEGER},
+      OP_UNIT = #{opUnit,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      SHOW_NO = #{showNo,jdbcType=VARCHAR},
+      IF_FILE = #{ifFile,jdbcType=CHAR},
+      IF_PIC = #{ifPic,jdbcType=CHAR},
+      IF_LINE = #{ifLine,jdbcType=CHAR},
+      IF_DIST = #{ifDist,jdbcType=CHAR},
+      SCORE = #{score,jdbcType=INTEGER},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      DELETE_FLAG = #{deleteFlag,jdbcType=CHAR}
+    where SC0201_ID = #{sc0201Id,jdbcType=VARCHAR}
+  </update>
+</mapper>

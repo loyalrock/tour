@@ -5,18 +5,18 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 public interface DocumentShowMapper {
-    int deleteByPrimaryKey(String sc0201Id);
+    int deleteByPrimaryKey(String sc020101Id);
 
     int insert(DocumentShow record);
 
     int insertSelective(DocumentShow record);
 
-    DocumentShow selectByPrimaryKey(String sc0201Id);
+    DocumentShow selectByPrimaryKey(String sc020101Id);
 
     int updateByPrimaryKeySelective(DocumentShow record);
 
     int updateByPrimaryKey(DocumentShow record);
 
-    @Select("select count(*) from SC0201 where FILE_SOURCE = #{fileSource}")
+    @Select("select count(*) from SC020101 where FILE_SOURCE = #{fileSource}")
     int selectCount(@Param("fileSource") String fileSource);
 }
