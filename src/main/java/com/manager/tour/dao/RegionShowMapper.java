@@ -23,4 +23,8 @@ public interface RegionShowMapper {
     int selectCount(@Param("distSource") String distSource);
 
     int insertAll(@Param("regionShows")List<RegionShow> regionShows);
+
+    int deleteNotIn(@Param("ids") List<String> ids, @Param("ss01Id") String userUid);
+
+    int deleteAll(@Param("sc0201Id") String sc0201Id, @Param("ss01Id") String userUid);
 }

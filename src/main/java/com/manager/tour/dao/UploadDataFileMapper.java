@@ -28,4 +28,6 @@ public interface UploadDataFileMapper {
      * @return
      */
     int insertAll(@Param("uploadDataFiles") List<UploadDataFile> uploadDataFiles);
+
+    int deleteAll(@Param("ids") List<String> ids);
 }

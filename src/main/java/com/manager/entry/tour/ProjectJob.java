@@ -1,7 +1,9 @@
 package com.manager.entry.tour;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.manager.entry.common.CommonEntry;
 import com.manager.util.group.InsertGroup;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -31,8 +33,12 @@ public class ProjectJob extends CommonEntry {
 
     private String indexPic;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     private Date enableTime;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     private Date deactiTime;
 
     /**

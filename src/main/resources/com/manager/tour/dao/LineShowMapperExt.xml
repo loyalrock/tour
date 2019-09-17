@@ -7,7 +7,7 @@
       LINE_END_LONG, LINE_END_LAT, STATUS,
       CREATE_USER, CREATE_TIME, UPDATE_USER,
       UPDATE_TIME, DELETE_FLAG)
-    values 
+    values
     <foreach collection="lineShows" separator="," item="item">
       (#{item.sc020103Id,jdbcType=VARCHAR}, #{item.lineSource,jdbcType=VARCHAR}, #{item.lineNum,jdbcType=VARCHAR},
       #{item.lineName,jdbcType=VARCHAR}, #{item.lineStartLong,jdbcType=INTEGER}, #{item.lineStartLat,jdbcType=INTEGER},
@@ -15,6 +15,19 @@
       #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR},
       #{item.updateTime,jdbcType=TIMESTAMP}, #{item.deleteFlag,jdbcType=CHAR})
     </foreach>
-    
+
   </insert>
+
+  <update id="deleteNotIn">
+    update SC020103 set STATUS = 0, DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
+    where SC020103_ID not in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+
+  <update id="deleteAll">
+    update SC020103 set STATUS = 0, DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
+    where LINE_SOURCE = #{sc0201Id,jdbcType=VARCHAR}
+  </update>
 </mapper>

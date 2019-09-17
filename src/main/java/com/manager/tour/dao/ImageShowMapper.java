@@ -23,4 +23,8 @@ public interface ImageShowMapper {
     int selectCount(@Param("picSource") String picSource);
 
     int insertAll(@Param("imageShows")List<ImageShow> imageShows);
+
+    int deleteNotIn(@Param("ids") List<String> ids, @Param("ss01Id") String userUid);
+
+    int deleteAll(@Param("sc0201Id") String sc0201Id, @Param("ss01Id") String userUid);
 }

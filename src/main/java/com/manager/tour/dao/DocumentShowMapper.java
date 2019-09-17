@@ -1,6 +1,7 @@
 package com.manager.tour.dao;
 
 import com.manager.entry.tour.DocumentShow;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -23,4 +24,8 @@ public interface DocumentShowMapper {
     int selectCount(@Param("fileSource") String fileSource);
 
     int insertAll(@Param("documentShows")List<DocumentShow> documentShows);
+
+    int deleteNotIn(@Param("ids") List<String> ids, @Param("ss01Id") String userUid);
+
+    int deleteAll(@Param("sc0201Id") String sc0201Id, @Param("ss01Id") String userUid);
 }

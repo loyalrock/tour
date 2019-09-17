@@ -18,4 +18,12 @@ public interface ProjectContentService {
     ProjectContent selectDetail(String sc0201Id);
 
     int update(ProjectContent projectContent);
+
+    int deleteDocument(String sc020101Id);
+
+    int deleteImage(String sc020102);
+
+    int deleteLine(String sc020103);
+
+    int deleteDist(String sc020104);
 }

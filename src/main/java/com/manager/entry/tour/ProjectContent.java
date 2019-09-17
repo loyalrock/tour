@@ -49,7 +49,6 @@ public class ProjectContent extends CommonEntry {
 
     private List<RegionShow> regionShows;
 
-
     public List<ImageShow> getImageShows() {
         return imageShows;
     }
