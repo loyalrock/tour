@@ -36,4 +36,6 @@ public interface SuperContentMapper {
     int insertAll(@Param("query") List<Object> list);
 
     int updateAllStatus(@Param("ids") List<String> ids, String status);
+
+    List<SuperContent> selectAll(@Param("query") SuperContentQuery query);
 }

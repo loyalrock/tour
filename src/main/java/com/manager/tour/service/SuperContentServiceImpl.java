@@ -32,6 +32,11 @@ public class SuperContentServiceImpl implements SuperContentService{
     private SuperContentMapper superContentMapper;
 
     @Override
+    public List<SuperContent> selectAll(SuperContentQuery query) {
+        return superContentMapper.selectAll(query);
+    }
+
+    @Override
     public IPage<SuperContent> selectPage(Page<SuperContent> page, SuperContentQuery query) {
         return superContentMapper.selectPage(page, query);
     }

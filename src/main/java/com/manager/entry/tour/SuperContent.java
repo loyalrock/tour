@@ -44,6 +44,19 @@ public class SuperContent extends CommonEntry {
     @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     private Date deactiTime;
 
+    /**
+     * 递归查询
+     */
+    private List<SuperContent> superContents;
+
+    public List<SuperContent> getSuperContents() {
+        return superContents;
+    }
+
+    public void setSuperContents(List<SuperContent> superContents) {
+        this.superContents = superContents;
+    }
+
     public SuperContent(String sc01Id, String superPNo, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPScore, String ifAdd, Date enableTime, Date deactiTime, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
         super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
         this.sc01Id = sc01Id;

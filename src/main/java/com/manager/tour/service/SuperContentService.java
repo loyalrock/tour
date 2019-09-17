@@ -39,4 +39,6 @@ public interface SuperContentService {
 
     int updateAllStatus(List<String> ids, String status);
 
+    List<SuperContent> selectAll(SuperContentQuery query);
+
 }

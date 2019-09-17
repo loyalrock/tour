@@ -82,4 +82,24 @@
     </foreach>
   </update>
 
+  <select id="selectAll" resultMap="AllResultMap">
+    select * from SC01 where SUPER_P_LEVEL = 1
+  </select>
+
+  <select id="selectAllChild" resultMap="AllResultMap">
+    select * from SC01 where SUPER_P_NO regexp concat('^', #{code}) and SUPER_P_LEVEL = #{level} + 1
+  </select>
+
+  <resultMap id="AllResultMap" type="com.manager.entry.tour.SuperContent">
+    <id column="SC01_ID" property="sc01Id" jdbcType="VARCHAR"></id>
+    <result column="SUPER_P_NO" property="superPNo" jdbcType="VARCHAR"></result>
+    <result column="SYS_NO" property="sysNo" jdbcType="VARCHAR"></result>
+    <result column="SUPER_P_CHECK" property="superPCheck" jdbcType="VARCHAR"></result>
+    <result column="SUPER_P_EXP" property="superPExp" jdbcType="VARCHAR"></result>
+    <result column="SUPER_P_SCORE" property="superPScore" jdbcType="VARCHAR"></result>
+    <result column="SUPER_P_LEVEL" property="superPLevel" jdbcType="VARCHAR"></result>
+    <result column="STATUS" property="status" jdbcType="CHAR"></result>
+    <collection property="superContents" select="selectAllChild" ofType="com.manager.entry.tour.SuperContent" column="{code=SUPER_P_NO, level=SUPER_P_LEVEL}"></collection>
+  </resultMap>
+
 </mapper>

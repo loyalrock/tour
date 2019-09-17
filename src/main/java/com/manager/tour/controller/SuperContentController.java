@@ -10,6 +10,7 @@ import com.manager.util.*;
 import com.manager.util.group.InsertGroup;
 import com.manager.util.group.UpdateGroup;
 import com.manager.util.group.UpdateStatusGroup;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -110,6 +111,13 @@ public class SuperContentController {
     public ResultEntry updateAllStatus (@Validated(value = {UpdateStatusGroup.class}) @RequestBody SuperContent superContent) {
         int count = superContentService.updateAllStatus(superContent.getSc01Ids(), superContent.getStatus());
         return ResultUtil.success(Message.UPDATE_SUCCESS);
+    }
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT, Role.EXPERTS}, logical = Logical.OR)
+    public ResultEntry selectAll (SuperContentQuery query) {
+        List<SuperContent> superContents = superContentService.selectAll(query);
+        return ResultUtil.success(Message.SELECT_SUCCESS, superContents);
     }
 
 }
