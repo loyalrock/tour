@@ -11,6 +11,7 @@ import com.manager.util.ResultUtil;
 import com.manager.util.Role;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,8 @@ public class SystemController {
 
         // 获取user对象
         User user = (User)SecurityUtils.getSubject().getPrincipal();
+        // 过期时间
+        SecurityUtils.getSubject().getSession().setTimeout(24 * 60 * 60 * 1000l);
         // 获取角色
         List<UserRole> userRoles = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
 
@@ -67,7 +70,7 @@ public class SystemController {
      * @throws Exception
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     public ResultEntry upload(@RequestParam("file")MultipartFile multipartFile) throws Exception{
         String url = systemService.upload(multipartFile);
         return ResultUtil.success(Message.INSERT_SUCCESS, url);

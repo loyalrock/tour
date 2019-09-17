@@ -42,7 +42,7 @@ public class SuperContentController {
      * @return
      */
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     public ResultEntry selectPage(Page page, SuperContentQuery query) {
         IPage<SuperContent> superContentIPage = superContentService.selectPage(page, query);
         return ResultUtil.success(Message.SELECT_SUCCESS, superContentIPage);
@@ -54,7 +54,7 @@ public class SuperContentController {
      * @return
      */
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     public ResultEntry selectDetail(@RequestParam("superContentUid") String superContentUid) {
         SuperContent superContent = superContentService.selectDetail(superContentUid);
         return ResultUtil.success(Message.SELECT_SUCCESS, superContent);

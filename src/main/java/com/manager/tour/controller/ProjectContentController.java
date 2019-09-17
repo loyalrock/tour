@@ -6,6 +6,7 @@ import com.manager.tour.service.ProjectContentService;
 import com.manager.util.Message;
 import com.manager.util.ResultUtil;
 import com.manager.util.Role;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class ProjectContentController {
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResultEntry updateProjectContent (@RequestBody ProjectContent projectContent) throws Exception {
         projectContentService.update(projectContent);
@@ -42,7 +43,7 @@ public class ProjectContentController {
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ResultEntry updateProjectContent (@RequestParam("sc0201Id") String sc0201Id) throws Exception {
         ProjectContent projectContent = projectContentService.selectDetail(sc0201Id);

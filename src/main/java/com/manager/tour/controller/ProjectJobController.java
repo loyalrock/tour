@@ -9,6 +9,7 @@ import com.manager.tour.service.ProjectJobService;
 import com.manager.util.Message;
 import com.manager.util.ResultUtil;
 import com.manager.util.Role;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ public class ProjectJobController {
      *
      * @return
      */
-    @RequiresRoles(value = {"SYS_ADMIN"})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResultEntry getProjectJobList() {
         List<ProjectJob> projectJobs = projectJobService.selectList();
@@ -50,7 +51,7 @@ public class ProjectJobController {
      *
      * @return
      */
-    @RequiresRoles(value = {"SYS_ADMIN"})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public ResultEntry getProjectJobPage(Page<ProjectJob> page, ProjectJobQuery query) {
         IPage<ProjectJob> projectJobIPage = projectJobService.selectPage(page, query);
@@ -64,7 +65,7 @@ public class ProjectJobController {
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = {Role.SYSTEM})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResultEntry add(@RequestBody ProjectJob projectJob) throws Exception {
         projectJobService.add(projectJob);
@@ -78,7 +79,7 @@ public class ProjectJobController {
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = {Role.SYSTEM})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ResultEntry delete(@RequestParam("sc02Id") String sc02Id) throws Exception {
         projectJobService.deleteOne(sc02Id);
@@ -92,7 +93,7 @@ public class ProjectJobController {
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = {Role.SYSTEM})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     @RequestMapping(value = "/delete/all", method = RequestMethod.POST)
     public ResultEntry deleteAll(List<String> ids) throws Exception {
         projectJobService.deleteAll(ids);
@@ -106,7 +107,7 @@ public class ProjectJobController {
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = {Role.SYSTEM})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     @RequestMapping(value = "/update/status", method = RequestMethod.POST)
     public ResultEntry updateStatus(@RequestBody ProjectJobQuery query) throws Exception {
         projectJobService.updateStatus(query);
@@ -119,7 +120,7 @@ public class ProjectJobController {
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = {Role.SYSTEM})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     @RequestMapping(value = "/code", method = RequestMethod.GET)
     public ResultEntry getNextCode() throws Exception {
         String code = projectJobService.getNextCode();
@@ -132,7 +133,7 @@ public class ProjectJobController {
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = {Role.SYSTEM})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public ResultEntry selectDetail(@RequestParam("sc02Id") String sc02Id) throws Exception {
         ProjectJob projectJob = projectJobService.selectDetail(sc02Id);

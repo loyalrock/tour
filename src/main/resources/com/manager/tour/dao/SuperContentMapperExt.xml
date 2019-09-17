@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.manager.tour.dao.SuperContentMapper">
   <select id="selectPage" resultMap="PageResultMap">
-    select SC01_ID, SUPER_P_NO, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE, SUPER_P_LEVEL,
+    select SC01_ID, SUPER_P_NO, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE, SUPER_P_LEVEL, IF_ADD,
     STATUS from SC01 where DELETE_FLAG = '0'
     <if test="query != null">
       <if test="query.superPNo != null and query.superPNo.trim() != ''">
@@ -22,7 +22,7 @@
   </select>
 
   <select id="selectLevel" resultMap="PageResultMap">
-    select SC01_ID, SUPER_P_NO, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE, SUPER_P_LEVEL,
+    select SC01_ID, SUPER_P_NO, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE, SUPER_P_LEVEL, IF_ADD,
     STATUS from SC01 where DELETE_FLAG = '0'
       <if test="code != null and code.trim() != ''">
         and SUPER_P_NO like concat('', #{code,jdbcType=VARCHAR}, '%')
@@ -41,6 +41,7 @@
     <result column="SUPER_P_EXP" property="superPExp" jdbcType="VARCHAR"></result>
     <result column="SUPER_P_SCORE" property="superPScore" jdbcType="VARCHAR"></result>
     <result column="SUPER_P_LEVEL" property="superPLevel" jdbcType="VARCHAR"></result>
+    <result column="IF_ADD" property="ifAdd" jdbcType="CHAR"></result>
     <result column="STATUS" property="status" jdbcType="CHAR"></result>
   </resultMap>
 
@@ -99,6 +100,7 @@
     <result column="SUPER_P_SCORE" property="superPScore" jdbcType="VARCHAR"></result>
     <result column="SUPER_P_LEVEL" property="superPLevel" jdbcType="VARCHAR"></result>
     <result column="STATUS" property="status" jdbcType="CHAR"></result>
+    <result column="IF_ADD" property="ifAdd" jdbcType="CHAR"></result>
     <collection property="superContents" select="selectAllChild" ofType="com.manager.entry.tour.SuperContent" column="{code=SUPER_P_NO, level=SUPER_P_LEVEL}"></collection>
   </resultMap>
 
