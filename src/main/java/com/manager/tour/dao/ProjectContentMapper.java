@@ -26,4 +26,8 @@ public interface ProjectContentMapper {
     int insertAll(@Param("projectContents") List<ProjectContent> projectContents);
 
     ProjectContent selectDetail(@Param("sc0201Id") String sc0201Id);
+
+    int deleteAll(@Param("projectNo") String projectNo, @Param("ids") List<String> ids, @Param("ss01Id") String userUid);
+
+    List<String> selectDeleteId(@Param("projectNo") String projectNo, @Param("ids") List<String> ids);
 }

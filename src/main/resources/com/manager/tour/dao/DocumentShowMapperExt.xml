@@ -16,16 +16,23 @@
 
   </insert>
 
-  <update id="deleteNotIn">
+  <update id="deleteAll">
     update SC020101 set STATUS = 0, DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
-    where SC020101_ID not in
+    where FILE_SOURCE = #{sc0201Id,jdbcType=VARCHAR}
+    <if test="ids != null and ids.size > 0">
+      and SC020101_ID not in
+      <foreach collection="ids" item="id" separator="," open="(" close=")">
+        #{id,jdbcType=VARCHAR}
+      </foreach>
+    </if>
+  </update>
+
+  <update id="deleteAllByContent">
+    update SC020101 set STATUS = 0, DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
+    where FILE_SOURCE in
     <foreach collection="ids" item="id" separator="," open="(" close=")">
       #{id,jdbcType=VARCHAR}
     </foreach>
   </update>
 
-  <update id="deleteAll">
-    update SC020101 set STATUS = 0, DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
-    where FILE_SOURCE = #{sc0201Id,jdbcType=VARCHAR}
-  </update>
 </mapper>

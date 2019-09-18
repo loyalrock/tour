@@ -25,7 +25,7 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     private UserRoleService userRoleService;
 
-    private static Map<String, List<String>> USER_ROLE_CACHE = new ConcurrentHashMap<>();
+    public static Map<String, List<String>> USER_ROLE_CACHE = new ConcurrentHashMap<>();
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {

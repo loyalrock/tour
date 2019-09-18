@@ -13,7 +13,7 @@ public class Role {
     /**
      * 项目管理员
      */
-    public final static String PROJECT = "SYS_ADMIN";
+    public final static String PROJECT = "PROJECT_ADMIN";
 
     /**
      * 专家

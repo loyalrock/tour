@@ -40,4 +40,11 @@ public interface ProjectJobService {
 
     ProjectJob selectDetail(String sc02Id);
 
+    /**
+     * 修改项目内容
+     * @param projectJob
+     * @return
+     */
+    int update(ProjectJob projectJob);
+
 }

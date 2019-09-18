@@ -5,11 +5,15 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.common.CommonException;
 import com.manager.entry.common.UserUtil;
+import com.manager.entry.system.User;
 import com.manager.entry.tour.*;
+import com.manager.shiro.ShiroRealm;
 import com.manager.tour.dao.*;
 import com.manager.util.FileType;
 import com.manager.util.Flag;
 import com.manager.util.Message;
+import com.manager.util.Role;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,6 +42,18 @@ public class ProjectJobServiceImpl implements ProjectJobService {
 
     @Autowired
     private ProjectContentMapper projectContentMapper;
+
+    @Autowired
+    private DocumentShowMapper documentShowMapper;
+
+    @Autowired
+    private ImageShowMapper imageShowMapper;
+
+    @Autowired
+    private LineShowMapper lineShowMapper;
+
+    @Autowired
+    private RegionShowMapper regionShowMapper;
 
     @Override
     public List<ProjectJob> selectList() {
@@ -62,7 +79,6 @@ public class ProjectJobServiceImpl implements ProjectJobService {
             for (UploadDataFile uploadDataFile : uploadDataFiles) {
                 uploadDataFile.setSfj01Id(UUID.randomUUID().toString());
                 uploadDataFile.setAppSource(projectJob.getProjectNo());
-                uploadDataFile.setAppNum(String.valueOf(++currentNo));
                 UserUtil.insertData(uploadDataFile);
             }
             // 批量新增
@@ -93,61 +109,82 @@ public class ProjectJobServiceImpl implements ProjectJobService {
         return projectJobMapper.selectDetail(sc02Id);
     }
 
-//    @Override
-//    public int uploadIndex(MultipartFile file, String projectNo) throws Exception {
-//        // 保存图片
-//        String filePath = Upload.saveFile(file);
-//        ProjectJob projectJob = new ProjectJob();
-//        projectJob.setProjectNo(projectNo);
-//        UserUtil.updateData(projectJob);
-//
-//        // 显示首页图片
-//        projectJob.setIndexPic(Flag.HAVE);
-//        UploadDataFile uploadDataFile = new UploadDataFile();
-//        // 新增数据
-//        UserUtil.insertData(uploadDataFile);
-//
-//        uploadDataFile.setSfj01Id(UUID.randomUUID().toString());
-//        uploadDataFile.setAppSource(projectNo);
-//        uploadDataFile.setAppUrl(filePath);
-//        uploadDataFile.setAppName(file.getOriginalFilename());
-//        int num = uploadDataFileMapper.selectCount(projectNo);
-//        uploadDataFile.setAppNum(String.valueOf(num + 1));
-//        uploadDataFileMapper.insertSelective(uploadDataFile);
-//
-////        } else if (FileType.SHOW_PIC.equals(type)) {
-////            projectJob.setIfPic(Flag.HAVE);
-////            ImageShow imageShow = new ImageShow();
-////            // 新增数据
-////            UserUtil.insertData(imageShow);
-////
-////            imageShow.setSc0202Id(UUID.randomUUID().toString());
-////            imageShow.setPicSource(projectNo);
-////            imageShow.setAppUrl(filePath);
-////            imageShow.setPicName(file.getOriginalFilename());
-////            int num = imageShowMapper.selectCount(projectNo);
-////            imageShow.setPicNum(String.valueOf(num + 1));
-////            imageShowMapper.insertSelective(imageShow);
-////            projectJob.setIfPic(Flag.HAVE);
-////        } else if (FileType.SHOW_FILE.equals(type)) {
-////            projectJob.setIfFile(Flag.HAVE);
-////            DocumentShow documentShow = new DocumentShow();
-////            // 新增数据
-////            UserUtil.insertData(documentShow);
-////
-////            documentShow.setSc0201Id(UUID.randomUUID().toString());
-////            documentShow.setFileSource(projectNo);
-////            documentShow.setFileUrl(filePath);
-////            documentShow.setFileName(file.getOriginalFilename());
-////            int num = documentShowMapper.selectCount(projectNo);
-////            documentShow.setFileNum(String.valueOf(num + 1));
-////            documentShowMapper.insertSelective(documentShow);
-////            projectJob.setIfPic(Flag.HAVE);
-////        }
-//
-//        int count = projectJobMapper.updateByProjectNo(projectJob);
-//        return count;
-//    }
+    @Override
+    public int update(ProjectJob projectJob) {
+
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        // 当前操作账户
+        String ss01Id = user.getSs01Id();
+
+        // 修改删除新增替换的首页图片
+        List<UploadDataFile> insertUploadList = new ArrayList<>();
+        List<String> deleteUploadNotInIds = new ArrayList<>();
+
+        List<UploadDataFile> uploadDataFiles = projectJob.getUploadDataFiles();
+        if (uploadDataFiles != null && uploadDataFiles.size() > 0) {
+            projectJob.setIndexPic(Flag.HAVE);
+            for (UploadDataFile uploadDataFile : uploadDataFiles) {
+                if (uploadDataFile.getSfj01Id() == null) {
+                    UserUtil.insertData(uploadDataFile);
+                    uploadDataFile.setSfj01Id(UUID.randomUUID().toString());
+                    uploadDataFile.setAppSource(projectJob.getProjectNo());
+                    insertUploadList.add(uploadDataFile);
+                } else {
+                    deleteUploadNotInIds.add(uploadDataFile.getSfj01Id());
+                    UserUtil.updateData(uploadDataFile);
+                    uploadDataFileMapper.updateByPrimaryKeySelective(uploadDataFile);
+                }
+            }
+        } else {
+            projectJob.setIndexPic(Flag.NOT_HAVE);
+        }
+        // 先删除在新增 如果有id就排除法删除 没有的情况下全删 修改时 已有的数据即为全部
+        uploadDataFileMapper.deleteAll(projectJob.getProjectNo(), deleteUploadNotInIds, ss01Id);
+        if (insertUploadList.size() > 0) {
+            uploadDataFileMapper.insertAll(insertUploadList);
+        }
+
+        // 修改删除新增替换的维护内容
+        List<ProjectContent> insertContentList = new ArrayList<>();
+        List<String> deleteContentNotInIds = new ArrayList<>();
+
+        List<ProjectContent> projectContents = projectJob.getProjectContents();
+        if (projectContents != null && projectContents.size() > 0) {
+            for (ProjectContent projectContent : projectContents) {
+                if (projectContent.getSc0201Id() == null) {
+                    UserUtil.insertData(projectContent);
+                    projectContent.setSc0201Id(UUID.randomUUID().toString());
+                    projectContent.setProjectNo(projectJob.getProjectNo());
+                    insertContentList.add(projectContent);
+                } else {
+                    deleteContentNotInIds.add(projectContent.getSc0201Id());
+                    UserUtil.updateData(projectContent);
+                    projectContentMapper.updateByPrimaryKeySelective(projectContent);
+                }
+            }
+        }
+
+        // 删除数量
+        int count = projectContentMapper.deleteAll(projectJob.getProjectNo(), deleteContentNotInIds, ss01Id);
+        if (count > 0) {
+            // 数量大于0 有被删除的 查询删除的ID
+            List<String> deleteIds = projectContentMapper.selectDeleteId(projectJob.getProjectNo(), deleteContentNotInIds);
+            if (deleteIds != null && deleteIds.size() > 0) {
+                // 删除内容关联的图片路线等 sc0201Ids
+                documentShowMapper.deleteAllByContent(deleteIds, ss01Id);
+                imageShowMapper.deleteAllByContent(deleteIds, ss01Id);
+                lineShowMapper.deleteAllByContent(deleteIds, ss01Id);
+                regionShowMapper.deleteAllByContent(deleteIds, ss01Id);
+            }
+        }
+        if (insertContentList.size() > 0) {
+            projectContentMapper.insertAll(insertContentList);
+        }
+
+        UserUtil.updateData(projectJob);
+        count = projectJobMapper.updateByPrimaryKeySelective(projectJob);
+        return count;
+    }
 
     private final static String PROJECT_NO_PREFIX = "XM";
     private int codeLength = 5;
@@ -182,6 +219,16 @@ public class ProjectJobServiceImpl implements ProjectJobService {
 
     @Override
     public IPage<ProjectJob> selectPage(Page<ProjectJob> page, ProjectJobQuery query) {
-        return projectJobMapper.selectPage(page, query);
+
+        User user = (User)SecurityUtils.getSubject().getPrincipal();
+
+        List<String> roles = ShiroRealm.USER_ROLE_CACHE.get(user.getSs01Id());
+        String ss01Id = null;
+        // 不是全域管理员就查询所属项目 该接口只有项目管理员和全域管理员可以访问
+        if (!roles.contains(Role.SYSTEM)) {
+            ss01Id = user.getSs01Id();
+        }
+
+        return projectJobMapper.selectPage(page, query, ss01Id);
     }
 }

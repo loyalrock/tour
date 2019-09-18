@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.manager.tour.dao.UploadDataFileMapper" >
-  <insert id="insertAll">
-     insert into SFJ01 (SFJ01_ID, APP_SOURCE, APP_NUM,
-      APP_NAME, APP_URL, STATUS,
-      CREATE_USER, CREATE_TIME, UPDATE_USER,
-      UPDATE_TIME, DELETE_FLAG)
-    values
+<mapper namespace="com.manager.tour.dao.UploadDataFileMapper">
+    <insert id="insertAll">
+        insert into SFJ01 (SFJ01_ID, APP_SOURCE, APP_NUM,
+        APP_NAME, APP_URL, STATUS,
+        CREATE_USER, CREATE_TIME, UPDATE_USER,
+        UPDATE_TIME, DELETE_FLAG)
+        values
         <foreach collection="uploadDataFiles" separator="," item="item">
-          (#{item.sfj01Id,jdbcType=VARCHAR}, #{item.appSource,jdbcType=VARCHAR}, #{item.appNum,jdbcType=VARCHAR},
-          #{item.appName,jdbcType=VARCHAR}, #{item.appUrl,jdbcType=VARCHAR}, #{item.status,jdbcType=CHAR},
-          #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR},
-          #{item.updateTime,jdbcType=TIMESTAMP}, #{item.deleteFlag,jdbcType=CHAR})
+            (#{item.sfj01Id,jdbcType=VARCHAR}, #{item.appSource,jdbcType=VARCHAR}, #{item.appNum,jdbcType=VARCHAR},
+            #{item.appName,jdbcType=VARCHAR}, #{item.appUrl,jdbcType=VARCHAR}, #{item.status,jdbcType=CHAR},
+            #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateUser,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP}, #{item.deleteFlag,jdbcType=CHAR})
         </foreach>
-    
-  </insert>
+
+    </insert>
+
+    <update id="deleteAll">
+        update SFJ01 set STATUS = 0, DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
+        where APP_SOURCE = #{projectNo,jdbcType=VARCHAR}
+        <if test="ids != null and ids.size > 0">
+            and SFJ01_ID not in
+            <foreach collection="ids" item="id" separator="," open="(" close=")">
+                #{id,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+    </update>
 </mapper>

@@ -32,6 +32,9 @@
                 and PROJECT_NAME like concat('%', #{query.projectName,jdbcType=VARCHAR}, '%')
             </if>
         </if>
+        <if test="ss01Id != null and ss01Id != ''">
+            and PROJECT_NO in (select PROJECT_NO from SS0102 where SS01_ID = #{ss01Id,jdbcType=VARCHAR} and DELETE_FLAG = '0')
+        </if>
         order by PROJECT_NO
     </select>
 
@@ -84,7 +87,7 @@
 
     <select id="selectDetail" parameterType="String" resultMap="DetailResultMap">
         select t1.SC02_ID, t1.PROJECT_NO, t1.PROJECT_NAME, t1.PROJECT_NAME_J, t1.PROJECT_LONG, t1.PROJECT_LAT, t1.INDEX_PIC,
-        pc.SC0201_ID, pc.PROJECT_NO, pc.SUPER_P_NO, pc.SUPER_P_LEVEL, pc.SYS_NO, pc.SUPER_P_CHECK, pc.SUPER_P_EXP, pc.SUPER_P_CONT, pc.SUPER_P_SCORE, pc.OP_UNIT,
+        pc.SC0201_ID, pc.PROJECT_NO as PROJECT_NO_CONTENT, pc.SUPER_P_NO, pc.SUPER_P_LEVEL, pc.SYS_NO, pc.SUPER_P_CHECK, pc.SUPER_P_EXP, pc.SUPER_P_CONT, pc.SUPER_P_SCORE, pc.OP_UNIT,
         t2.SFJ01_ID,
         t2.APP_URL    as index_url,
         t2.APP_NUM    as index_num,
@@ -110,7 +113,7 @@
         </collection>
         <collection property="projectContents" ofType="com.manager.entry.tour.ProjectContent">
             <id column="SC0201_ID" jdbcType="VARCHAR" property="sc0201Id" />
-            <result column="PROJECT_NO" jdbcType="VARCHAR" property="projectNo" />
+            <result column="PROJECT_NO_CONTENT" jdbcType="VARCHAR" property="projectNo" />
             <result column="SUPER_P_NO" jdbcType="VARCHAR" property="superPNo" />
             <result column="SUPER_P_LEVEL" jdbcType="VARCHAR" property="superPLevel" />
             <result column="SYS_NO" jdbcType="VARCHAR" property="sysNo" />

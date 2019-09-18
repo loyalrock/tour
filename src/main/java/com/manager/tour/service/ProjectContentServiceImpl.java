@@ -110,18 +110,14 @@ public class ProjectContentServiceImpl implements ProjectContentService {
                     documentShowMapper.updateByPrimaryKeySelective(documentShow);
                 }
             }
-            // 删除不在此内的
-            if (deleteDocumentNotInIds.size() > 0) {
-                documentShowMapper.deleteNotIn(deleteDocumentNotInIds, ss01Id);
-            }
-            // 新增
-            if (insertDocumentList.size() > 0) {
-                documentShowMapper.insertAll(insertDocumentList);
-            }
         } else {
-            // 不存在 删除所有
             projectContent.setIfFile(Flag.NOT_HAVE);
-            documentShowMapper.deleteAll(sc0201Id, ss01Id);
+        }
+
+        documentShowMapper.deleteAll(sc0201Id, deleteDocumentNotInIds, ss01Id);
+        // 新增
+        if (insertDocumentList.size() > 0) {
+            documentShowMapper.insertAll(insertDocumentList);
         }
 
         // 下面以此类推
@@ -143,16 +139,13 @@ public class ProjectContentServiceImpl implements ProjectContentService {
                     imageShowMapper.updateByPrimaryKeySelective(imageShow);
                 }
             }
-            if (deleteImageNotInIds.size() > 0) {
-                documentShowMapper.deleteNotIn(deleteImageNotInIds, ss01Id);
-            }
-            if (insertImageList.size() > 0) {
-                imageShowMapper.insertAll(insertImageList);
-            }
-
         } else {
             projectContent.setIfPic(Flag.NOT_HAVE);
-            imageShowMapper.deleteAll(sc0201Id, ss01Id);
+        }
+
+        imageShowMapper.deleteAll(sc0201Id, deleteImageNotInIds, ss01Id);
+        if (insertImageList.size() > 0) {
+            imageShowMapper.insertAll(insertImageList);
         }
 
         // 下面以此类推
@@ -174,15 +167,15 @@ public class ProjectContentServiceImpl implements ProjectContentService {
                     lineShowMapper.updateByPrimaryKeySelective(lineShow);
                 }
             }
-            if (deleteLineNotInIds.size() > 0) {
-                lineShowMapper.deleteNotIn(deleteLineNotInIds, ss01Id);
-            }
-            if (insertLineList.size() > 0) {
-                lineShowMapper.insertAll(insertLineList);
-            }
+
         } else {
             projectContent.setIfLine(Flag.NOT_HAVE);
-            lineShowMapper.deleteAll(sc0201Id, ss01Id);
+
+        }
+
+        lineShowMapper.deleteAll(sc0201Id, deleteLineNotInIds, ss01Id);
+        if (insertLineList.size() > 0) {
+            lineShowMapper.insertAll(insertLineList);
         }
 
         // 下面以此类推
@@ -204,15 +197,13 @@ public class ProjectContentServiceImpl implements ProjectContentService {
                     regionShowMapper.updateByPrimaryKeySelective(regionShow);
                 }
             }
-            if (deleteRegionNotInIds.size() > 0) {
-                regionShowMapper.deleteNotIn(deleteRegionNotInIds, ss01Id);
-            }
-            if (insertRegionList.size() > 0) {
-                regionShowMapper.insertAll(insertRegionList);
-            }
         } else {
             projectContent.setIfDist(Flag.NOT_HAVE);
-            regionShowMapper.deleteAll(sc0201Id, ss01Id);
+        }
+
+        regionShowMapper.deleteAll(sc0201Id, deleteRegionNotInIds, ss01Id);
+        if (insertRegionList.size() > 0) {
+            regionShowMapper.insertAll(insertRegionList);
         }
 
         // 修改内容维护

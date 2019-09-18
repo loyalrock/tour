@@ -35,7 +35,14 @@ public interface ProjectJobMapper {
 
     int updateStatus(@Param("query") ProjectJobQuery query);
 
-    IPage<ProjectJob> selectPage(Page<ProjectJob> page,@Param("query") ProjectJobQuery query);
+    /**
+     * sc01Id存在是 是项目管理员查询自己所属的项目
+     * @param page
+     * @param query
+     * @param sc01Id
+     * @return
+     */
+    IPage<ProjectJob> selectPage(Page<ProjectJob> page,@Param("query") ProjectJobQuery query, @Param("ss01Id") String sc01Id);
 
     @Select("select count(*) from SC02 where PROJECT_NO = #{code}")
     int checkCodeUnion(@Param("code") String code);

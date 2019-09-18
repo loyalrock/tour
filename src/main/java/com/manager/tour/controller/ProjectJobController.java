@@ -35,11 +35,11 @@ public class ProjectJobController {
     private ProjectJobService projectJobService;
 
     /**
-     * 查询所有列表
+     * 查询所有列表 新增用户时使用 选择项目
      *
      * @return
      */
-    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
+    @RequiresRoles(value = {Role.SYSTEM})
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResultEntry getProjectJobList() {
         List<ProjectJob> projectJobs = projectJobService.selectList();
@@ -47,7 +47,7 @@ public class ProjectJobController {
     }
 
     /**
-     * 查询所有列表
+     * 查询分页
      *
      * @return
      */
@@ -65,11 +65,25 @@ public class ProjectJobController {
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
+    @RequiresRoles(value = {Role.SYSTEM}, logical = Logical.OR)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResultEntry add(@RequestBody ProjectJob projectJob) throws Exception {
         projectJobService.add(projectJob);
         return ResultUtil.success(Message.INSERT_SUCCESS);
+    }
+
+    /**
+     * 修改
+     *
+     * @param projectJob
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResultEntry update(@RequestBody ProjectJob projectJob) throws Exception {
+        projectJobService.update(projectJob);
+        return ResultUtil.success(Message.UPDATE_SUCCESS);
     }
 
     /**
@@ -79,7 +93,7 @@ public class ProjectJobController {
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
+    @RequiresRoles(value = {Role.SYSTEM}, logical = Logical.OR)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ResultEntry delete(@RequestParam("sc02Id") String sc02Id) throws Exception {
         projectJobService.deleteOne(sc02Id);
@@ -93,7 +107,7 @@ public class ProjectJobController {
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
+    @RequiresRoles(value = {Role.SYSTEM}, logical = Logical.OR)
     @RequestMapping(value = "/delete/all", method = RequestMethod.POST)
     public ResultEntry deleteAll(List<String> ids) throws Exception {
         projectJobService.deleteAll(ids);
@@ -120,7 +134,7 @@ public class ProjectJobController {
      * @return
      * @throws Exception
      */
-    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
+    @RequiresRoles(value = {Role.SYSTEM})
     @RequestMapping(value = "/code", method = RequestMethod.GET)
     public ResultEntry getNextCode() throws Exception {
         String code = projectJobService.getNextCode();

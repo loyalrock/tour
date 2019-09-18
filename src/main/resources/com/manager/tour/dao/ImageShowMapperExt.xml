@@ -27,4 +27,12 @@
     update SC020102 set STATUS = 0, DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
     where PIC_SOURCE = #{sc0201Id,jdbcType=VARCHAR}
   </update>
+
+  <update id="deleteAllByContent">
+    update SC020102 set STATUS = 0, DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
+    where PIC_SOURCE in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id,jdbcType=VARCHAR}
+    </foreach>
+  </update>
 </mapper>

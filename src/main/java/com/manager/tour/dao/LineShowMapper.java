@@ -24,7 +24,7 @@ public interface LineShowMapper {
 
     int insertAll(@Param("lineShows")List<LineShow> lineShows);
 
-    int deleteNotIn(@Param("ids") List<String> ids, @Param("ss01Id") String userUid);
+    int deleteAll(@Param("sc0201Id") String sc0201Id, @Param("ids") List<String> ids, @Param("ss01Id") String userUid);
 
-    int deleteAll(@Param("sc0201Id") String sc0201Id, @Param("ss01Id") String userUid);
+    int deleteAllByContent(@Param("ids") List<String> ids, @Param("ss01Id") String userUid);
 }
