@@ -14,6 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -33,6 +34,15 @@ public class LoggerAop {
         HttpServletRequest request = sra.getRequest();
         HttpServletResponse response = sra.getResponse();
         String uri = request.getRequestURI();
+        log.info("uri:{}",uri);
+
+        Enumeration<String> enu=request.getParameterNames();
+        StringBuilder param=new StringBuilder();
+        while(enu.hasMoreElements()){
+            String paraName=(String)enu.nextElement();
+            param.append(paraName+"-"+request.getParameter(paraName)+";");
+        }
+        log.info("param:{}",param);
 
         // 打印日志
         long beginTime = System.currentTimeMillis();

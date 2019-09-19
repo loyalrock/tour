@@ -41,17 +41,24 @@
            t3.PIC_NAME,
            t3.PIC_NUM,
            t4.*,
-           t5.*
+           t5.*,
+           t6.STATUS as PROJECT_STATUS,
+           t6.SC02_ID,
+           t6.PROJECT_NAME
         from SC0201 t1
                left join SC020101 t2 on t2.FILE_SOURCE = t1.SC0201_ID and t2.STATUS = '1' and t2.DELETE_FLAG = '0'
                left join SC020102 t3 on t3.PIC_SOURCE = t1.SC0201_ID and t3.STATUS = '1' and t3.DELETE_FLAG = '0'
                left join SC020103 t4 on t4.LINE_SOURCE = t1.SC0201_ID and t4.STATUS = '1' and t4.DELETE_FLAG = '0'
                left join SC020104 t5 on t5.DIST_SOURCE = t1.SC0201_ID and t5.STATUS = '1' and t5.DELETE_FLAG = '0'
+               left join SC02 t6 on t6.PROJECT_NO = t1.PROJECT_NO
         where t1.SC0201_ID = #{sc0201Id,jdbcType=VARCHAR} and t1.DELETE_FLAG = '0' order by t2.FILE_NUM, t3.PIC_NUM, t4.LINE_NUM, t5.DIST_NO
   </select>
     <resultMap id="DetailResultMap" type="com.manager.entry.tour.ProjectContent">
         <id column="SC0201_ID" jdbcType="VARCHAR" property="sc0201Id"/>
         <result column="PROJECT_NO" jdbcType="VARCHAR" property="projectNo"/>
+        <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName"/>
+        <result column="PROJECT_STATUS" jdbcType="VARCHAR" property="projectStatus"/>
+        <result column="SC02_ID" jdbcType="VARCHAR" property="sc02Id"/>
         <result column="SUPER_P_NO" jdbcType="VARCHAR" property="superPNo"/>
         <result column="SUPER_P_LEVEL" jdbcType="VARCHAR" property="superPLevel"/>
         <result column="SYS_NO" jdbcType="VARCHAR" property="sysNo"/>

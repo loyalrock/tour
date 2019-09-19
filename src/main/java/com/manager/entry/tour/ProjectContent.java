@@ -13,6 +13,21 @@ public class ProjectContent extends CommonEntry {
 
     private String projectNo;
 
+    /**
+     * 项目名称
+     */
+    private String projectName;
+
+    /**
+     * 项目状态
+     */
+    private String projectStatus;
+
+    /**
+     * 项目主键
+     */
+    private String sc02Id;
+
     private String superPNo;
 
     private String superPLevel;
@@ -48,6 +63,30 @@ public class ProjectContent extends CommonEntry {
     private List<LineShow> lineShows;
 
     private List<RegionShow> regionShows;
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getProjectStatus() {
+        return projectStatus;
+    }
+
+    public void setProjectStatus(String projectStatus) {
+        this.projectStatus = projectStatus;
+    }
+
+    public String getSc02Id() {
+        return sc02Id;
+    }
+
+    public void setSc02Id(String sc02Id) {
+        this.sc02Id = sc02Id;
+    }
 
     public List<ImageShow> getImageShows() {
         return imageShows;
