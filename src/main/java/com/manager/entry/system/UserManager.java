@@ -36,10 +36,10 @@ public class UserManager {
      */
     private List<UserRole> userRoles;
 
-    @NotBlank(message = "所属单位未填写", groups = {UpdateGroup.class, InsertGroup.class})
+//    @NotBlank(message = "所属单位未填写", groups = {UpdateGroup.class, InsertGroup.class})
     private String opUnit;
 
-    @NotBlank(message = "所属项目未选择", groups = {UpdateGroup.class, InsertGroup.class})
+//    @NotBlank(message = "所属项目未选择", groups = {UpdateGroup.class, InsertGroup.class})
     private String projectNo;
 
     private String projectName;

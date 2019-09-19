@@ -35,6 +35,9 @@ public class ProjectContentServiceImpl implements ProjectContentService {
     @Autowired
     private ProjectContentMapper projectContentMapper;
 
+    @Autowired
+    private ProjectJobMapper projectJobMapper;
+
     @Override
     public int deleteDocument(String sc020101Id) {
         DocumentShow documentShow = new DocumentShow();
@@ -82,6 +85,8 @@ public class ProjectContentServiceImpl implements ProjectContentService {
      */
     @Override
     public int update(ProjectContent projectContent) {
+
+        // TODO 项目状态为停止的时候不可维护
 
         // 维护内容主键
         String sc0201Id = projectContent.getSc0201Id();

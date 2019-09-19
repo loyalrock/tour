@@ -53,14 +53,14 @@ public class SystemController {
         User user = (User)SecurityUtils.getSubject().getPrincipal();
         // 过期时间
         SecurityUtils.getSubject().getSession().setTimeout(24 * 60 * 60 * 1000l);
-        // 获取角色
-        List<UserRole> userRoles = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
+//        // 获取角色
+//        List<UserRole> userRoles = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
+//
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("user", user);
+//        jsonObject.put("roles", userRoles);
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("user", user);
-        jsonObject.put("roles", userRoles);
-
-        return ResultUtil.success(Message.LOGIN_SUCCESS, jsonObject);
+        return ResultUtil.success(Message.LOGIN_SUCCESS, user);
     }
 
     /**

@@ -101,7 +101,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public IPage<UserManager> selectUserManagerList(Page<UserManager> page, UserManagerQuery query) {
-        return userMapper.selectUserManagerList(page, query);
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        UserProject userProject = user.getUserProject();
+        return userMapper.selectUserManagerList(page, query, userProject == null ? null : userProject.getProjectNo());
     }
 
     @Override

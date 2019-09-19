@@ -25,6 +25,19 @@ public class UserManagerQuery {
      */
     private String projectNo;
 
+    /**
+     * 项目名称
+     */
+    private String projectName;
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
     public String getStatus() {
         return status;
     }

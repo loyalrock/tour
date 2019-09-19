@@ -1,11 +1,15 @@
 package com.manager.shiro;
 
-import com.manager.entry.system.Role;
+import com.manager.entry.common.CommonException;
 import com.manager.entry.system.User;
+import com.manager.entry.system.UserProject;
 import com.manager.entry.system.UserRole;
+import com.manager.system.dao.UserProjectMapper;
 import com.manager.system.service.RoleService;
 import com.manager.system.service.UserRoleService;
 import com.manager.system.service.UserService;
+import com.manager.util.Message;
+import com.manager.util.Role;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -23,6 +27,9 @@ public class ShiroRealm extends AuthorizingRealm {
     private UserService userService;
 
     @Autowired
+    private UserProjectMapper userProjectMapper;
+
+    @Autowired
     private UserRoleService userRoleService;
 
     public static Map<String, List<String>> USER_ROLE_CACHE = new ConcurrentHashMap<>();
@@ -37,18 +44,18 @@ public class ShiroRealm extends AuthorizingRealm {
         String ss01Id = user.getSs01Id();
         List<String> roles = USER_ROLE_CACHE.get(ss01Id);
 
-        if (roles == null) {
-            // 缓存并设置角色
-            List<UserRole> userRoles = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
-            roles = new ArrayList<>();
-            for (UserRole userRole : userRoles) {
-                roles.add(userRole.getUserRoleId());
-            }
-            USER_ROLE_CACHE.put(ss01Id, roles);
-            info.addRoles(roles);
-        } else {
-            info.addRoles(roles);
-        }
+//        if (roles == null) {
+//            // 缓存并设置角色
+//            List<UserRole> userRoles = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
+//            roles = new ArrayList<>();
+//            for (UserRole userRole : userRoles) {
+//                roles.add(userRole.getUserRoleId());
+//            }
+//            USER_ROLE_CACHE.put(ss01Id, roles);
+//            info.addRoles(roles);
+//        } else {
+        info.addRoles(roles);
+//        }
 
         return info;
     }
@@ -62,13 +69,34 @@ public class ShiroRealm extends AuthorizingRealm {
         User user = userService.selectUserByUserId(username);
         if (user == null) {
             // 用户名不存在抛出异常
-            throw new UnknownAccountException();
+            throw new CommonException(Message.NOT_USER_FOUND);
         }
         if (User.DISABLE.equals(user.getStatus())) {
             // 用户被管理员锁定抛出异常
-            throw new LockedAccountException();
+            throw new CommonException(Message.DISABLE_USER);
+        }
+        if (!user.getPassword().equals(password)) {
+            throw new CommonException(Message.NOT_USER_FOUND);
         }
 
-        return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
+        List<UserRole> userRoles = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
+        List<String> roles = new ArrayList<>();
+        for (UserRole userRole : userRoles) {
+            roles.add(userRole.getUserRoleId());
+        }
+        USER_ROLE_CACHE.put(user.getSs01Id(), roles);
+
+        // 项目管理员判断是否绑定项目
+        if (!roles.contains(Role.SYSTEM) && roles.contains(Role.PROJECT)) {
+            UserProject userProject = userProjectMapper.selectProjectBySs01Id(user.getSs01Id());
+            if (userProject == null || userProject.getProjectNo() == null || "".equals(userProject.getProjectNo().trim())) {
+                throw new CommonException(Message.UN_BIND_PROJECT);
+            }
+            user.setUserProject(userProject);
+        }
+
+        user.setUserRoles(userRoles);
+
+        return new SimpleAuthenticationInfo(user, password, getName());
     }
 }

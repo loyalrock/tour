@@ -18,18 +18,26 @@
         left join SS0102 t4 on t1.SS01_ID = t4.SS01_ID
         left join SC02 t5 on t5.PROJECT_NO = t4.PROJECT_NO
         <where>
-            1 = 1
-            <if test="query.status != null and query.status.trim() != ''">
-                and t1.STATUS = #{query.status,jdbcType=VARCHAR}
+            1 = 1 and t1.DELETE_FLAG = '0'
+            <if test="projectNo != null">
+                and t4.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
             </if>
-            <if test="query.userName != null and query.userName.trim() != ''">
-                and t1.USER_NAME like CONCAT('%', #{query.userName,jdbcType=VARCHAR}, '%')
-            </if>
-            <if test="query.projectNo != null and query.projectNo.trim() != ''">
-                and t5.PROJECT_NO = #{query.projectNo,jdbcType=VARCHAR}
-            </if>
-            <if test="query.userRoleId != null and query.userRoleId.trim() != ''">
-                and t2.USER_ROLE_ID = #{query.userRoleId,jdbcType=VARCHAR}
+            <if test="query != null">
+                <if test="query.status != null and query.status.trim() != ''">
+                    and t1.STATUS = #{query.status,jdbcType=VARCHAR}
+                </if>
+                <if test="query.userName != null and query.userName.trim() != ''">
+                    and t1.USER_NAME like CONCAT('%', #{query.userName,jdbcType=VARCHAR}, '%')
+                </if>
+                <if test="query.projectNo != null and query.projectNo.trim() != ''">
+                    and t5.PROJECT_NO = #{query.projectNo,jdbcType=VARCHAR}
+                </if>
+                <if test="query.projectName != null and query.projectName.trim() != ''">
+                    and t1.PROJECT_NAME like CONCAT('%', #{query.projectName,jdbcType=VARCHAR}, '%')
+                </if>
+                <if test="query.userRoleId != null and query.userRoleId.trim() != ''">
+                    and t2.USER_ROLE_ID = #{query.userRoleId,jdbcType=VARCHAR}
+                </if>
             </if>
         </where>
         group by t1.USER_ID order by t1.CREATE_TIME

@@ -10,6 +10,7 @@ import com.manager.util.*;
 import com.manager.util.group.InsertGroup;
 import com.manager.util.group.UpdateGroup;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/manager/page", method = RequestMethod.GET)
-    @RequiresRoles(value = {Role.SYSTEM})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     public ResultEntry getUserManagerList(Page page, UserManagerQuery query) {
         IPage<UserManager> userManagers = userService.selectUserManagerList(page, query);
         return ResultUtil.success(Message.SELECT_SUCCESS, userManagers);
@@ -56,7 +57,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/manager/detail", method = RequestMethod.GET)
-    @RequiresRoles(value = {Role.SYSTEM})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     public ResultEntry getUserManagerList(@Param("userUid") String userUid) throws Exception {
         UserManager userManager = userService.selectUserManagerDetail(userUid);
         return ResultUtil.success(Message.SELECT_SUCCESS, userManager);

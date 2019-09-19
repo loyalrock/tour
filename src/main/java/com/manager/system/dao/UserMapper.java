@@ -30,11 +30,12 @@ public interface UserMapper extends BaseMapper<UserManager> {
 
     /**
      * 分页查询
-     * @param page
-     * @param query
+     * @param page 分页查询
+     * @param query 模糊查询
+     * @param projectNo 如果是项目管理员 筛选当前所属项目的人员进行显示
      * @return
      */
-    IPage<UserManager> selectUserManagerList(Page page, @Param("query") UserManagerQuery query);
+    IPage<UserManager> selectUserManagerList(Page page, @Param("query") UserManagerQuery query, @Param("projectNo") String projectNo);
 
     UserManager selectUserManagerDetail(@Param("userUid") String userUid);
 

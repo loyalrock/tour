@@ -16,6 +16,7 @@ public enum Message {
     CODE_UN_UNIQUE("9007", "编号不唯一"),
     FILE_IS_EMPTY("9008", "文件大小为0"),
     FILE_SAVE_FAILED("9009", "文件保存失败"),
+    UN_BIND_PROJECT("9010", "请给当前用户分配项目"),
 
 
 

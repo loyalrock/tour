@@ -23,6 +23,12 @@ public interface UserService {
      */
     User selectUserByUserId(String userId);
 
+    /**
+     * 分页查询
+     * @param page
+     * @param query
+     * @return
+     */
     IPage<UserManager> selectUserManagerList(Page<UserManager> page, UserManagerQuery query);
 
     UserManager selectUserManagerDetail(String userUid) throws Exception;

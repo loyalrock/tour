@@ -113,6 +113,11 @@ public class SuperContentController {
         return ResultUtil.success(Message.UPDATE_SUCCESS);
     }
 
+    /**
+     * 查询所有
+     * @param query
+     * @return
+     */
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT, Role.EXPERTS}, logical = Logical.OR)
     public ResultEntry selectAll (SuperContentQuery query) {

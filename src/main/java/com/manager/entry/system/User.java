@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 系统用户
@@ -47,6 +48,32 @@ public class User extends CommonEntry {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
+    }
+
+    /**
+     * 所属项目
+     */
+    private UserProject userProject;
+
+    /**
+     * 用户角色
+     */
+    private List<UserRole> userRoles;
+
+    public UserProject getUserProject() {
+        return userProject;
+    }
+
+    public void setUserProject(UserProject userProject) {
+        this.userProject = userProject;
+    }
+
+    public List<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 
     public User() {
