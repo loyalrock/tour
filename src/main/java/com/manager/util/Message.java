@@ -33,6 +33,7 @@ public enum Message {
 
 
     CONTENT_IMPORT_ERROR("2002", "内容维护导入信息有误"),
+    PROJECT_IS_DISABLE("2003", "内容维护导入信息有误"),
 
     ;
 

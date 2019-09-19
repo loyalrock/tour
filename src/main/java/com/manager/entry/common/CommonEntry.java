@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.manager.entry.system.User;
 import com.manager.util.Delete;
 import com.manager.util.group.UpdateStatusGroup;
+import lombok.Data;
 import org.apache.shiro.SecurityUtils;
 
 import javax.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ import java.util.Date;
 /**
  * 公共字段继承
  */
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommonEntry {
 
@@ -38,54 +40,6 @@ public class CommonEntry {
         this.updateUser = updateUser;
         this.updateTime = updateTime;
         this.deleteFlag = deleteFlag;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(String deleteFlag) {
-        this.deleteFlag = deleteFlag;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public static CommonEntry insert() {

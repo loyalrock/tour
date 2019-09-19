@@ -1,9 +1,11 @@
 package com.manager.entry.tour;
 
 import com.manager.entry.common.CommonEntry;
+import lombok.Data;
 
 import java.util.Date;
 
+@Data
 public class DocumentShow extends CommonEntry {
     private String sc020101Id;
 
@@ -26,45 +28,5 @@ public class DocumentShow extends CommonEntry {
 
     public DocumentShow() {
         super();
-    }
-
-    public String getSc020101Id() {
-        return sc020101Id;
-    }
-
-    public void setSc020101Id(String sc020101Id) {
-        this.sc020101Id = sc020101Id == null ? null : sc020101Id.trim();
-    }
-
-    public String getFileSource() {
-        return fileSource;
-    }
-
-    public void setFileSource(String fileSource) {
-        this.fileSource = fileSource == null ? null : fileSource.trim();
-    }
-
-    public String getFileNum() {
-        return fileNum;
-    }
-
-    public void setFileNum(String fileNum) {
-        this.fileNum = fileNum == null ? null : fileNum.trim();
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName == null ? null : fileName.trim();
-    }
-
-    public String getFileUrl() {
-        return fileUrl;
-    }
-
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl == null ? null : fileUrl.trim();
     }
 }

@@ -1,18 +1,20 @@
 package com.manager.tour.service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.manager.entry.common.CommonEntry;
+import com.manager.entry.common.CommonException;
 import com.manager.entry.common.UserUtil;
 import com.manager.entry.system.User;
 import com.manager.entry.tour.*;
 import com.manager.tour.dao.*;
 import com.manager.util.Delete;
 import com.manager.util.Flag;
+import com.manager.util.Message;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * impl
@@ -86,7 +88,27 @@ public class ProjectContentServiceImpl implements ProjectContentService {
     @Override
     public int update(ProjectContent projectContent) {
 
-        // TODO 项目状态为停止的时候不可维护
+        // 查询修改前的状态
+        ProjectContent oldProjectContent = projectContentMapper.selectDetail(projectContent.getSc0201Id());
+        // 状态为0 不可维护
+        if (!Flag.HAVE.equals(oldProjectContent.getProjectStatus())) {
+            throw new CommonException(Message.PROJECT_IS_DISABLE);
+        }
+
+        // 检测修改的原始数据
+        Map<String, CommonEntry> repeatMap = new HashMap<>();
+        for (DocumentShow documentShow : oldProjectContent.getDocumentShows()) {
+            repeatMap.put(documentShow.getSc020101Id(), documentShow);
+        }
+        for (ImageShow imageShow : oldProjectContent.getImageShows()) {
+            repeatMap.put(imageShow.getSc020102Id(), imageShow);
+        }
+        for (LineShow lineShow : oldProjectContent.getLineShows()) {
+            repeatMap.put(lineShow.getSc020103Id(), lineShow);
+        }
+        for (RegionShow regionShow : oldProjectContent.getRegionShows()) {
+            repeatMap.put(regionShow.getSc020104Id(), regionShow);
+        }
 
         // 维护内容主键
         String sc0201Id = projectContent.getSc0201Id();
@@ -110,10 +132,14 @@ public class ProjectContentServiceImpl implements ProjectContentService {
                     documentShow.setFileSource(sc0201Id);
                     insertDocumentList.add(documentShow);
                 } else {
-                    deleteDocumentNotInIds.add(documentShow.getSc020101Id());
-                    UserUtil.updateData(documentShow);
-                    // 修改当前
-                    documentShowMapper.updateByPrimaryKeySelective(documentShow);
+                    String sc020101Id = documentShow.getSc020101Id();
+                    deleteDocumentNotInIds.add(sc020101Id);
+                    // @data注解重写equals方法 比较每一个属性的值
+                    if (!documentShow.equals(repeatMap.get(sc020101Id))) {
+                        UserUtil.updateData(documentShow);
+                        // 修改当前
+                        documentShowMapper.updateByPrimaryKeySelective(documentShow);
+                    }
                 }
             }
         } else {
@@ -140,9 +166,12 @@ public class ProjectContentServiceImpl implements ProjectContentService {
                     imageShow.setPicSource(sc0201Id);
                     insertImageList.add(imageShow);
                 } else {
-                    deleteImageNotInIds.add(imageShow.getSc020102Id());
-                    UserUtil.updateData(imageShow);
-                    imageShowMapper.updateByPrimaryKeySelective(imageShow);
+                    String sc020102Id = imageShow.getSc020102Id();
+                    deleteImageNotInIds.add(sc020102Id);
+                    if (!imageShow.equals(repeatMap.get(sc020102Id))) {
+                        UserUtil.updateData(imageShow);
+                        imageShowMapper.updateByPrimaryKeySelective(imageShow);
+                    }
                 }
             }
         } else {
@@ -168,12 +197,14 @@ public class ProjectContentServiceImpl implements ProjectContentService {
                     lineShow.setLineSource(sc0201Id);
                     insertLineList.add(lineShow);
                 } else {
-                    deleteLineNotInIds.add(lineShow.getSc020103Id());
-                    UserUtil.updateData(lineShow);
-                    lineShowMapper.updateByPrimaryKeySelective(lineShow);
+                    String sc020103Id = lineShow.getSc020103Id();
+                    deleteLineNotInIds.add(sc020103Id);
+                    if (!lineShow.equals(repeatMap.get(sc020103Id))) {
+                        UserUtil.updateData(lineShow);
+                        lineShowMapper.updateByPrimaryKeySelective(lineShow);
+                    }
                 }
             }
-
         } else {
             projectContent.setIfLine(Flag.NOT_HAVE);
 
@@ -198,9 +229,12 @@ public class ProjectContentServiceImpl implements ProjectContentService {
                     regionShow.setDistSource(sc0201Id);
                     insertRegionList.add(regionShow);
                 } else {
-                    deleteRegionNotInIds.add(regionShow.getSc020104Id());
-                    UserUtil.updateData(regionShow);
-                    regionShowMapper.updateByPrimaryKeySelective(regionShow);
+                    String sc020104Id = regionShow.getSc020104Id();
+                    deleteRegionNotInIds.add(sc020104Id);
+                    if (!regionShow.equals(repeatMap.get(sc020104Id))) {
+                        UserUtil.updateData(regionShow);
+                        regionShowMapper.updateByPrimaryKeySelective(regionShow);
+                    }
                 }
             }
         } else {

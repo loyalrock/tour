@@ -1,9 +1,11 @@
 package com.manager.entry.tour;
 
 import com.manager.entry.common.CommonEntry;
+import lombok.Data;
 
 import java.util.Date;
 
+@Data
 public class RegionShow extends CommonEntry {
     private String sc020104Id;
 
@@ -49,99 +51,4 @@ public class RegionShow extends CommonEntry {
         super();
     }
 
-    public String getSc020104Id() {
-        return sc020104Id;
-    }
-
-    public void setSc020104Id(String sc020104Id) {
-        this.sc020104Id = sc020104Id == null ? null : sc020104Id.trim();
-    }
-
-    public String getDistSource() {
-        return distSource;
-    }
-
-    public void setDistSource(String distSource) {
-        this.distSource = distSource == null ? null : distSource.trim();
-    }
-
-    public String getDistNo() {
-        return distNo;
-    }
-
-    public void setDistNo(String distNo) {
-        this.distNo = distNo == null ? null : distNo.trim();
-    }
-
-    public String getDistClass() {
-        return distClass;
-    }
-
-    public void setDistClass(String distClass) {
-        this.distClass = distClass == null ? null : distClass.trim();
-    }
-
-    public String getDistSecCalss() {
-        return distSecCalss;
-    }
-
-    public void setDistSecCalss(String distSecCalss) {
-        this.distSecCalss = distSecCalss == null ? null : distSecCalss.trim();
-    }
-
-    public String getDistName() {
-        return distName;
-    }
-
-    public void setDistName(String distName) {
-        this.distName = distName == null ? null : distName.trim();
-    }
-
-    public Integer getDistStartLong() {
-        return distStartLong;
-    }
-
-    public void setDistStartLong(Integer distStartLong) {
-        this.distStartLong = distStartLong;
-    }
-
-    public Integer getDistStartLat() {
-        return distStartLat;
-    }
-
-    public void setDistStartLat(Integer distStartLat) {
-        this.distStartLat = distStartLat;
-    }
-
-    public String getDistAdres() {
-        return distAdres;
-    }
-
-    public void setDistAdres(String distAdres) {
-        this.distAdres = distAdres == null ? null : distAdres.trim();
-    }
-
-    public String getDistPicUrl() {
-        return distPicUrl;
-    }
-
-    public void setDistPicUrl(String distPicUrl) {
-        this.distPicUrl = distPicUrl == null ? null : distPicUrl.trim();
-    }
-
-    public String getDistTel() {
-        return distTel;
-    }
-
-    public void setDistTel(String distTel) {
-        this.distTel = distTel == null ? null : distTel.trim();
-    }
-
-    public String getDistExp() {
-        return distExp;
-    }
-
-    public void setDistExp(String distExp) {
-        this.distExp = distExp == null ? null : distExp.trim();
-    }
 }
