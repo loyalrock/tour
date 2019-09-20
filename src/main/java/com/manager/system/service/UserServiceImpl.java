@@ -35,6 +35,30 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRoleMapper userRoleMapper;
 
+    @Override
+    public int updatePassword(String oldPassword, String newPassword) throws Exception {
+
+        // 长度小于6
+        if ("".equals(newPassword.trim()) || newPassword.length() < 6) {
+            throw new CommonException(Message.PASSWORD_LENGTH_SHORT);
+        }
+
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        User userDetail = userMapper.selectByPrimaryKey(user.getSs01Id());
+
+        // 原始密码不匹配
+        if (!oldPassword.equals(userDetail.getPassword())) {
+            throw new CommonException(Message.PASSWORD_ERROR);
+        }
+
+        User updateUser = new User();
+        UserUtil.updateData(updateUser);
+        updateUser.setSs01Id(user.getSs01Id());
+        updateUser.setPassword(newPassword);
+
+        return userMapper.updateByPrimaryKeySelective(updateUser);
+    }
+
     @Autowired
     private UserProjectMapper userProjectMapper;
 

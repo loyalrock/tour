@@ -5,6 +5,7 @@ import com.manager.entry.common.CommonEntry;
 import com.manager.util.group.InsertGroup;
 import com.manager.util.group.UpdateGroup;
 import com.manager.util.group.UpdateStatusGroup;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.List;
 
+@Data
 public class SuperContent extends CommonEntry {
     @NotBlank(message = "缺失主键", groups = {UpdateGroup.class})
     private String sc01Id;
@@ -27,6 +29,8 @@ public class SuperContent extends CommonEntry {
 
     @NotBlank(message = "缺失系统序号", groups = {InsertGroup.class, UpdateGroup.class})
     private String sysNo;
+
+    private Integer totalScore;
 
     private String superPCheck;
 
@@ -71,95 +75,6 @@ public class SuperContent extends CommonEntry {
         this.deactiTime = deactiTime;
     }
 
-    public List<String> getSc01Ids() {
-        return sc01Ids;
-    }
+    public SuperContent(){};
 
-    public void setSc01Ids(List<String> sc01Ids) {
-        this.sc01Ids = sc01Ids;
-    }
-
-    public SuperContent() {
-        super();
-    }
-
-    public String getSc01Id() {
-        return sc01Id;
-    }
-
-    public void setSc01Id(String sc01Id) {
-        this.sc01Id = sc01Id == null ? null : sc01Id.trim();
-    }
-
-    public String getSuperPNo() {
-        return superPNo;
-    }
-
-    public void setSuperPNo(String superPNo) {
-        this.superPNo = superPNo == null ? null : superPNo.trim();
-    }
-
-    public String getSuperPLevel() {
-        return superPLevel;
-    }
-
-    public void setSuperPLevel(String superPLevel) {
-        this.superPLevel = superPLevel == null ? null : superPLevel.trim();
-    }
-
-    public String getSysNo() {
-        return sysNo;
-    }
-
-    public void setSysNo(String sysNo) {
-        this.sysNo = sysNo == null ? null : sysNo.trim();
-    }
-
-    public String getSuperPCheck() {
-        return superPCheck;
-    }
-
-    public void setSuperPCheck(String superPCheck) {
-        this.superPCheck = superPCheck == null ? null : superPCheck.trim();
-    }
-
-    public String getSuperPExp() {
-        return superPExp;
-    }
-
-    public void setSuperPExp(String superPExp) {
-        this.superPExp = superPExp == null ? null : superPExp.trim();
-    }
-
-    public String getSuperPScore() {
-        return superPScore;
-    }
-
-    public void setSuperPScore(String superPScore) {
-        this.superPScore = superPScore == null ? null : superPScore.trim();
-    }
-
-    public String getIfAdd() {
-        return ifAdd;
-    }
-
-    public void setIfAdd(String ifAdd) {
-        this.ifAdd = ifAdd == null ? null : ifAdd.trim();
-    }
-
-    public Date getEnableTime() {
-        return enableTime;
-    }
-
-    public void setEnableTime(Date enableTime) {
-        this.enableTime = enableTime;
-    }
-
-    public Date getDeactiTime() {
-        return deactiTime;
-    }
-
-    public void setDeactiTime(Date deactiTime) {
-        this.deactiTime = deactiTime;
-    }
 }

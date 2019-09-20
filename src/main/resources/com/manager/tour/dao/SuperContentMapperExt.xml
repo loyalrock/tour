@@ -2,23 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.manager.tour.dao.SuperContentMapper">
   <select id="selectPage" resultMap="PageResultMap">
-    select SC01_ID, SUPER_P_NO, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE, SUPER_P_LEVEL, IF_ADD,
-    STATUS from SC01 where DELETE_FLAG = '0'
+    select t1.SC01_ID, t1.SUPER_P_NO, t1.SYS_NO, t1.SUPER_P_CHECK, t1.SUPER_P_EXP, t1.SUPER_P_SCORE, t1.SUPER_P_LEVEL, t1.IF_ADD,
+    t1.STATUS, SUM(t2.SUPER_P_SCORE) + t1.SUPER_P_SCORE as TOTAL_SCORE from SC01 t1
+    LEFT JOIN SC01 t2 ON t2.SUPER_P_NO REGEXP CONCAT('^', t1.SUPER_P_NO) AND t2.STATUS = '1' AND t2.DELETE_FLAG = '0'
+    where t1.DELETE_FLAG = '0'
     <if test="query != null">
       <if test="query.superPNo != null and query.superPNo.trim() != ''">
-        and SUPER_P_NO like concat('%', #{query.superPNo,jdbcType=VARCHAR}, '%')
+        and t1.SUPER_P_NO like concat('%', #{query.superPNo,jdbcType=VARCHAR}, '%')
       </if>
       <if test="query.superPCheck != null and query.superPCheck.trim() != ''">
-        and SUPER_P_CHECK like concat('%', #{query.superPCheck,jdbcType=VARCHAR}, '%')
+        and t1.SUPER_P_CHECK like concat('%', #{query.superPCheck,jdbcType=VARCHAR}, '%')
       </if>
       <if test="query.status != null and query.status.trim() != ''">
-        and STATUS = #{query.status,jdbcType=VARCHAR}
+        and t1.STATUS = #{query.status,jdbcType=VARCHAR}
       </if>
       <if test="query.superPLevel != null and query.superPLevel.trim() != ''">
-        and SUPER_P_LEVEL = #{query.superPLevel,jdbcType=VARCHAR}
+        and t1.SUPER_P_LEVEL = #{query.superPLevel,jdbcType=VARCHAR}
       </if>
     </if>
-    order by SUPER_P_NO
+    GROUP BY t1.SC01_ID
+    order by cast(REPLACE(t1.SYS_NO, '.', '') as SIGNED)
   </select>
 
   <select id="selectLevel" resultMap="PageResultMap">
@@ -43,6 +46,7 @@
     <result column="SUPER_P_LEVEL" property="superPLevel" jdbcType="VARCHAR"></result>
     <result column="IF_ADD" property="ifAdd" jdbcType="CHAR"></result>
     <result column="STATUS" property="status" jdbcType="CHAR"></result>
+    <result column="TOTAL_SCORE" property="totalScore" jdbcType="INTEGER"></result>
   </resultMap>
 
   <select id="selectNextCode" resultType="String">
@@ -84,25 +88,43 @@
   </update>
 
   <select id="selectAll" resultMap="AllResultMap">
-    select * from SC01 where SUPER_P_LEVEL = 1
+    SELECT
+    t1.*,
+    SUM(t2.SUPER_P_SCORE) + t1.SUPER_P_SCORE as TOTAL_SCORE
+    FROM
+    SC01 t1
+    LEFT JOIN SC01 t2
+    ON t2.SUPER_P_NO REGEXP CONCAT('^', t1.SUPER_P_NO) AND t2.STATUS = '1' AND t2.DELETE_FLAG = '0'
+    WHERE t1.SUPER_P_LEVEL = 1
     <if test="query != null">
       <if test="query.superPNo != null and query.superPNo.trim() != ''">
-        and SUPER_P_NO like concat('%', #{query.superPNo,jdbcType=VARCHAR}, '%')
+        and t1.SUPER_P_NO like concat('%', #{query.superPNo,jdbcType=VARCHAR}, '%')
       </if>
       <if test="query.superPCheck != null and query.superPCheck.trim() != ''">
-        and SUPER_P_CHECK like concat('%', #{query.superPCheck,jdbcType=VARCHAR}, '%')
+        and t1.SUPER_P_CHECK like concat('%', #{query.superPCheck,jdbcType=VARCHAR}, '%')
       </if>
       <if test="query.status != null and query.status.trim() != ''">
-        and STATUS = #{query.status,jdbcType=VARCHAR}
+        and t1.STATUS = #{query.status,jdbcType=VARCHAR}
       </if>
       <if test="query.superPLevel != null and query.superPLevel.trim() != ''">
-        and SUPER_P_LEVEL = #{query.superPLevel,jdbcType=VARCHAR}
+        and t1.SUPER_P_LEVEL = #{query.superPLevel,jdbcType=VARCHAR}
       </if>
     </if>
+    GROUP BY t1.SC01_ID
+    order by cast(REPLACE(t1.SYS_NO, '.', '') as SIGNED)
   </select>
 
   <select id="selectAllChild" resultMap="AllResultMap">
-    select * from SC01 where SUPER_P_NO regexp concat('^', #{code}) and SUPER_P_LEVEL = #{level} + 1
+    SELECT
+    t1.*,
+    SUM(t2.SUPER_P_SCORE) + t1.SUPER_P_SCORE as TOTAL_SCORE
+    FROM
+    SC01 t1
+    LEFT JOIN SC01 t2
+    ON t2.SUPER_P_NO REGEXP CONCAT('^', t1.SUPER_P_NO) AND t2.STATUS = '1' AND t2.DELETE_FLAG = '0'
+    WHERE t1.SUPER_P_NO regexp concat('^', #{code}) and t1.SUPER_P_LEVEL = #{level} + 1
+    GROUP BY t1.SC01_ID
+    order by cast(REPLACE(t1.SYS_NO, '.', '') as SIGNED)
   </select>
 
   <resultMap id="AllResultMap" type="com.manager.entry.tour.SuperContent">
@@ -115,6 +137,7 @@
     <result column="SUPER_P_LEVEL" property="superPLevel" jdbcType="VARCHAR"></result>
     <result column="STATUS" property="status" jdbcType="CHAR"></result>
     <result column="IF_ADD" property="ifAdd" jdbcType="CHAR"></result>
+    <result column="TOTAL_SCORE" property="totalScore" jdbcType="INTEGER"></result>
     <collection property="superContents" select="selectAllChild" ofType="com.manager.entry.tour.SuperContent" column="{code=SUPER_P_NO, level=SUPER_P_LEVEL}"></collection>
   </resultMap>
 

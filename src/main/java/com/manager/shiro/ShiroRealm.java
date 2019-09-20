@@ -76,7 +76,7 @@ public class ShiroRealm extends AuthorizingRealm {
             throw new CommonException(Message.DISABLE_USER);
         }
         if (!user.getPassword().equals(password)) {
-            throw new CommonException(Message.NOT_USER_FOUND);
+            throw new CommonException(Message.PASSWORD_ERROR);
         }
 
         List<UserRole> userRoles = userRoleService.selectUserRoleByUserUid(user.getSs01Id());

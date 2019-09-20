@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.tour.SuperContent;
 import com.manager.entry.tour.SuperContentQuery;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -35,7 +37,17 @@ public interface SuperContentMapper {
 
     int insertAll(@Param("query") List<Object> list);
 
+    /**
+     * 批量启用或者停用内容 并修改启用和停用时间
+     * @param ids
+     * @param status
+     * @return
+     */
     int updateAllStatus(@Param("ids") List<String> ids, String status);
 
     List<SuperContent> selectAll(@Param("query") SuperContentQuery query);
+
+    @Select("select SC01_ID, SUPER_P_SCORE from SC01 where SUPER_P_NO = #{code}")
+    @ResultMap("BaseResultMap")
+    SuperContent selectByCode(@Param("code") String code);
 }

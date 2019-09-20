@@ -44,4 +44,6 @@ public interface UserService {
 
     int updateUser(UserManager userManager) throws Exception;
 
+    int updatePassword(String oldPassword, String newPassword) throws Exception;
+
 }

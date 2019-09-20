@@ -3,6 +3,7 @@ package com.manager.system.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.common.ResultEntry;
+import com.manager.entry.system.User;
 import com.manager.entry.system.UserManager;
 import com.manager.entry.system.UserManagerQuery;
 import com.manager.system.service.UserService;
@@ -100,6 +101,20 @@ public class UserController {
     @RequiresRoles(value = {Role.SYSTEM})
     public ResultEntry updateStatus(@RequestParam("status") String status, @RequestParam("userUid") String userUid) throws Exception {
         userService.updateStatus(userUid, status);
+        return ResultUtil.success(Message.UPDATE_SUCCESS);
+    }
+
+    /**
+     * 修改密码
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/pw/update", method = RequestMethod.POST)
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
+    public ResultEntry upload(@Param("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) throws Exception{
+        userService.updatePassword(oldPassword, newPassword);
         return ResultUtil.success(Message.UPDATE_SUCCESS);
     }
 }
