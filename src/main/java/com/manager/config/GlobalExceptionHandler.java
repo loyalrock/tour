@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,6 +51,8 @@ public class GlobalExceptionHandler {
         if (e instanceof CommonException) {
             CommonException commonException = (CommonException) e;
             return ResultUtil.error(commonException.getMessageEnum());
+        } else if (e instanceof MissingServletRequestParameterException) {
+            return ResultUtil.error(Message.LOST_PARAM);
         } else if (e instanceof AuthenticationException) {
             // 未登录
             AuthenticationException authenticationException = (AuthenticationException) e;

@@ -1,6 +1,5 @@
 package com.manager.tour.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.common.CommonException;
@@ -9,20 +8,14 @@ import com.manager.entry.system.User;
 import com.manager.entry.tour.*;
 import com.manager.shiro.ShiroRealm;
 import com.manager.tour.dao.*;
-import com.manager.util.FileType;
 import com.manager.util.Flag;
 import com.manager.util.Message;
 import com.manager.util.Role;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -56,6 +49,16 @@ public class ProjectJobServiceImpl implements ProjectJobService {
     private RegionShowMapper regionShowMapper;
 
     @Override
+    public List<String> selectIndexPics(String code) {
+        return projectJobMapper.selectIndexPics(code);
+    }
+
+    @Override
+    public int checkProjectNameShort(String code) {
+        return projectJobMapper.checkProjectJobShort(code);
+    }
+
+    @Override
     public List<ProjectJob> selectList() {
         return projectJobMapper.selectList();
     }
@@ -73,7 +76,12 @@ public class ProjectJobServiceImpl implements ProjectJobService {
             throw new CommonException(Message.CODE_UN_UNIQUE);
         }
 
-        // TODO 判断修改
+        // 项目简称
+        count  = projectJobMapper.checkProjectJobShort(projectJob.getProjectNameJ());
+        if (count > 0) {
+            throw new CommonException(Message.PROJECT_NAME_J_UNIQUE);
+        }
+
         int currentNo = uploadDataFileMapper.selectCount(projectJob.getProjectNo());
         List<UploadDataFile> uploadDataFiles = projectJob.getUploadDataFiles();
         if (uploadDataFiles != null && uploadDataFiles.size() > 0) {
@@ -223,10 +231,10 @@ public class ProjectJobServiceImpl implements ProjectJobService {
 
         User user = (User)SecurityUtils.getSubject().getPrincipal();
 
-        List<String> roles = ShiroRealm.USER_ROLE_CACHE.get(user.getSs01Id());
+        String role = ShiroRealm.USER_ROLE_CACHE.get(user.getSs01Id());
         String ss01Id = null;
         // 不是全域管理员就查询所属项目 该接口只有项目管理员和全域管理员可以访问
-        if (!roles.contains(Role.SYSTEM)) {
+        if (!role.equals(Role.SYSTEM)) {
             ss01Id = user.getSs01Id();
         }
 

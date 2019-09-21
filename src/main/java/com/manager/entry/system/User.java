@@ -3,6 +3,7 @@ package com.manager.entry.system;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.manager.entry.common.CommonEntry;
 import javafx.beans.DefaultProperty;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * 系统用户
  * @auth zhongyan
  */
+@Data
 public class User extends CommonEntry {
 
     /**
@@ -58,57 +60,9 @@ public class User extends CommonEntry {
     /**
      * 用户角色
      */
-    private List<UserRole> userRoles;
-
-    public UserProject getUserProject() {
-        return userProject;
-    }
-
-    public void setUserProject(UserProject userProject) {
-        this.userProject = userProject;
-    }
-
-    public List<UserRole> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(List<UserRole> userRoles) {
-        this.userRoles = userRoles;
-    }
+    private UserRole userRole;
 
     public User() {
         super();
-    }
-
-    public String getSs01Id() {
-        return ss01Id;
-    }
-
-    public void setSs01Id(String ss01Id) {
-        this.ss01Id = ss01Id == null ? null : ss01Id.trim();
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
     }
 }

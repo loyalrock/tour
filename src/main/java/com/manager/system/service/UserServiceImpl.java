@@ -87,25 +87,19 @@ public class UserServiceImpl implements UserService {
         }
 
         // 判断角色是否改变
-        List<String> userRoles = Arrays.asList(userManager.getUserRoleId().split(","));
-        HashSet<String> beforeUpdateRoles = new HashSet<>();
-        for (UserRole userRole : beforeUpdateUser.getUserRoles()) {
-            beforeUpdateRoles.add(userRole.getUserRoleId());
-        }
-        if (!beforeUpdateRoles.containsAll(userRoles)) {
+        String userRoleId = userManager.getUserRoleId();
+        String beforeUpdateRoleId = beforeUpdateUser.getUserRole().getUserRoleId();
+        if (!userRoleId.equals(beforeUpdateRoleId)) {
             // 删除所有角色
             userRoleMapper.deleteByUserUid(userUid);
 
             // 新增
-            for (String userRoleId : userRoles) {
-                UserRole userRole = new UserRole();
-                userRole.setSs0101Id(UUID.randomUUID().toString());
-                userRole.setSs01Id(userUid);
-                userRole.setUserRoleId(userRoleId);
-                UserUtil.insertData(userRole);
-                count = userRoleMapper.insertSelective(userRole);
-            }
-
+            UserRole userRole = new UserRole();
+            userRole.setSs0101Id(UUID.randomUUID().toString());
+            userRole.setSs01Id(userUid);
+            userRole.setUserRoleId(userRoleId);
+            UserUtil.insertData(userRole);
+            count = userRoleMapper.insertSelective(userRole);
 
         }
 

@@ -2,6 +2,8 @@ package com.manager.tour.service;
 
 import com.manager.entry.tour.ProjectContent;
 
+import java.util.List;
+
 /**
  * 项目内容维护service
  *
@@ -26,5 +28,14 @@ public interface ProjectContentService {
      * @return
      */
     int updateScore(String sc0201Id, Integer score);
+
+    /**
+     * 查询项目下的维护内容列表
+     * @param projectNo
+     * @param code
+     * @param level
+     * @return
+     */
+    List<ProjectContent> selectProjectContentLevel(String projectNo, String code, String level);
 
 }

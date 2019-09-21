@@ -20,4 +20,21 @@
     </set>
     where SS01_ID = #{ss01Id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectProjectBySs01Id" parameterType="String" resultMap="DetailResultMap">
+    select t1.*, t2.PROJECT_NAME, t2.PROJECT_NAME_J, t2.PROJECT_LONG
+    from SS0102 t1 left join SC02 t2
+    on t1.PROJECT_NO = t2.PROJECT_NO
+    where t1.SS01_ID = #{ss01Id} and t1.DELETE_FLAG = '0'
+  </select>
+
+  <resultMap id="DetailResultMap" type="com.manager.entry.system.UserProject">
+    <id column="SS0102_ID" jdbcType="VARCHAR" property="ss0102Id" />
+    <result column="SS01_ID" jdbcType="VARCHAR" property="ss01Id" />
+    <result column="PROJECT_NO" jdbcType="VARCHAR" property="projectNo" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+    <result column="PROJECT_NAME_J" jdbcType="VARCHAR" property="projectNameJ" />
+    <result column="PROJECT_LONG" jdbcType="VARCHAR" property="projectLong" />
+    <result column="OP_UNIT" jdbcType="VARCHAR" property="opUnit" />
+  </resultMap>
 </mapper>

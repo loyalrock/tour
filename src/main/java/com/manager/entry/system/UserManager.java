@@ -2,6 +2,7 @@ package com.manager.entry.system;
 
 import com.manager.util.group.InsertGroup;
 import com.manager.util.group.UpdateGroup;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * 用户管理查询实体类
  * @author zhongyan
  */
+@Data
 public class UserManager {
 
     /**
@@ -32,9 +34,9 @@ public class UserManager {
     private String userRoleName;
 
     /**
-     * 多角色
+     * 单角色
      */
-    private List<UserRole> userRoles;
+    private UserRole userRole;
 
 //    @NotBlank(message = "所属单位未填写", groups = {UpdateGroup.class, InsertGroup.class})
     private String opUnit;
@@ -46,91 +48,4 @@ public class UserManager {
 
     private String projectNameJ;
 
-    public String getSs01Id() {
-        return ss01Id;
-    }
-
-    public void setSs01Id(String ss01Id) {
-        this.ss01Id = ss01Id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getUserRoleId() {
-        return userRoleId;
-    }
-
-    public void setUserRoleId(String userRoleId) {
-        this.userRoleId = userRoleId;
-    }
-
-    public String getUserRoleName() {
-        return userRoleName;
-    }
-
-    public void setUserRoleName(String userRoleName) {
-        this.userRoleName = userRoleName;
-    }
-
-    public String getOpUnit() {
-        return opUnit;
-    }
-
-    public void setOpUnit(String opUnit) {
-        this.opUnit = opUnit;
-    }
-
-    public String getProjectNo() {
-        return projectNo;
-    }
-
-    public void setProjectNo(String projectNo) {
-        this.projectNo = projectNo;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-
-    public String getProjectNameJ() {
-        return projectNameJ;
-    }
-
-    public void setProjectNameJ(String projectNameJ) {
-        this.projectNameJ = projectNameJ;
-    }
-
-    public List<UserRole> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(List<UserRole> userRoles) {
-        this.userRoles = userRoles;
-    }
 }

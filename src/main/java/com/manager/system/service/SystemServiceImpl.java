@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.UUID;
@@ -20,7 +21,7 @@ public class SystemServiceImpl implements SystemService{
     private String folderName;
 
     @Override
-    public String upload(MultipartFile file) throws Exception {
+    public String upload(MultipartFile file, String code) throws Exception {
         FileOutputStream out = null;
         InputStream in = null;
         String filePath;
@@ -37,8 +38,25 @@ public class SystemServiceImpl implements SystemService{
             String Suffix;
             String fileName = file.getOriginalFilename();
             Suffix = fileName.substring(fileName.indexOf("."));
+            StringBuffer savePathBuffer = new StringBuffer();
+            savePathBuffer.append("/");
+            savePathBuffer.append(folderName);
+            savePathBuffer.append("/");
+            if (code != null && !"".equals(code.trim())) {
+                savePathBuffer.append(code);
+                savePathBuffer.append("/");
+            }
+            // 文件夹路径
+            String folderUrl = systemPath + savePathBuffer.toString();
+            // 不错在就创建
+            File folder = new File(folderUrl);
+            if (!folder.exists() || !folder.isDirectory()) {
+                folder.mkdir();
+            }
+            savePathBuffer.append(UUID.randomUUID().toString());
+            savePathBuffer.append(Suffix);
             // 文件路径
-            savePath = "/" + folderName + "/" + UUID.randomUUID().toString() + Suffix;
+            savePath = savePathBuffer.toString();
             filePath = systemPath + savePath;
             out = new FileOutputStream(filePath);
             in = file.getInputStream();

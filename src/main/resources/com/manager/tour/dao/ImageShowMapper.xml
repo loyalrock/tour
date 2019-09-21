@@ -5,6 +5,7 @@
     <constructor>
       <idArg column="SC020102_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="PIC_SOURCE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="PIC_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="PIC_NUM" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="PIC_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="APP_URL" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -17,7 +18,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    SC020102_ID, PIC_SOURCE, PIC_NUM, PIC_NAME, APP_URL, STATUS, CREATE_USER, CREATE_TIME,
+    SC020102_ID, PIC_SOURCE, PIC_NUM, PIC_TIME, PIC_NAME, APP_URL, STATUS, CREATE_USER, CREATE_TIME,
     UPDATE_USER, UPDATE_TIME, DELETE_FLAG
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -31,11 +32,11 @@
     where SC020102_ID = #{sc020102Id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.manager.entry.tour.ImageShow">
-    insert into SC020102 (SC020102_ID, PIC_SOURCE, PIC_NUM,
+    insert into SC020102 (SC020102_ID, PIC_SOURCE, PIC_TIME, PIC_NUM,
       PIC_NAME, APP_URL, STATUS,
       CREATE_USER, CREATE_TIME, UPDATE_USER,
       UPDATE_TIME, DELETE_FLAG)
-    values (#{sc020102Id,jdbcType=VARCHAR}, #{picSource,jdbcType=VARCHAR}, #{picNum,jdbcType=VARCHAR},
+    values (#{sc020102Id,jdbcType=VARCHAR}, #{picSource,jdbcType=VARCHAR}, #{picTime,jdbcType=TIMESTAMP}, #{picNum,jdbcType=VARCHAR},
       #{picName,jdbcType=VARCHAR}, #{appUrl,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
       #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
@@ -48,6 +49,9 @@
       </if>
       <if test="picSource != null">
         PIC_SOURCE,
+      </if>
+      <if test="pecTime != null">
+        PIC_TIME,
       </if>
       <if test="picNum != null">
         PIC_NUM,
@@ -84,6 +88,9 @@
       <if test="picSource != null">
         #{picSource,jdbcType=VARCHAR},
       </if>
+      <if test="picTime != null">
+        #{picTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="picNum != null">
         #{picNum,jdbcType=VARCHAR},
       </if>
@@ -119,6 +126,9 @@
       <if test="picSource != null">
         PIC_SOURCE = #{picSource,jdbcType=VARCHAR},
       </if>
+      <if test="picTime != null">
+        PIC_TIME = #{picTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="picNum != null">
         PIC_NUM = #{picNum,jdbcType=VARCHAR},
       </if>
@@ -153,6 +163,7 @@
     update SC020102
     set PIC_SOURCE = #{picSource,jdbcType=VARCHAR},
       PIC_NUM = #{picNum,jdbcType=VARCHAR},
+      PIC_TIME = #{picTime,jdbcType=TIMESTAMP},
       PIC_NAME = #{picName,jdbcType=VARCHAR},
       APP_URL = #{appUrl,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=CHAR},

@@ -18,6 +18,8 @@ public enum Message {
     FILE_SAVE_FAILED("9009", "文件保存失败"),
     UN_BIND_PROJECT("9010", "请给当前用户分配项目"),
     PASSWORD_LENGTH_SHORT("9011", "密码长度不能小于6"),
+    LOGIN_TYPE_ERROR("9012", "请重新选择登录前后台"),
+    LOST_PARAM("9013", "缺少必要参数"),
 
 
     // 基础
@@ -36,7 +38,10 @@ public enum Message {
     PROJECT_IS_DISABLE("2003", "内容维护导入信息有误"),
     SUPER_CONTENT_DEACTI_ERROR("2004", "内容维护停用时间不能等于或早于今天"),
     SUPER_CONTENT_TIME_ERROR("2005", "内容维护启用时间不能等于或晚于停用时间"),
-    SCORE_OVER_MAX("2006", "自评分数不能超过内容维护最大分值")
+    SCORE_OVER_MAX("2006", "自评分数不能超过内容维护最大分值"),
+
+
+    PROJECT_NAME_J_UNIQUE("3001", "项目简称不唯一")
     ;
 
     private String code;

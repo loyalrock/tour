@@ -14,7 +14,7 @@ public class UserRoleServiceImpl implements UserRoleService{
     private UserRoleMapper userRoleMapper;
 
     @Override
-    public List<UserRole> selectUserRoleByUserUid(String userUid) {
+    public UserRole selectUserRoleByUserUid(String userUid) {
         return userRoleMapper.selectUserRoleByUserUid(userUid);
     }
 }

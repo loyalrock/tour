@@ -71,6 +71,10 @@ public class ProjectContent extends CommonEntry {
 
     private Integer score;
 
+    private Integer totalSuperScore;
+
+    private Integer totalScore;
+
     private List<ImageShow> imageShows;
 
     private List<DocumentShow> documentShows;

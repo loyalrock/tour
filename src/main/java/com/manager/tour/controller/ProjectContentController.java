@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 项目内容维护
@@ -64,11 +65,28 @@ public class ProjectContentController {
      * @throws Exception
      */
     @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT, Role.EXPERTS}, logical = Logical.OR)
-    @RequestMapping(value = "/score", method = RequestMethod.GET)
+    @RequestMapping(value = "/score", method = RequestMethod.POST)
     public ResultEntry updateProjectContent(@RequestParam("sc0201Id") @NotBlank(message = "缺失主键") String sc0201Id,
                                             @RequestParam("score") @Min(value = 0, message = "分数不能小于0") @NotNull(message = "分数不能为空") Integer score) throws Exception {
         int count = projectContentService.updateScore(sc0201Id, score);
         return ResultUtil.success(Message.UPDATE_SUCCESS);
+    }
+
+    /**
+     * 查询当前项目下的项目内容
+     * @param projectNo
+     * @param code
+     * @param level
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT, Role.EXPERTS}, logical = Logical.OR)
+    @RequestMapping(value = "/level", method = RequestMethod.GET)
+    public ResultEntry selectProjectContentList(@RequestParam(required = false, value = "projectNo") String projectNo,
+                                                @RequestParam(required = false, value = "code") String code,
+                                                @RequestParam(defaultValue = "1") String level) throws Exception {
+        List<ProjectContent> projectContentList = projectContentService.selectProjectContentLevel(projectNo, code, level);
+        return ResultUtil.success(Message.SELECT_SUCCESS, projectContentList);
     }
 
 }

@@ -7,5 +7,5 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface SystemService {
 
-    String upload(MultipartFile file) throws Exception;
+    String upload(MultipartFile file, String code) throws Exception;
 }

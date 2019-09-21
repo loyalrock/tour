@@ -34,11 +34,13 @@
         select t1.*,
            t2.SC020101_ID,
            t2.FILE_URL,
+           t2.fileTime,
            t2.FILE_NAME,
            t2.FILE_NUM,
            t3.SC020102_ID,
            t3.APP_URL,
            t3.PIC_NAME,
+           t3.PIC_TIME,
            t3.PIC_NUM,
            t4.*,
            t5.*,
@@ -77,12 +79,14 @@
         <collection property="imageShows" ofType="com.manager.entry.tour.ImageShow">
             <id column="SC020102_ID" jdbcType="VARCHAR" property="sc020102Id"/>
             <result column="PIC_NUM" jdbcType="VARCHAR" property="picNum"/>
+            <result column="PIC_TIME" jdbcType="TIMESTAMP" property="picNum"/>
             <result column="PIC_NAME" jdbcType="VARCHAR" property="picName"/>
             <result column="APP_URL" jdbcType="VARCHAR" property="appUrl"/>
         </collection>
         <collection property="documentShows" ofType="com.manager.entry.tour.DocumentShow">
             <id column="SC020101_ID" jdbcType="VARCHAR" property="sc020101Id"/>
             <result column="FILE_NUM" jdbcType="VARCHAR" property="fileNum"/>
+            <result column="FILE_TIME" jdbcType="TIMESTAMP" property="fileTime"/>
             <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName"/>
             <result column="FILE_URL" jdbcType="VARCHAR" property="fileUrl"/>
         </collection>
@@ -130,4 +134,43 @@
             </foreach>
         </if>
     </select>
+
+    <select id="selectProjectContentLevel" resultMap="LevelResultMap">
+        select t1.*, sum(t2.SUPER_P_SCORE) as totalSuperScore, sum(t2.SCORE) as totalScore
+        from SC0201 t1
+                 left join SC0201 t2
+                           on t2.SUPER_P_NO regexp concat('^', t1.SUPER_P_NO) and t2.STATUS = '1' and t2.DELETE_FLAG = '0'
+        where t1.SUPER_P_LEVEL = #{level,jdbcType=VARCHAR}
+          and t1.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+          <if test="level != '1'.toString()">
+              and t1.SUPER_P_NO regexp concat('^', #{code,jdbcType=VARCHAR})
+          </if>
+        group by t1.SC0201_ID
+        order by cast(REPLACE(t1.SYS_NO, '.', '') as SIGNED)
+    </select>
+
+    <resultMap id="LevelResultMap" type="com.manager.entry.tour.ProjectContent">
+        <id column="SC0201_ID" jdbcType="VARCHAR" property="sc0201Id"/>
+        <result column="PROJECT_NO" jdbcType="VARCHAR" property="projectNo"/>
+        <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName"/>
+        <result column="PROJECT_STATUS" jdbcType="VARCHAR" property="projectStatus"/>
+        <result column="SC02_ID" jdbcType="VARCHAR" property="sc02Id"/>
+        <result column="SUPER_P_NO" jdbcType="VARCHAR" property="superPNo"/>
+        <result column="SUPER_P_LEVEL" jdbcType="VARCHAR" property="superPLevel"/>
+        <result column="SYS_NO" jdbcType="VARCHAR" property="sysNo"/>
+        <result column="SUPER_P_CHECK" jdbcType="VARCHAR" property="superPCheck"/>
+        <result column="SUPER_P_EXP" jdbcType="VARCHAR" property="superPExp"/>
+        <result column="SUPER_P_CONT" jdbcType="VARCHAR" property="superPCont"/>
+        <result column="SUPER_P_SCORE" jdbcType="INTEGER" property="superPScore"/>
+        <result column="OP_UNIT" jdbcType="VARCHAR" property="opUnit"/>
+        <result column="STATUS" jdbcType="CHAR" property="status"/>
+        <result column="SHOW_NO" jdbcType="VARCHAR" property="showNo"/>
+        <result column="IF_FILE" jdbcType="CHAR" property="ifFile"/>
+        <result column="IF_PIC" jdbcType="CHAR" property="ifPic"/>
+        <result column="IF_LINE" jdbcType="CHAR" property="ifLine"/>
+        <result column="IF_DIST" jdbcType="CHAR" property="ifDist"/>
+        <result column="SCORE" jdbcType="INTEGER" property="score"/>
+        <result column="totalSuperScore" jdbcType="INTEGER" property="totalSuperScore"/>
+        <result column="totalScore" jdbcType="INTEGER" property="totalScore"/>
+    </resultMap>
 </mapper>

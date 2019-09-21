@@ -53,4 +53,10 @@ public interface ProjectJobMapper {
     int selectCount();
 
     ProjectJob selectDetail(@Param("sc02Id") String sc02Id);
+
+    @Select("select count(*) from SC02 where PROJECT_NAME_J = #{code}")
+    int checkProjectJobShort(@Param("code") String code);
+
+    @Select("select APP_URL from SFJ01 where STATUS = '1' and DELETE_FLAG = '0' and APP_SOURCE in (select PROJECT_NO from SC02 where PROJECT_NAME_J = #{code})")
+    List<String> selectIndexPics(@Param("code") String code);
 }

@@ -1,13 +1,11 @@
 package com.manager.tour.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.manager.entry.common.CommonEntry;
 import com.manager.entry.common.CommonException;
 import com.manager.entry.common.UserUtil;
 import com.manager.entry.system.User;
 import com.manager.entry.tour.*;
 import com.manager.tour.dao.*;
-import com.manager.util.Delete;
 import com.manager.util.Flag;
 import com.manager.util.Message;
 import org.apache.shiro.SecurityUtils;
@@ -37,6 +35,11 @@ public class ProjectContentServiceImpl implements ProjectContentService {
     @Autowired
     private ProjectContentMapper projectContentMapper;
 
+    @Override
+    public List<ProjectContent> selectProjectContentLevel(String projectNo, String code, String level) {
+        projectNo = UserUtil.getProjectNo(projectNo);
+        return projectContentMapper.selectProjectContentLevel(projectNo, code, level);
+    }
 
     @Override
     public int updateScore(String sc0201Id, Integer score) {

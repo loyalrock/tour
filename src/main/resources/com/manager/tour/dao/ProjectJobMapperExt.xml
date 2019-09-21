@@ -26,7 +26,7 @@
   </update>
 
     <select id="selectPage" resultMap="PageResultMap">
-        select SC02_ID, PROJECT_NO, PROJECT_NAME, STATUS from SC02 where DELETE_FLAG = '0'
+        select SC02_ID, PROJECT_NO, PROJECT_NAME, PROJECT_NAME_J, STATUS from SC02 where DELETE_FLAG = '0'
         <if test="query != null">
             <if test="query.projectName != null and query.projectName.trim() != ''">
                 and PROJECT_NAME like concat('%', #{query.projectName,jdbcType=VARCHAR}, '%')
@@ -42,6 +42,7 @@
         <id column="SC02_ID" property="sc02Id" jdbcType="VARCHAR"></id>
         <result column="PROJECT_NO" property="projectNo" jdbcType="VARCHAR"></result>
         <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR"></result>
+        <result column="PROJECT_NAME_J" property="projectNameJ" jdbcType="VARCHAR"></result>
         <result column="STATUS" property="status" jdbcType="VARCHAR"></result>
     </resultMap>
 

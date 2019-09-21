@@ -5,6 +5,7 @@
     <constructor>
       <idArg column="SC020101_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="FILE_SOURCE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FILE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="FILE_NUM" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="FILE_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="FILE_URL" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -17,7 +18,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    SC02010101_ID, FILE_SOURCE, FILE_NUM, FILE_NAME, FILE_URL, STATUS, CREATE_USER, CREATE_TIME,
+    SC02010101_ID, FILE_SOURCE, FILE_TIME, FILE_NUM, FILE_NAME, FILE_URL, STATUS, CREATE_USER, CREATE_TIME,
     UPDATE_USER, UPDATE_TIME, DELETE_FLAG
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -31,11 +32,11 @@
     where SC020101_ID = #{sc020101Id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.manager.entry.tour.DocumentShow">
-    insert into SC020101 (SC020101_ID, FILE_SOURCE, FILE_NUM,
+    insert into SC020101 (SC020101_ID, FILE_SOURCE,FILE_TIME, FILE_NUM,
       FILE_NAME, FILE_URL, STATUS,
       CREATE_USER, CREATE_TIME, UPDATE_USER,
       UPDATE_TIME, DELETE_FLAG)
-    values (#{sc020101Id,jdbcType=VARCHAR}, #{fileSource,jdbcType=VARCHAR}, #{fileNum,jdbcType=VARCHAR},
+    values (#{sc020101Id,jdbcType=VARCHAR}, #{fileSource,jdbcType=VARCHAR}, #{fileTime,jdbcType=TIMESTAMP}, #{fileNum,jdbcType=VARCHAR},
       #{fileName,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
       #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
@@ -48,6 +49,9 @@
       </if>
       <if test="fileSource != null">
         FILE_SOURCE,
+      </if>
+      <if test="fileTime != null">
+        FILE_TIME,
       </if>
       <if test="fileNum != null">
         FILE_NUM,
@@ -84,6 +88,9 @@
       <if test="fileSource != null">
         #{fileSource,jdbcType=VARCHAR},
       </if>
+      <if test="fileTime != null">
+        #{fileTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="fileNum != null">
         #{fileNum,jdbcType=VARCHAR},
       </if>
@@ -119,6 +126,9 @@
       <if test="fileSource != null">
         FILE_SOURCE = #{fileSource,jdbcType=VARCHAR},
       </if>
+      <if test="fileTime != null">
+        FILE_Time = #{fileTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="fileNum != null">
         FILE_NUM = #{fileNum,jdbcType=VARCHAR},
       </if>
@@ -152,6 +162,7 @@
   <update id="updateByPrimaryKey" parameterType="com.manager.entry.tour.DocumentShow">
     update SC020101
     set FILE_SOURCE = #{fileSource,jdbcType=VARCHAR},
+      FILE_TIME = #{fileTime,jdbcType=TIMESTAMP},
       FILE_NUM = #{fileNum,jdbcType=VARCHAR},
       FILE_NAME = #{fileName,jdbcType=VARCHAR},
       FILE_URL = #{fileUrl,jdbcType=VARCHAR},

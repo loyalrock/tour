@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface UserRoleService {
 
-    List<UserRole> selectUserRoleByUserUid(String userUid);
+    UserRole selectUserRoleByUserUid(String userUid);
 }

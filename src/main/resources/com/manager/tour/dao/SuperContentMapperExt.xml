@@ -3,7 +3,7 @@
 <mapper namespace="com.manager.tour.dao.SuperContentMapper">
   <select id="selectPage" resultMap="PageResultMap">
     select t1.SC01_ID, t1.SUPER_P_NO, t1.SYS_NO, t1.SUPER_P_CHECK, t1.SUPER_P_EXP, t1.SUPER_P_SCORE, t1.SUPER_P_LEVEL, t1.IF_ADD,
-    t1.STATUS, SUM(t2.SUPER_P_SCORE) + t1.SUPER_P_SCORE as TOTAL_SCORE from SC01 t1
+    t1.STATUS, SUM(t2.SUPER_P_SCORE) as TOTAL_SCORE from SC01 t1
     LEFT JOIN SC01 t2 ON t2.SUPER_P_NO REGEXP CONCAT('^', t1.SUPER_P_NO) AND t2.STATUS = '1' AND t2.DELETE_FLAG = '0'
     where t1.DELETE_FLAG = '0'
     <if test="query != null">
@@ -36,7 +36,7 @@
       <if test="ss01Id != null and ss01Id.trim() != ''">
         and
       </if>
-    order by SUPER_P_NO
+    order by cast(REPLACE(SYS_NO, '.', '') as SIGNED)
   </select>
 
   <resultMap id="PageResultMap" type="com.manager.entry.tour.SuperContent">
@@ -93,7 +93,7 @@
   <select id="selectAll" resultMap="AllResultMap">
     SELECT
     t1.*,
-    SUM(t2.SUPER_P_SCORE) + t1.SUPER_P_SCORE as TOTAL_SCORE
+    SUM(t2.SUPER_P_SCORE) as TOTAL_SCORE
     FROM
     SC01 t1
     LEFT JOIN SC01 t2
@@ -120,7 +120,7 @@
   <select id="selectAllChild" resultMap="AllResultMap">
     SELECT
     t1.*,
-    SUM(t2.SUPER_P_SCORE) + t1.SUPER_P_SCORE as TOTAL_SCORE
+    SUM(t2.SUPER_P_SCORE) as TOTAL_SCORE
     FROM
     SC01 t1
     LEFT JOIN SC01 t2

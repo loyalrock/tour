@@ -35,10 +35,11 @@ public class SystemController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResultEntry Login(@RequestParam @NotBlank(message = "用户名不能为空") String username,
-                             @RequestParam @NotBlank(message = "密码不能为空") String password)
+                             @RequestParam @NotBlank(message = "密码不能为空") String password,
+                             @RequestParam @NotBlank(message = "登录环境不能为空") String type)
     {
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password, type);
         // 登录
         subject.login(token);
 
@@ -58,8 +59,9 @@ public class SystemController {
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
-    public ResultEntry upload(@RequestParam("file")MultipartFile multipartFile) throws Exception{
-        String url = systemService.upload(multipartFile);
+    public ResultEntry upload(@RequestParam("file")MultipartFile multipartFile,
+                              @RequestParam(required = false, value = "code") String code) throws Exception{
+        String url = systemService.upload(multipartFile, code);
         return ResultUtil.success(Message.INSERT_SUCCESS, url);
     }
 }

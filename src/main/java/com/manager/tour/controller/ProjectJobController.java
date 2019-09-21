@@ -159,4 +159,33 @@ public class ProjectJobController {
         ProjectJob projectJob = projectJobService.selectDetail(sc02Id);
         return ResultUtil.success(Message.SELECT_SUCCESS, projectJob);
     }
+
+    /**
+     * 检测项目简称是否重复
+     * 如果大于0 重复  等于0可以使用
+     * @param projectNameJ
+     * @return
+     * @throws Exception
+     */
+    @RequiresRoles(value = {Role.SYSTEM}, logical = Logical.OR)
+    @RequestMapping(value = "/check/short", method = RequestMethod.GET)
+    public ResultEntry checkProjectNameJ(@RequestParam("projectNameJ") @NotBlank(message = "项目简称缺失") String projectNameJ) throws Exception {
+        int count = projectJobService.checkProjectNameShort(projectNameJ);
+        return ResultUtil.success(Message.SELECT_SUCCESS, count);
+    }
+
+    /**
+     * 查询项目下的图片
+     * shiro 不校验
+     * @param projectNameJ
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public ResultEntry selectProjectIndexPic(@RequestParam("projectNameJ") @NotBlank(message = "项目简称缺失") String projectNameJ) throws Exception {
+        List<String> pics = projectJobService.selectIndexPics(projectNameJ);
+        return ResultUtil.success(Message.SELECT_SUCCESS, pics);
+    }
+
+
 }

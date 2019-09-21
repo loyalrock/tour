@@ -20,7 +20,7 @@ public interface UserRoleMapper {
 
     int updateByPrimaryKey(UserRole record);
 
-    List<UserRole> selectUserRoleByUserUid(@Param("userUid") String userUid);
+    UserRole selectUserRoleByUserUid(@Param("userUid") String userUid);
 
     /**
      * 修改用户角色关系 通过SS01_ID

@@ -30,4 +30,6 @@ public interface ProjectContentMapper {
     int deleteAll(@Param("projectNo") String projectNo, @Param("ids") List<String> ids, @Param("ss01Id") String userUid);
 
     List<String> selectDeleteId(@Param("projectNo") String projectNo, @Param("ids") List<String> ids);
+
+    List<ProjectContent> selectProjectContentLevel(@Param("projectNo") String projectNo, @Param("code") String code, @Param("level") String level);
 }

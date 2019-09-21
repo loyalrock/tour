@@ -47,4 +47,18 @@ public interface ProjectJobService {
      */
     int update(ProjectJob projectJob);
 
+    /**
+     * 检测项目简称是否重复
+     * @param code
+     * @return
+     */
+    int checkProjectNameShort(String code);
+
+    /**
+     * 查询该项目的首页图片
+     * @param code
+     * @return
+     */
+    List<String> selectIndexPics(String code);
+
 }

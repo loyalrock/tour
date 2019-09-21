@@ -1,7 +1,9 @@
 package com.manager.entry.tour;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.manager.entry.common.CommonEntry;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -12,6 +14,10 @@ public class ImageShow extends CommonEntry {
     private String picSource;
 
     private String picNum;
+
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+    private String picTime;
 
     private String picName;
 

@@ -92,9 +92,9 @@
         <result column="PROJECT_NO" property="projectNo" jdbcType="VARCHAR"></result>
         <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR"></result>
         <result column="PROJECT_NAME_J" property="projectNameJ" jdbcType="VARCHAR"></result>
-        <collection property="userRoles" ofType="com.manager.entry.system.UserRole">
+        <association property="userRole" javaType="com.manager.entry.system.UserRole">
             <result column="USER_ROLE_ID" property="userRoleId" jdbcType="VARCHAR"></result>
             <result column="SS0101_ID" property="ss0101Id" jdbcType="VARCHAR"></result>
-        </collection>
+        </association>
     </resultMap>
 </mapper>
