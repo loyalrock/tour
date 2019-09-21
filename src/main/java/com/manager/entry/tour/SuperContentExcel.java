@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * 描述
  *
- * @auth0r nosign
+ * @author nosign
  * @date 2019/09/12
  */
 public class SuperContentExcel extends BaseRowModel {

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import java.security.Principal;
 
 @RestController
@@ -59,7 +60,7 @@ public class UserController {
      */
     @RequestMapping(value = "/manager/detail", method = RequestMethod.GET)
     @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
-    public ResultEntry getUserManagerList(@Param("userUid") String userUid) throws Exception {
+    public ResultEntry getUserManagerList(@Param("userUid") @NotBlank(message = "缺失用户主键") String userUid) throws Exception {
         UserManager userManager = userService.selectUserManagerDetail(userUid);
         return ResultUtil.success(Message.SELECT_SUCCESS, userManager);
     }
@@ -99,7 +100,8 @@ public class UserController {
      */
     @RequestMapping(value = "/status/update", method = RequestMethod.POST)
     @RequiresRoles(value = {Role.SYSTEM})
-    public ResultEntry updateStatus(@RequestParam("status") String status, @RequestParam("userUid") String userUid) throws Exception {
+    public ResultEntry updateStatus(@RequestParam("status") @NotBlank(message = "缺失修改状态") String status,
+                                    @RequestParam("userUid") @NotBlank(message = "缺失用户主键") String userUid) throws Exception {
         userService.updateStatus(userUid, status);
         return ResultUtil.success(Message.UPDATE_SUCCESS);
     }
@@ -113,7 +115,8 @@ public class UserController {
      */
     @RequestMapping(value = "/pw/update", method = RequestMethod.POST)
     @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
-    public ResultEntry upload(@Param("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) throws Exception{
+    public ResultEntry upload(@Param("oldPassword") @NotBlank(message = "缺失原始密码") String oldPassword,
+                              @RequestParam("newPassword") @NotBlank(message = "缺失新密码") String newPassword) throws Exception{
         userService.updatePassword(oldPassword, newPassword);
         return ResultUtil.success(Message.UPDATE_SUCCESS);
     }

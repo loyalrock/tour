@@ -36,6 +36,7 @@ public enum Message {
     PROJECT_IS_DISABLE("2003", "内容维护导入信息有误"),
     SUPER_CONTENT_DEACTI_ERROR("2004", "内容维护停用时间不能等于或早于今天"),
     SUPER_CONTENT_TIME_ERROR("2005", "内容维护启用时间不能等于或晚于停用时间"),
+    SCORE_OVER_MAX("2006", "自评分数不能超过内容维护最大分值")
     ;
 
     private String code;

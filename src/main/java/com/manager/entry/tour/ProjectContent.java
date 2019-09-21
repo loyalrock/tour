@@ -1,21 +1,31 @@
 package com.manager.entry.tour;
 
 import com.manager.entry.common.CommonEntry;
+import com.manager.util.group.InsertGroup;
+import com.manager.util.group.UpdateGroup;
+import lombok.Data;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
 /**
  * 项目内容维护
  */
+@Data
 public class ProjectContent extends CommonEntry {
+
+    @NotBlank(message = "缺失内容维护主键", groups = {UpdateGroup.class})
     private String sc0201Id;
 
+    @NotBlank(message = "缺失项目编号", groups = {InsertGroup.class})
     private String projectNo;
 
     /**
      * 项目名称
      */
+    @NotBlank(message = "缺失项目名称", groups = {InsertGroup.class})
     private String projectName;
 
     /**
@@ -28,18 +38,23 @@ public class ProjectContent extends CommonEntry {
      */
     private String sc02Id;
 
+    @NotBlank(message = "缺失维护内容编号", groups = {InsertGroup.class})
     private String superPNo;
 
+    @NotBlank(message = "缺失维护内容层级", groups = {InsertGroup.class})
     private String superPLevel;
 
+    @NotBlank(message = "缺失维护内容系统编号", groups = {InsertGroup.class})
     private String sysNo;
 
+    @NotBlank(message = "缺失维护内容", groups = {InsertGroup.class})
     private String superPCheck;
 
     private String superPExp;
 
     private String superPCont;
 
+    @Min(value = 0, message = "分值不能小于0", groups = {InsertGroup.class})
     private Integer superPScore;
 
     private String opUnit;
@@ -64,61 +79,6 @@ public class ProjectContent extends CommonEntry {
 
     private List<RegionShow> regionShows;
 
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-
-    public String getProjectStatus() {
-        return projectStatus;
-    }
-
-    public void setProjectStatus(String projectStatus) {
-        this.projectStatus = projectStatus;
-    }
-
-    public String getSc02Id() {
-        return sc02Id;
-    }
-
-    public void setSc02Id(String sc02Id) {
-        this.sc02Id = sc02Id;
-    }
-
-    public List<ImageShow> getImageShows() {
-        return imageShows;
-    }
-
-    public void setImageShows(List<ImageShow> imageShows) {
-        this.imageShows = imageShows;
-    }
-
-    public List<DocumentShow> getDocumentShows() {
-        return documentShows;
-    }
-
-    public void setDocumentShows(List<DocumentShow> documentShows) {
-        this.documentShows = documentShows;
-    }
-
-    public List<LineShow> getLineShows() {
-        return lineShows;
-    }
-
-    public void setLineShows(List<LineShow> lineShows) {
-        this.lineShows = lineShows;
-    }
-
-    public List<RegionShow> getRegionShows() {
-        return regionShows;
-    }
-
-    public void setRegionShows(List<RegionShow> regionShows) {
-        this.regionShows = regionShows;
-    }
 
     public ProjectContent(String sc0201Id, String projectNo, String superPNo, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPCont, Integer superPScore, String opUnit, String status, String showNo, String ifFile, String ifPic, String ifLine, String ifDist, Integer score, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
         super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
@@ -142,133 +102,5 @@ public class ProjectContent extends CommonEntry {
 
     public ProjectContent() {
         super();
-    }
-
-    public String getSc0201Id() {
-        return sc0201Id;
-    }
-
-    public void setSc0201Id(String sc0201Id) {
-        this.sc0201Id = sc0201Id == null ? null : sc0201Id.trim();
-    }
-
-    public String getProjectNo() {
-        return projectNo;
-    }
-
-    public void setProjectNo(String projectNo) {
-        this.projectNo = projectNo == null ? null : projectNo.trim();
-    }
-
-    public String getSuperPNo() {
-        return superPNo;
-    }
-
-    public void setSuperPNo(String superPNo) {
-        this.superPNo = superPNo == null ? null : superPNo.trim();
-    }
-
-    public String getSuperPLevel() {
-        return superPLevel;
-    }
-
-    public void setSuperPLevel(String superPLevel) {
-        this.superPLevel = superPLevel == null ? null : superPLevel.trim();
-    }
-
-    public String getSysNo() {
-        return sysNo;
-    }
-
-    public void setSysNo(String sysNo) {
-        this.sysNo = sysNo == null ? null : sysNo.trim();
-    }
-
-    public String getSuperPCheck() {
-        return superPCheck;
-    }
-
-    public void setSuperPCheck(String superPCheck) {
-        this.superPCheck = superPCheck == null ? null : superPCheck.trim();
-    }
-
-    public String getSuperPExp() {
-        return superPExp;
-    }
-
-    public void setSuperPExp(String superPExp) {
-        this.superPExp = superPExp == null ? null : superPExp.trim();
-    }
-
-    public String getSuperPCont() {
-        return superPCont;
-    }
-
-    public void setSuperPCont(String superPCont) {
-        this.superPCont = superPCont == null ? null : superPCont.trim();
-    }
-
-    public Integer getSuperPScore() {
-        return superPScore;
-    }
-
-    public void setSuperPScore(Integer superPScore) {
-        this.superPScore = superPScore;
-    }
-
-    public String getOpUnit() {
-        return opUnit;
-    }
-
-    public void setOpUnit(String opUnit) {
-        this.opUnit = opUnit == null ? null : opUnit.trim();
-    }
-
-    public String getShowNo() {
-        return showNo;
-    }
-
-    public void setShowNo(String showNo) {
-        this.showNo = showNo == null ? null : showNo.trim();
-    }
-
-    public String getIfFile() {
-        return ifFile;
-    }
-
-    public void setIfFile(String ifFile) {
-        this.ifFile = ifFile == null ? null : ifFile.trim();
-    }
-
-    public String getIfPic() {
-        return ifPic;
-    }
-
-    public void setIfPic(String ifPic) {
-        this.ifPic = ifPic == null ? null : ifPic.trim();
-    }
-
-    public String getIfLine() {
-        return ifLine;
-    }
-
-    public void setIfLine(String ifLine) {
-        this.ifLine = ifLine == null ? null : ifLine.trim();
-    }
-
-    public String getIfDist() {
-        return ifDist;
-    }
-
-    public void setIfDist(String ifDist) {
-        this.ifDist = ifDist == null ? null : ifDist.trim();
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
     }
 }

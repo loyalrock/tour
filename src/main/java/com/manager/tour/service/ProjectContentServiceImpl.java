@@ -37,47 +37,25 @@ public class ProjectContentServiceImpl implements ProjectContentService {
     @Autowired
     private ProjectContentMapper projectContentMapper;
 
-    @Autowired
-    private ProjectJobMapper projectJobMapper;
 
     @Override
-    public int deleteDocument(String sc020101Id) {
-        DocumentShow documentShow = new DocumentShow();
-        UserUtil.updateData(documentShow);
-        documentShow.setSc020101Id(sc020101Id);
-        documentShow.setDeleteFlag(Delete.DELETE_ED);
-        documentShow.setStatus(Flag.NOT_HAVE);
-        return documentShowMapper.updateByPrimaryKeySelective(documentShow);
-    }
+    public int updateScore(String sc0201Id, Integer score) {
 
-    @Override
-    public int deleteImage(String sc020102) {
-        ImageShow imageShow = new ImageShow();
-        UserUtil.updateData(imageShow);
-        imageShow.setSc020102Id(sc020102);
-        imageShow.setDeleteFlag(Delete.DELETE_ED);
-        imageShow.setStatus(Flag.NOT_HAVE);
-        return imageShowMapper.updateByPrimaryKeySelective(imageShow);
-    }
+        ProjectContent projectContent = projectContentMapper.selectDetail(sc0201Id);
 
-    @Override
-    public int deleteLine(String sc020103) {
-        LineShow lineShow = new LineShow();
-        UserUtil.updateData(lineShow);
-        lineShow.setSc020103Id(sc020103);
-        lineShow.setDeleteFlag(Delete.DELETE_ED);
-        lineShow.setStatus(Flag.NOT_HAVE);
-        return lineShowMapper.updateByPrimaryKeySelective(lineShow);
-    }
+        Integer projectScore = projectContent.getSuperPScore();
 
-    @Override
-    public int deleteDist(String sc020104) {
-        RegionShow regionShow = new RegionShow();
-        UserUtil.updateData(regionShow);
-        regionShow.setSc020104Id(sc020104);
-        regionShow.setDeleteFlag(Delete.DELETE_ED);
-        regionShow.setStatus(Flag.NOT_HAVE);
-        return regionShowMapper.updateByPrimaryKeySelective(regionShow);
+        if (score > projectScore) {
+            throw new CommonException(Message.SCORE_OVER_MAX);
+        }
+
+        ProjectContent updateData = new ProjectContent();
+        updateData.setSc0201Id(sc0201Id);
+        updateData.setScore(score);
+        UserUtil.updateData(updateData);
+        int count = projectContentMapper.updateByPrimaryKeySelective(updateData);
+
+        return count;
     }
 
     /**
@@ -116,7 +94,6 @@ public class ProjectContentServiceImpl implements ProjectContentService {
         // 当前操作账户
         String ss01Id = user.getSs01Id();
 
-        // TODO 增加一个判断修改的方法
         List<DocumentShow> insertDocumentList = new ArrayList<>();
         List<String> deleteDocumentNotInIds = new ArrayList<>();
         // 新增文档

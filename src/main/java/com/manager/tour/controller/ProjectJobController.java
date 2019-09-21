@@ -9,12 +9,18 @@ import com.manager.tour.service.ProjectJobService;
 import com.manager.util.Message;
 import com.manager.util.ResultUtil;
 import com.manager.util.Role;
+import com.manager.util.group.InsertGroup;
+import com.manager.util.group.UpdateGroup;
+import com.manager.util.group.UpdateStatusGroup;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.io.*;
 import java.util.List;
 import java.util.UUID;
@@ -67,7 +73,7 @@ public class ProjectJobController {
      */
     @RequiresRoles(value = {Role.SYSTEM}, logical = Logical.OR)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResultEntry add(@RequestBody ProjectJob projectJob) throws Exception {
+    public ResultEntry add(@RequestBody @Validated(value = {InsertGroup.class}) ProjectJob projectJob) throws Exception {
         projectJobService.add(projectJob);
         return ResultUtil.success(Message.INSERT_SUCCESS);
     }
@@ -81,7 +87,7 @@ public class ProjectJobController {
      */
     @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResultEntry update(@RequestBody ProjectJob projectJob) throws Exception {
+    public ResultEntry update(@RequestBody @Validated(value = {UpdateGroup.class}) ProjectJob projectJob) throws Exception {
         projectJobService.update(projectJob);
         return ResultUtil.success(Message.UPDATE_SUCCESS);
     }
@@ -95,7 +101,7 @@ public class ProjectJobController {
      */
     @RequiresRoles(value = {Role.SYSTEM}, logical = Logical.OR)
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public ResultEntry delete(@RequestParam("sc02Id") String sc02Id) throws Exception {
+    public ResultEntry delete(@RequestParam("sc02Id") @NotBlank(message = "缺失主键") String sc02Id) throws Exception {
         projectJobService.deleteOne(sc02Id);
         return ResultUtil.success(Message.DELETE_SUCCESS);
     }
@@ -109,7 +115,7 @@ public class ProjectJobController {
      */
     @RequiresRoles(value = {Role.SYSTEM}, logical = Logical.OR)
     @RequestMapping(value = "/delete/all", method = RequestMethod.POST)
-    public ResultEntry deleteAll(List<String> ids) throws Exception {
+    public ResultEntry deleteAll(@NotEmpty(message = "缺失删除列表") List<String> ids) throws Exception {
         projectJobService.deleteAll(ids);
         return ResultUtil.success(Message.DELETE_SUCCESS);
     }
@@ -123,7 +129,7 @@ public class ProjectJobController {
      */
     @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     @RequestMapping(value = "/update/status", method = RequestMethod.POST)
-    public ResultEntry updateStatus(@RequestBody ProjectJobQuery query) throws Exception {
+    public ResultEntry updateStatus(@RequestBody @Validated(value = {UpdateStatusGroup.class}) ProjectJobQuery query) throws Exception {
         projectJobService.updateStatus(query);
         return ResultUtil.success(Message.UPDATE_SUCCESS);
     }
@@ -136,7 +142,7 @@ public class ProjectJobController {
      */
     @RequiresRoles(value = {Role.SYSTEM})
     @RequestMapping(value = "/code", method = RequestMethod.GET)
-    public ResultEntry getNextCode() throws Exception {
+    public ResultEntry getNextCode() {
         String code = projectJobService.getNextCode();
         return ResultUtil.success(Message.SELECT_SUCCESS, code);
     }
@@ -149,7 +155,7 @@ public class ProjectJobController {
      */
     @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public ResultEntry selectDetail(@RequestParam("sc02Id") String sc02Id) throws Exception {
+    public ResultEntry selectDetail(@RequestParam("sc02Id") @NotBlank(message = "缺失主键") String sc02Id) throws Exception {
         ProjectJob projectJob = projectJobService.selectDetail(sc02Id);
         return ResultUtil.success(Message.SELECT_SUCCESS, projectJob);
     }

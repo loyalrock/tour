@@ -19,11 +19,12 @@ public interface ProjectContentService {
 
     int update(ProjectContent projectContent);
 
-    int deleteDocument(String sc020101Id);
+    /**
+     * 打分
+     * @param sc0201Id
+     * @param score
+     * @return
+     */
+    int updateScore(String sc0201Id, Integer score);
 
-    int deleteImage(String sc020102);
-
-    int deleteLine(String sc020103);
-
-    int deleteDist(String sc020104);
 }

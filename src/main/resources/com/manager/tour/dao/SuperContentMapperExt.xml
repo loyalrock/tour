@@ -33,6 +33,9 @@
       <if test="level != null and level.trim() != ''">
         and SUPER_P_LEVEL = #{level,jdbcType=VARCHAR}
       </if>
+      <if test="ss01Id != null and ss01Id.trim() != ''">
+        and
+      </if>
     order by SUPER_P_NO
   </select>
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @RestController
@@ -55,7 +56,7 @@ public class SuperContentController {
      */
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
-    public ResultEntry selectDetail(@RequestParam("superContentUid") String superContentUid) {
+    public ResultEntry selectDetail(@RequestParam("superContentUid") @NotBlank(message = "缺失主键") String superContentUid) {
         SuperContent superContent = superContentService.selectDetail(superContentUid);
         return ResultUtil.success(Message.SELECT_SUCCESS, superContent);
     }
@@ -99,7 +100,7 @@ public class SuperContentController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @RequiresRoles(value = {Role.SYSTEM})
+    @RequiresRoles(value = {Role.SYSTEM, Role.EXPERTS})
     public ResultEntry selectByLevel (@RequestParam(defaultValue = "1", value = "level") String level,
                                       @RequestParam(value = "code", required = false) String code) {
         List<SuperContent> superContents = superContentService.selectLevel(level, code);
