@@ -1,6 +1,9 @@
 package com.manager.tour.service;
 
 import com.manager.entry.tour.ProjectContent;
+import com.manager.entry.tour.ProjectDocumentNum;
+import com.manager.entry.tour.ProjectScore;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -37,5 +40,9 @@ public interface ProjectContentService {
      * @return
      */
     List<ProjectContent> selectProjectContentLevel(String projectNo, String code, String level);
+
+    List<ProjectScore> selectProjectScoreStatistics(String projectNo);
+
+    List<ProjectDocumentNum> selectProjectDocumentStatistics(String projectNo);
 
 }

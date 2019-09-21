@@ -1,6 +1,8 @@
 package com.manager.tour.dao;
 
 import com.manager.entry.tour.ProjectContent;
+import com.manager.entry.tour.ProjectDocumentNum;
+import com.manager.entry.tour.ProjectScore;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -32,4 +34,8 @@ public interface ProjectContentMapper {
     List<String> selectDeleteId(@Param("projectNo") String projectNo, @Param("ids") List<String> ids);
 
     List<ProjectContent> selectProjectContentLevel(@Param("projectNo") String projectNo, @Param("code") String code, @Param("level") String level);
+
+    List<ProjectScore> selectProjectScoreStatistics(@Param("projectNo") String projectNo);
+
+    List<ProjectDocumentNum> selectProjectDocumentStatistics(@Param("projectNo") String projectNo);
 }

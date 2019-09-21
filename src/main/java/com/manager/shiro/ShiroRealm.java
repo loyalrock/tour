@@ -92,7 +92,7 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         // 非全域 放入项目
-        if (!userRole.equals(Role.SYSTEM)) {
+        if (!userRoleId.equals(Role.SYSTEM)) {
             UserProject userProject = userProjectMapper.selectProjectBySs01Id(user.getSs01Id());
             if (userProject == null || userProject.getProjectNo() == null || "".equals(userProject.getProjectNo().trim())) {
                 throw new CommonException(Message.UN_BIND_PROJECT);

@@ -2,6 +2,8 @@ package com.manager.tour.controller;
 
 import com.manager.entry.common.ResultEntry;
 import com.manager.entry.tour.ProjectContent;
+import com.manager.entry.tour.ProjectDocumentNum;
+import com.manager.entry.tour.ProjectScore;
 import com.manager.tour.service.ProjectContentService;
 import com.manager.util.Message;
 import com.manager.util.ResultUtil;
@@ -89,4 +91,17 @@ public class ProjectContentController {
         return ResultUtil.success(Message.SELECT_SUCCESS, projectContentList);
     }
 
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT, Role.EXPERTS}, logical = Logical.OR)
+    @RequestMapping(value = "/stats/score", method = RequestMethod.GET)
+    public ResultEntry selectScore(@RequestParam(required = false, value = "projectNo") String projectNo) throws Exception {
+        List<ProjectScore> projectScores = projectContentService.selectProjectScoreStatistics(projectNo);
+        return ResultUtil.success(Message.SELECT_SUCCESS, projectScores);
+    }
+
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT, Role.EXPERTS}, logical = Logical.OR)
+    @RequestMapping(value = "/stats/document", method = RequestMethod.GET)
+    public ResultEntry selectDocumentNum(@RequestParam(required = false, value = "projectNo") String projectNo) throws Exception {
+        List<ProjectDocumentNum> projectDocumentNums = projectContentService.selectProjectDocumentStatistics(projectNo);
+        return ResultUtil.success(Message.SELECT_SUCCESS, projectDocumentNums);
+    }
 }

@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.manager.tour.dao.DocumentShowMapper">
-  <insert id="insertAll" parameterType="List">
-    insert into SC020101 (SC020101_ID, FILE_SOURCE, FILE_NUM,
-      FILE_NAME, FILE_URL, STATUS,
-      CREATE_USER, CREATE_TIME, UPDATE_USER,
-      UPDATE_TIME, DELETE_FLAG)
-    values
-    <foreach collection="documentShows" item="item" separator=",">
-      (#{item.sc020101Id,jdbcType=VARCHAR}, #{item.fileSource,jdbcType=VARCHAR}, #{item.fileNum,jdbcType=VARCHAR},
-      #{item.fileName,jdbcType=VARCHAR}, #{item.fileUrl,jdbcType=VARCHAR}, #{item.status,jdbcType=CHAR},
-      #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR},
-      #{item.updateTime,jdbcType=TIMESTAMP}, #{item.deleteFlag,jdbcType=CHAR})
-    </foreach>
+    <insert id="insertAll" parameterType="List">
+        insert into SC020101 (SC020101_ID, FILE_SOURCE,FILE_TIME, FILE_NUM,
+        FILE_NAME, FILE_URL, STATUS,
+        CREATE_USER, CREATE_TIME, UPDATE_USER,
+        UPDATE_TIME, DELETE_FLAG)
+        values
+        <foreach collection="documentShows" item="item" separator=",">
+            (#{item.sc020101Id,jdbcType=VARCHAR}, #{item.fileSource,jdbcType=VARCHAR},
+            #{item.fileTime,jdbcType=TIMESTAMP}, #{item.fileNum,jdbcType=VARCHAR},
+            #{item.fileName,jdbcType=VARCHAR}, #{item.fileUrl,jdbcType=VARCHAR}, #{item.status,jdbcType=CHAR},
+            #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateUser,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP}, #{item.deleteFlag,jdbcType=CHAR})
+        </foreach>
 
-  </insert>
+    </insert>
 
-  <update id="deleteAll">
-    update SC020101 set STATUS = 0, DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
-    where FILE_SOURCE = #{sc0201Id,jdbcType=VARCHAR}
-    <if test="ids != null and ids.size > 0">
-      and SC020101_ID not in
-      <foreach collection="ids" item="id" separator="," open="(" close=")">
-        #{id,jdbcType=VARCHAR}
-      </foreach>
-    </if>
-  </update>
+    <update id="deleteAll">
+        update SC020101 set STATUS = 0, DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
+        where FILE_SOURCE = #{sc0201Id,jdbcType=VARCHAR}
+        <if test="ids != null and ids.size > 0">
+            and SC020101_ID not in
+            <foreach collection="ids" item="id" separator="," open="(" close=")">
+                #{id,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+    </update>
 
-  <update id="deleteAllByContent">
-    update SC020101 set STATUS = 0, DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
-    where FILE_SOURCE in
-    <foreach collection="ids" item="id" separator="," open="(" close=")">
-      #{id,jdbcType=VARCHAR}
-    </foreach>
-  </update>
+    <update id="deleteAllByContent">
+        update SC020101 set STATUS = 0, DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
+        where FILE_SOURCE in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id,jdbcType=VARCHAR}
+        </foreach>
+    </update>
 
 </mapper>
