@@ -10,6 +10,7 @@ import com.manager.system.dao.UserProjectMapper;
 import com.manager.system.dao.UserRoleMapper;
 import com.manager.util.Delete;
 import com.manager.util.Message;
+import com.manager.util.Role;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,7 +77,7 @@ public class UserServiceImpl implements UserService {
         int count = 0;
 
         // 判断姓名和登录账号是否相同
-        if (!userManager.getUserName().equals(beforeUpdateUser.getUserName()) || !userManager.getUserId().equals(beforeUpdateUser.getUserId())) {
+        if (!userManager.getUserName().equals(beforeUpdateUser.getUserName())) {
             User user = new User();
             user.setSs01Id(userUid);
             user.setUserName(userManager.getUserName());
@@ -104,15 +105,19 @@ public class UserServiceImpl implements UserService {
         }
 
         // 判断项目
-        if (!userManager.getProjectNo().equals(beforeUpdateUser.getProjectNo()) || !userManager.getOpUnit().equals(beforeUpdateUser.getOpUnit())) {
+        String currentUserRoleId = currentUser.getUserRole().getUserRoleId();
+        // 如果是全域管理员且项目编码改变
+        if (currentUserRoleId.equals(Role.SYSTEM) && !userManager.getProjectNo().equals(beforeUpdateUser.getProjectNo())) {
             UserProject userProject = new UserProject();
             userProject.setSs01Id(userUid);
             userProject.setOpUnit(userManager.getOpUnit());
-            userProject.setProjectNo(userManager.getProjectNo());
+            String projectNo = UserUtil.getProjectNo(userManager.getProjectNo());
+            userProject.setProjectNo(projectNo);
             userProject.setUpdateUser(currentUser.getSs01Id());
             userProject.setUpdateTime(now);
             count = userProjectMapper.updateByUserUid(userProject);
         }
+
 
         return count;
     }
@@ -141,6 +146,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int addUser(UserManager userManager) throws Exception {
+
         // 校验userUid 是否存在
         User checkUser = userMapper.selectUserByUserId(userManager.getUserId());
         if (checkUser != null) {
@@ -166,34 +172,42 @@ public class UserServiceImpl implements UserService {
         // 新增用户表
         int count = userMapper.insertSelective(user);
 
-        // 新增多角色
-        String [] userRoleIds =  userManager.getUserRoleId().split(",");
-        for (String userRoleId : userRoleIds) {
-            UserRole userRole = new UserRole(
-                    UUID.randomUUID().toString(),
-                    newUserUid,
-                    userRoleId,
-                    currentUser.getSs01Id(),
-                    now,
-                    currentUser.getSs01Id(),
-                    now,
-                    Delete.UN_DELETE);
-            // 新增用户角色表
-            count = userRoleMapper.insertSelective(userRole);
+        // 新增角色  如果是项目管理员不能选择全域
+        String currentUserRoleId = ((User) SecurityUtils.getSubject().getPrincipal()).getUserRole().getUserRoleId();
+        String userRoleId =  userManager.getUserRoleId();
+        if (currentUserRoleId.equals(Role.PROJECT) && userRoleId.equals(Role.SYSTEM)) {
+            throw new CommonException(Message.ROLE_ERROR);
         }
 
-        UserProject userProject = new UserProject(
+        UserRole userRole = new UserRole(
                 UUID.randomUUID().toString(),
                 newUserUid,
-                userManager.getProjectNo(),
-                userManager.getOpUnit(),
+                userRoleId,
                 currentUser.getSs01Id(),
                 now,
                 currentUser.getSs01Id(),
                 now,
                 Delete.UN_DELETE);
-        // 新增用户项目关联
-        count = userProjectMapper.insertSelective(userProject);
+        // 新增用户角色表
+        count = userRoleMapper.insertSelective(userRole);
+
+        // 全域管理员不添加项目
+        if (!userRoleId.equals(Role.SYSTEM)) {
+            String projectNo = UserUtil.getProjectNo(userManager.getProjectNo());
+            UserProject userProject = new UserProject(
+                    UUID.randomUUID().toString(),
+                    newUserUid,
+                    projectNo,
+                    userManager.getOpUnit(),
+                    currentUser.getSs01Id(),
+                    now,
+                    currentUser.getSs01Id(),
+                    now,
+                    Delete.UN_DELETE);
+            // 新增用户项目关联
+            count = userProjectMapper.insertSelective(userProject);
+        }
+
         return count;
     }
 }

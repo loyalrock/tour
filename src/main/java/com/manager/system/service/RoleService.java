@@ -18,4 +18,6 @@ public interface RoleService {
      * @return
      */
     List<Role> selectRoleList();
+
+    int updateRole(Role role);
 }

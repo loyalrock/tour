@@ -18,8 +18,10 @@ public enum Message {
     FILE_SAVE_FAILED("9009", "文件保存失败"),
     UN_BIND_PROJECT("9010", "请给当前用户分配项目"),
     PASSWORD_LENGTH_SHORT("9011", "密码长度不能小于6"),
-    LOGIN_TYPE_ERROR("9012", "请重新选择登录前后台"),
+    ERROR_PROJECT("9012", "项目编号有误，请正确选择"),
+    LOGIN_TYPE_ERROR("9015", "请重新选择登录前后台"),
     LOST_PARAM("9013", "缺少必要参数"),
+    ROLE_ERROR("9014", "角色选择错误"),
 
 
     // 基础

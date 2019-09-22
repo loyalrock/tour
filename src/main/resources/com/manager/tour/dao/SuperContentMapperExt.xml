@@ -21,7 +21,7 @@
       </if>
     </if>
     GROUP BY t1.SC01_ID
-    order by cast(REPLACE(t1.SYS_NO, '.', '') as SIGNED)
+    order by t1.SYS_NO
   </select>
 
   <select id="selectLevel" resultMap="PageResultMap">
@@ -78,7 +78,8 @@
     UPDATE SC01 SET STATUS = #{status,jdbcType=VARCHAR},
     <choose>
       <when test="status == '1'">
-        ENABLE_TIME = NOW()
+        ENABLE_TIME = NOW(),
+        DEACTI_TIME = null
       </when>
       <otherwise>
         DEACTI_TIME = NOW()

@@ -2,6 +2,7 @@ package com.manager.entry.tour;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.manager.entry.common.CommonEntry;
+import com.manager.entry.common.CommonTime;
 import com.manager.util.group.InsertGroup;
 import com.manager.util.group.UpdateGroup;
 import com.manager.util.group.UpdateStatusGroup;
@@ -14,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class SuperContent extends CommonEntry {
+public class SuperContent extends CommonEntry implements CommonTime {
     @NotBlank(message = "缺失主键", groups = {UpdateGroup.class})
     private String sc01Id;
 

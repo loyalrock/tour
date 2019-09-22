@@ -60,7 +60,7 @@ public class UserController {
      */
     @RequestMapping(value = "/manager/detail", method = RequestMethod.GET)
     @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
-    public ResultEntry getUserManagerList(@Param("userUid") @NotBlank(message = "缺失用户主键") String userUid) throws Exception {
+    public ResultEntry getUserManagerList(@RequestParam("userUid") @NotBlank(message = "缺失用户主键") String userUid) throws Exception {
         UserManager userManager = userService.selectUserManagerDetail(userUid);
         return ResultUtil.success(Message.SELECT_SUCCESS, userManager);
     }
@@ -72,7 +72,7 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @RequiresRoles(value = {Role.SYSTEM})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     public ResultEntry insertUser(@Validated(InsertGroup.class) @RequestBody UserManager userManager) throws Exception {
         userService.addUser(userManager);
         return ResultUtil.success(Message.INSERT_SUCCESS);
@@ -85,7 +85,7 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    @RequiresRoles(value = {Role.SYSTEM})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     public ResultEntry updateUser(@Validated(UpdateGroup.class) @RequestBody UserManager userManager) throws Exception {
         userService.updateUser(userManager);
         return ResultUtil.success(Message.UPDATE_SUCCESS);
@@ -99,7 +99,7 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping(value = "/status/update", method = RequestMethod.POST)
-    @RequiresRoles(value = {Role.SYSTEM})
+    @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
     public ResultEntry updateStatus(@RequestParam("status") @NotBlank(message = "缺失修改状态") String status,
                                     @RequestParam("userUid") @NotBlank(message = "缺失用户主键") String userUid) throws Exception {
         userService.updateStatus(userUid, status);
@@ -115,7 +115,7 @@ public class UserController {
      */
     @RequestMapping(value = "/pw/update", method = RequestMethod.POST)
     @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT}, logical = Logical.OR)
-    public ResultEntry upload(@Param("oldPassword") @NotBlank(message = "缺失原始密码") String oldPassword,
+    public ResultEntry upload(@RequestParam("oldPassword") @NotBlank(message = "缺失原始密码") String oldPassword,
                               @RequestParam("newPassword") @NotBlank(message = "缺失新密码") String newPassword) throws Exception{
         userService.updatePassword(oldPassword, newPassword);
         return ResultUtil.success(Message.UPDATE_SUCCESS);

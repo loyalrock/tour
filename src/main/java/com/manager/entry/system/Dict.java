@@ -4,11 +4,13 @@ import com.manager.entry.common.CommonEntry;
 import com.manager.util.group.InsertGroup;
 import com.manager.util.group.UpdateGroup;
 import com.manager.util.group.UpdateStatusGroup;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
+@Data
 public class Dict extends CommonEntry {
     @NotBlank(message = "唯一键缺失", groups = {UpdateGroup.class, UpdateStatusGroup.class})
     private String ss03Id;
@@ -54,37 +56,5 @@ public class Dict extends CommonEntry {
 
     public Dict() {
         super();
-    }
-
-    public String getSs03Id() {
-        return ss03Id;
-    }
-
-    public void setSs03Id(String ss03Id) {
-        this.ss03Id = ss03Id == null ? null : ss03Id.trim();
-    }
-
-    public String getDirId() {
-        return dirId;
-    }
-
-    public void setDirId(String dirId) {
-        this.dirId = dirId == null ? null : dirId.trim();
-    }
-
-    public String getDirName() {
-        return dirName;
-    }
-
-    public void setDirName(String dirName) {
-        this.dirName = dirName == null ? null : dirName.trim();
-    }
-
-    public String getDirExp() {
-        return dirExp;
-    }
-
-    public void setDirExp(String dirExp) {
-        this.dirExp = dirExp == null ? null : dirExp.trim();
     }
 }

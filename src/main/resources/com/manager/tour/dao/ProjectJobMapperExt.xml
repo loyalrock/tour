@@ -59,7 +59,7 @@
                 PROJECT_LONG = #{projectLong,jdbcType=INTEGER},
             </if>
             <if test="projectLat != null">
-                PROJECT_LAT = #{projectLat,jdbcType=INTEGER},
+                PROJECT_LAT = #{projectLat,jdbcType=VARCHAR},
             </if>
             <if test="indexPic != null">
                 INDEX_PIC = #{indexPic,jdbcType=CHAR},
@@ -104,7 +104,7 @@
         <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName"/>
         <result column="PROJECT_NAME_J" jdbcType="VARCHAR" property="projectNameJ"/>
         <result column="PROJECT_LONG" jdbcType="INTEGER" property="projectLong"/>
-        <result column="PROJECT_LAT" jdbcType="INTEGER" property="projectLat"/>
+        <result column="PROJECT_LAT" jdbcType="VARCHAR" property="projectLat"/>
         <result column="INDEX_PIC" jdbcType="CHAR" property="indexPic"/>
         <collection property="uploadDataFiles" ofType="com.manager.entry.tour.UploadDataFile">
             <id column="SFJ01_ID" jdbcType="VARCHAR" property="sfj01Id"/>

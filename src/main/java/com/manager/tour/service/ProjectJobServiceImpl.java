@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,6 +70,9 @@ public class ProjectJobServiceImpl implements ProjectJobService {
         UserUtil.insertData(projectJob);
         projectJob.setSc02Id(UUID.randomUUID().toString());
 
+        // 校验开始和停用时间
+        UserUtil.checkInsertTime(projectJob);
+
         // 检测编号唯一
         int count = projectJobMapper.checkCodeUnion(projectJob.getProjectNo());
 
@@ -120,6 +124,12 @@ public class ProjectJobServiceImpl implements ProjectJobService {
 
     @Override
     public int update(ProjectJob projectJob) {
+
+        /**
+         * 校验启用和停用时间
+         */
+        String status = UserUtil.checkUpdateTime(projectJob);
+        projectJob.setStatus(status);
 
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         // 当前操作账户
@@ -191,6 +201,9 @@ public class ProjectJobServiceImpl implements ProjectJobService {
         }
 
         UserUtil.updateData(projectJob);
+        // 不更新这两个
+        projectJob.setProjectNo(null);
+        projectJob.setProjectNameJ(null);
         count = projectJobMapper.updateByPrimaryKeySelective(projectJob);
         return count;
     }

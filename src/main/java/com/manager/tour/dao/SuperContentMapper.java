@@ -47,7 +47,6 @@ public interface SuperContentMapper {
 
     List<SuperContent> selectAll(@Param("query") SuperContentQuery query);
 
-    @Select("select SC01_ID, SUPER_P_SCORE from SC01 where SUPER_P_NO = #{code}")
-    @ResultMap("BaseResultMap")
+    @Select("select SC01_ID as sc01Id, SUPER_P_SCORE as superPScore from SC01 where SUPER_P_NO = #{code}")
     SuperContent selectByCode(@Param("code") String code);
 }

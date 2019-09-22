@@ -2,6 +2,8 @@ package com.manager.entry.tour;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.manager.entry.common.CommonEntry;
+import com.manager.entry.common.CommonTime;
+import com.manager.entry.common.UserUtil;
 import com.manager.util.group.InsertGroup;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,7 +19,7 @@ import java.util.List;
  * 项目
  */
 @Data
-public class ProjectJob extends CommonEntry {
+public class ProjectJob extends CommonEntry implements CommonTime {
     private String sc02Id;
 
     @NotBlank(message = "编号缺失", groups = {InsertGroup.class})
@@ -32,7 +34,7 @@ public class ProjectJob extends CommonEntry {
     @NotNull(message = "地理位置缺失", groups = {InsertGroup.class})
     private Integer projectLong;
 
-    private Integer projectLat;
+    private String projectLat;
 
     private String indexPic;
 
@@ -71,7 +73,7 @@ public class ProjectJob extends CommonEntry {
         this.projectContents = projectContents;
     }
 
-    public ProjectJob(String sc02Id, String projectNo, String projectName, String projectNameJ, Integer projectLong, Integer projectLat, String indexPic, Date enableTime, Date deactiTime, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+    public ProjectJob(String sc02Id, String projectNo, String projectName, String projectNameJ, Integer projectLong, String projectLat, String indexPic, Date enableTime, Date deactiTime, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
         super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
         this.sc02Id = sc02Id;
         this.projectNo = projectNo;

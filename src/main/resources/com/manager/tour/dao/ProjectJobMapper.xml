@@ -8,7 +8,7 @@
       <arg column="PROJECT_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="PROJECT_NAME_J" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="PROJECT_LONG" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="PROJECT_LAT" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="PROJECT_LAT" javaType="java.lang.Integer" jdbcType="VARCHAR" />
       <arg column="INDEX_PIC" javaType="java.lang.String" jdbcType="CHAR" />
       <arg column="ENABLE_TIME" javaType="java.util.Date" jdbcType="DATE" />
       <arg column="DEACTI_TIME" javaType="java.util.Date" jdbcType="DATE" />
@@ -41,7 +41,7 @@
       CREATE_USER, CREATE_TIME, UPDATE_USER,
       UPDATE_TIME, DELETE_FLAG)
     values (#{sc02Id,jdbcType=VARCHAR}, #{projectNo,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR},
-      #{projectNameJ,jdbcType=VARCHAR}, #{projectLong,jdbcType=INTEGER}, #{projectLat,jdbcType=INTEGER},
+      #{projectNameJ,jdbcType=VARCHAR}, #{projectLong,jdbcType=INTEGER}, #{projectLat,jdbcType=VARCHAR},
       #{indexPic,jdbcType=CHAR}, #{enableTime,jdbcType=DATE}, #{deactiTime,jdbcType=DATE}, #{status,jdbcType=VARCHAR},
       #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
@@ -159,7 +159,7 @@
         PROJECT_LONG = #{projectLong,jdbcType=INTEGER},
       </if>
       <if test="projectLat != null">
-        PROJECT_LAT = #{projectLat,jdbcType=INTEGER},
+        PROJECT_LAT = #{projectLat,jdbcType=VARCHAR},
       </if>
       <if test="indexPic != null">
         INDEX_PIC = #{indexPic,jdbcType=CHAR},
@@ -197,7 +197,7 @@
       PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
       PROJECT_NAME_J = #{projectNameJ,jdbcType=VARCHAR},
       PROJECT_LONG = #{projectLong,jdbcType=INTEGER},
-      PROJECT_LAT = #{projectLat,jdbcType=INTEGER},
+      PROJECT_LAT = #{projectLat,jdbcType=VARCHAR},
       INDEX_PIC = #{indexPic,jdbcType=CHAR},
       ENABLE_TIME = #{enableTime,jdbcType=DATE},
       DEACTI_TIME = #{deactiTime,jdbcType=DATE},

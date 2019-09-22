@@ -70,22 +70,26 @@ public class DictServiceImpl implements DictService{
 
     @Override
     public int updateDict(Dict dict) throws Exception {
-        // 删除原有的
-        categoryDictMapper.deleteByDictUid(dict.getSs03Id());
+//        没有类别修改
+//        // 删除原有的
+//        categoryDictMapper.deleteByDictUid(dict.getSs03Id());
 
-        // 批量新增
-        List<String> categoryUids = dict.getCategoryUids();
-        List<CategoryDict> categoryDicts = new ArrayList<>();
-        for(String categoryUid : categoryUids) {
-            CategoryDict categoryDict = new CategoryDict(dict.getSs03Id(), categoryUid);
-            categoryDicts.add(categoryDict);
-        }
-        categoryDictMapper.insertList(categoryDicts);
+//        // 批量新增
+//        List<String> categoryUids = dict.getCategoryUids();
+//        List<CategoryDict> categoryDicts = new ArrayList<>();
+//        for(String categoryUid : categoryUids) {
+//            CategoryDict categoryDict = new CategoryDict(dict.getSs03Id(), categoryUid);
+//            categoryDicts.add(categoryDict);
+//        }
+//        categoryDictMapper.insertList(categoryDicts);
 
         // 获取修改时间 人
         UserUtil.updateData(dict);
+        Dict updateData = new Dict();
+        updateData.setSs03Id(dict.getSs03Id());
+        updateData.setDirName(dict.getDirName());
         // 修改数据字典其他参数
-        int count = dictMapper.updateByPrimaryKeySelective(dict);
+        int count = dictMapper.updateByPrimaryKeySelective(updateData);
 
         return count;
     }

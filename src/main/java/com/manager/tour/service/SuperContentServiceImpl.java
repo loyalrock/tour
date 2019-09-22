@@ -59,36 +59,9 @@ public class SuperContentServiceImpl implements SuperContentService{
 
         superContent.setSc01Id(UUID.randomUUID().toString());
         UserUtil.insertData(superContent);
-        Date today = new Date();
-        Date enableTime = superContent.getEnableTime();
-        Date disAbleTime = superContent.getDeactiTime();
-        // 默认为今天
-        if (enableTime == null) {
-            enableTime = today;
-            superContent.setEnableTime(enableTime);
-        }
-        if (disAbleTime != null) {
-            // 判断停用时间 不能早于启用时间
-            if (disAbleTime.before(enableTime)) {
-                throw new CommonException(Message.SUPER_CONTENT_DEACTI_ERROR);
-            }
-        }
-//        // 修改上级分值
-//        int level = Integer.parseInt(superContent.getSuperPLevel());
-//        int score = Integer.parseInt(superContent.getSuperPScore());
-//        if (level > 1) {
-//            // 存在上级 逐级修改上级分分数
-//            String superPNo = superContent.getSuperPNo();
-//            for (int i = level; i > 1; i--) {
-//                superPNo = superPNo.substring(0, superPNo.length() - 3);
-//                // 父级
-//                SuperContent parent = superContentMapper.selectByCode(superPNo);
-//                int parentScore = Integer.parseInt(parent.getSuperPScore());
-//                parent.setSuperPScore(String.valueOf(score + parentScore));
-//                UserUtil.updateData(parent);
-//                superContentMapper.updateByPrimaryKeySelective(parent);
-//            }
-//        }
+
+        UserUtil.checkInsertTime(superContent);
+
         return superContentMapper.insertSelective(superContent);
     }
 
@@ -100,17 +73,8 @@ public class SuperContentServiceImpl implements SuperContentService{
     @Override
     public int update(SuperContent superContent) {
         UserUtil.updateData(superContent);
-        Date today = new Date();
-        Date disAbleTime = superContent.getDeactiTime();
-        // 停用时间不为空  如果在于今天 则停用 如果晚于今天 启用并修改启用时间
-        if (disAbleTime != null) {
-            if (disAbleTime.before(today)) {
-                superContent.setStatus(User.DISABLE);
-            } else {
-                superContent.setStatus(User.ENABLE);
-                superContent.setEnableTime(today);
-            }
-        }
+        String status = UserUtil.checkUpdateTime(superContent);
+        superContent.setStatus(status);
         return superContentMapper.updateByPrimaryKeySelective(superContent);
     }
 

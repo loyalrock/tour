@@ -1,5 +1,6 @@
 package com.manager.system.service;
 
+import com.manager.entry.common.UserUtil;
 import com.manager.entry.system.Role;
 import com.manager.system.dao.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,12 @@ public class RoleServiceImpl implements RoleService {
         return roleMapper.selectList();
     }
 
-
+    @Override
+    public int updateRole(Role role) {
+        Role update = new Role();
+        update.setSs02Id(role.getSs02Id());
+        update.setUserRoleName(role.getUserRoleName());
+        UserUtil.updateData(update);
+        return roleMapper.updateByPrimaryKeySelective(update);
+    }
 }

@@ -1,10 +1,16 @@
 package com.manager.entry.system;
 
 import com.manager.entry.common.CommonEntry;
+import com.manager.util.group.UpdateGroup;
+import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
+@Data
 public class Role extends CommonEntry {
+
+    @NotBlank(message = "缺失主键", groups = {UpdateGroup.class})
     private String ss02Id;
 
     private String userRoleId;
@@ -25,35 +31,4 @@ public class Role extends CommonEntry {
         super();
     }
 
-    public String getSs02Id() {
-        return ss02Id;
-    }
-
-    public void setSs02Id(String ss02Id) {
-        this.ss02Id = ss02Id == null ? null : ss02Id.trim();
-    }
-
-    public String getUserRoleId() {
-        return userRoleId;
-    }
-
-    public void setUserRoleId(String userRoleId) {
-        this.userRoleId = userRoleId == null ? null : userRoleId.trim();
-    }
-
-    public String getUserRoleName() {
-        return userRoleName;
-    }
-
-    public void setUserRoleName(String userRoleName) {
-        this.userRoleName = userRoleName == null ? null : userRoleName.trim();
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks == null ? null : remarks.trim();
-    }
 }

@@ -7,7 +7,8 @@
         t1.SS01_ID,
         t1.USER_NAME,
         t1.STATUS,
-        group_concat(t3.USER_ROLE_NAME) as USER_ROLE_NAME,
+        t3.USER_ROLE_NAME,
+        t3.USER_ROLE_ID,
         t4.OP_UNIT,
         t5.PROJECT_NO,
         t5.PROJECT_NAME,
@@ -40,7 +41,7 @@
                 </if>
             </if>
         </where>
-        group by t1.USER_ID order by t1.CREATE_TIME
+        order by t1.CREATE_TIME
     </select>
 
     <resultMap id="UserManagerList" type="com.manager.entry.system.UserManager">
