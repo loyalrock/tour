@@ -139,11 +139,11 @@
         </dependency>
 
         <!--        文件转换-->
-        <dependency>
-            <groupId>e-iceblue</groupId>
-            <artifactId>spire.pdf</artifactId>
-            <version>2.2.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>e-iceblue</groupId>-->
+<!--            <artifactId>spire.pdf</artifactId>-->
+<!--            <version>2.2.0</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
