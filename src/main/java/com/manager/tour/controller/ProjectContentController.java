@@ -91,6 +91,12 @@ public class ProjectContentController {
         return ResultUtil.success(Message.SELECT_SUCCESS, projectContentList);
     }
 
+    /**
+     * 前台-首页-分数统计
+     * @param projectNo
+     * @return
+     * @throws Exception
+     */
     @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT, Role.EXPERTS}, logical = Logical.OR)
     @RequestMapping(value = "/stats/score", method = RequestMethod.GET)
     public ResultEntry selectScore(@RequestParam(required = false, value = "projectNo") String projectNo) throws Exception {
@@ -98,6 +104,12 @@ public class ProjectContentController {
         return ResultUtil.success(Message.SELECT_SUCCESS, projectScores);
     }
 
+    /**
+     * 前台-首页-文档统计
+     * @param projectNo
+     * @return
+     * @throws Exception
+     */
     @RequiresRoles(value = {Role.SYSTEM, Role.PROJECT, Role.EXPERTS}, logical = Logical.OR)
     @RequestMapping(value = "/stats/document", method = RequestMethod.GET)
     public ResultEntry selectDocumentNum(@RequestParam(required = false, value = "projectNo") String projectNo) throws Exception {
