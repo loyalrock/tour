@@ -143,6 +143,7 @@
         t2.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
         where t1.SUPER_P_LEVEL = #{level,jdbcType=VARCHAR}
         and t1.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+        and t1.STATUS = '1' and t1.DELETE_FLAG = '0'
         <if test="level != '1'.toString()">
             and t1.SUPER_P_NO regexp concat('^', #{code,jdbcType=VARCHAR})
         </if>
