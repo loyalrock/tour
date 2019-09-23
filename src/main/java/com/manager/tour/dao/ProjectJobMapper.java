@@ -26,7 +26,7 @@ public interface ProjectJobMapper {
     int updateByPrimaryKey(ProjectJob record);
 
     @ResultMap("BaseResultMap")
-    @Select("select * from SC02")
+    @Select("select * from SC02 where STATUS = '1' and DELETE_FLAG = '0' order by cast(replace(PROJECT_NO, 'XM', '')  as SIGNED)")
     List<ProjectJob> selectList();
 
     int deleteAll(@Param("ids") List<String> ids);

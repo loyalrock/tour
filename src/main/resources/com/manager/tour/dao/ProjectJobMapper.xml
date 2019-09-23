@@ -8,7 +8,7 @@
       <arg column="PROJECT_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="PROJECT_NAME_J" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="PROJECT_LONG" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="PROJECT_LAT" javaType="java.lang.Integer" jdbcType="VARCHAR" />
+      <arg column="PROJECT_LAT" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="INDEX_PIC" javaType="java.lang.String" jdbcType="CHAR" />
       <arg column="ENABLE_TIME" javaType="java.util.Date" jdbcType="DATE" />
       <arg column="DEACTI_TIME" javaType="java.util.Date" jdbcType="DATE" />
