@@ -21,7 +21,7 @@
       </if>
     </if>
     GROUP BY t1.SC01_ID
-    order by t1.SYS_NO
+    order by t1.SUPER_P_NO
   </select>
 
   <select id="selectLevel" resultMap="PageResultMap">
@@ -61,16 +61,17 @@
   </select>
 
   <insert id="insertAll" parameterType="List">
-    insert into SC01 (SC01_ID, SUPER_P_NO, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE,
-    IF_ADD, ENABLE_TIME, DEACTI_TIME, STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER,
-    UPDATE_TIME, DELETE_FLAG) value
+    insert into SC01 ( SC01_ID, SUPER_P_NO, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE,
+    SUPER_P_STANDARD, SUPER_P_INDICATOR, SUPER_P_EXPLAIN, IF_ADD, ENABLE_TIME, DEACTI_TIME,
+    STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG) value
     <foreach collection="query" item="item" separator=",">
-      (#{item.sc01Id,jdbcType=VARCHAR}, #{item.superPNo,jdbcType=VARCHAR}, #{item.superPLevel,jdbcType=VARCHAR},
-      #{item.sysNo,jdbcType=VARCHAR}, #{item.superPCheck,jdbcType=VARCHAR}, #{item.superPExp,jdbcType=VARCHAR},
-      #{item.superPScore,jdbcType=VARCHAR}, #{item.ifAdd,jdbcType=CHAR}, #{item.enableTime,jdbcType=DATE},
-      #{item.deactiTime,jdbcType=DATE}, #{item.status,jdbcType=CHAR}, #{item.createUser,jdbcType=VARCHAR},
-      #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP},
-      #{item.deleteFlag,jdbcType=CHAR})
+      (#{sc01Id,jdbcType=VARCHAR}, #{superPNo,jdbcType=VARCHAR}, #{superPLevel,jdbcType=VARCHAR},
+      #{sysNo,jdbcType=VARCHAR}, #{superPCheck,jdbcType=VARCHAR}, #{superPExp,jdbcType=VARCHAR},
+      #{superPScore,jdbcType=VARCHAR}, #{superPStandard,jdbcType=VARCHAR}, #{superPIndicator,jdbcType=VARCHAR},
+      #{superPExplain,jdbcType=VARCHAR}, #{ifAdd,jdbcType=CHAR}, #{enableTime,jdbcType=DATE},
+      #{deactiTime,jdbcType=DATE}, #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
+      #{deleteFlag,jdbcType=CHAR})
     </foreach>
   </insert>
 

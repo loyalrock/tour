@@ -83,9 +83,14 @@ public class ProjectContent extends CommonEntry {
 
     private List<RegionShow> regionShows;
 
+    private String superPExplain;
 
-    public ProjectContent(String sc0201Id, String projectNo, String superPNo, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPCont, Integer superPScore, String opUnit, String status, String showNo, String ifFile, String ifPic, String ifLine, String ifDist, Integer score, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
-        super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
+    private String superPIndicator;
+
+    private String superPStandard;
+
+
+    public ProjectContent(String sc0201Id, String projectNo, String superPNo, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPCont, Integer superPScore, String superPExplain, String superPIndicator, String superPStandard, String opUnit, String status, String showNo, String ifFile, String ifPic, String ifLine, String ifDist, Integer score, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
         this.sc0201Id = sc0201Id;
         this.projectNo = projectNo;
         this.superPNo = superPNo;
@@ -95,6 +100,9 @@ public class ProjectContent extends CommonEntry {
         this.superPExp = superPExp;
         this.superPCont = superPCont;
         this.superPScore = superPScore;
+        this.superPExplain = superPExplain;
+        this.superPIndicator = superPIndicator;
+        this.superPStandard = superPStandard;
         this.opUnit = opUnit;
         this.showNo = showNo;
         this.ifFile = ifFile;

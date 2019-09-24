@@ -2,30 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.manager.tour.dao.ProjectContentMapper">
     <insert id="insertAll" parameterType="com.manager.entry.tour.ProjectContent">
-        insert into SC0201 (SC0201_ID, PROJECT_NO, SUPER_P_NO,
-        SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK,
-        SUPER_P_EXP, SUPER_P_CONT, SUPER_P_SCORE,
-        OP_UNIT, STATUS, SHOW_NO,
-        IF_FILE, IF_PIC, IF_LINE, IF_DIST,
-        SCORE, CREATE_USER, CREATE_TIME,
-        UPDATE_USER, UPDATE_TIME, DELETE_FLAG
+        insert into SC0201 (SC0201_ID, PROJECT_NO, SUPER_P_NO, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP,
+        SUPER_P_CONT, SUPER_P_SCORE, SUPER_P_EXPLAIN, SUPER_P_INDICATOR, SUPER_P_STANDARD,
+        OP_UNIT, STATUS, SHOW_NO, IF_FILE, IF_PIC, IF_LINE, IF_DIST, SCORE, CREATE_USER,
+        CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG
         )
         values
         <foreach collection="projectContents" item="projectContent" separator=",">
-            (#{projectContent.sc0201Id,jdbcType=VARCHAR}, #{projectContent.projectNo,jdbcType=VARCHAR},
-            #{projectContent.superPNo,jdbcType=VARCHAR},
-            #{projectContent.superPLevel,jdbcType=VARCHAR}, #{projectContent.sysNo,jdbcType=VARCHAR},
-            #{projectContent.superPCheck,jdbcType=VARCHAR},
-            #{projectContent.superPExp,jdbcType=VARCHAR}, #{projectContent.superPCont,jdbcType=VARCHAR},
-            #{projectContent.superPScore,jdbcType=INTEGER},
-            #{projectContent.opUnit,jdbcType=VARCHAR}, #{projectContent.status,jdbcType=CHAR},
-            #{projectContent.showNo,jdbcType=VARCHAR},
-            #{projectContent.ifFile,jdbcType=CHAR}, #{projectContent.ifPic,jdbcType=CHAR},
-            #{projectContent.ifLine,jdbcType=CHAR}, #{projectContent.ifDist,jdbcType=CHAR},
-            #{projectContent.score,jdbcType=INTEGER}, #{projectContent.createUser,jdbcType=VARCHAR},
-            #{projectContent.createTime,jdbcType=TIMESTAMP},
-            #{projectContent.updateUser,jdbcType=VARCHAR}, #{projectContent.updateTime,jdbcType=TIMESTAMP},
-            #{projectContent.deleteFlag,jdbcType=CHAR}
+            (#{sc0201Id,jdbcType=VARCHAR}, #{projectNo,jdbcType=VARCHAR}, #{superPNo,jdbcType=VARCHAR},
+            #{superPLevel,jdbcType=VARCHAR}, #{sysNo,jdbcType=VARCHAR}, #{superPCheck,jdbcType=VARCHAR},
+            #{superPExp,jdbcType=VARCHAR}, #{superPCont,jdbcType=VARCHAR}, #{superPScore,jdbcType=INTEGER},
+            #{superPExplain,jdbcType=VARCHAR}, #{superPIndicator,jdbcType=VARCHAR}, #{superPStandard,jdbcType=VARCHAR},
+            #{opUnit,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{showNo,jdbcType=VARCHAR},
+            #{ifFile,jdbcType=CHAR}, #{ifPic,jdbcType=CHAR}, #{ifLine,jdbcType=CHAR}, #{ifDist,jdbcType=CHAR},
+            #{score,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+            #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}
             )
         </foreach>
     </insert>

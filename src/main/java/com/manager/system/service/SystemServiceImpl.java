@@ -4,6 +4,7 @@ import com.manager.entry.common.CommonException;
 import com.manager.util.Message;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -15,6 +16,7 @@ import java.util.UUID;
  * impl
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class SystemServiceImpl implements SystemService{
 
     @Value("${project.upload.folderName}")

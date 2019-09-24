@@ -10,6 +10,9 @@
       <arg column="SUPER_P_CHECK" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="SUPER_P_EXP" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="SUPER_P_SCORE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SUPER_P_STANDARD" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SUPER_P_INDICATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SUPER_P_EXPLAIN" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="IF_ADD" javaType="java.lang.String" jdbcType="CHAR" />
       <arg column="ENABLE_TIME" javaType="java.util.Date" jdbcType="DATE" />
       <arg column="DEACTI_TIME" javaType="java.util.Date" jdbcType="DATE" />
@@ -22,12 +25,12 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    SC01_ID, SUPER_P_NO, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE, 
-    IF_ADD, ENABLE_TIME, DEACTI_TIME, STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER, 
-    UPDATE_TIME, DELETE_FLAG
+    SC01_ID, SUPER_P_NO, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE,
+    SUPER_P_STANDARD, SUPER_P_INDICATOR, SUPER_P_EXPLAIN, IF_ADD, ENABLE_TIME, DEACTI_TIME,
+    STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from SC01
     where SC01_ID = #{sc01Id,jdbcType=VARCHAR}
@@ -37,17 +40,19 @@
     where SC01_ID = #{sc01Id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.manager.entry.tour.SuperContent">
-    insert into SC01 (SC01_ID, SUPER_P_NO, SUPER_P_LEVEL, 
-      SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, 
-      SUPER_P_SCORE, IF_ADD, ENABLE_TIME, 
-      DEACTI_TIME, STATUS, CREATE_USER, 
-      CREATE_TIME, UPDATE_USER, UPDATE_TIME, 
+    insert into SC01 (SC01_ID, SUPER_P_NO, SUPER_P_LEVEL,
+      SYS_NO, SUPER_P_CHECK, SUPER_P_EXP,
+      SUPER_P_SCORE, SUPER_P_STANDARD, SUPER_P_INDICATOR,
+      SUPER_P_EXPLAIN, IF_ADD, ENABLE_TIME,
+      DEACTI_TIME, STATUS, CREATE_USER,
+      CREATE_TIME, UPDATE_USER, UPDATE_TIME,
       DELETE_FLAG)
-    values (#{sc01Id,jdbcType=VARCHAR}, #{superPNo,jdbcType=VARCHAR}, #{superPLevel,jdbcType=VARCHAR}, 
-      #{sysNo,jdbcType=VARCHAR}, #{superPCheck,jdbcType=VARCHAR}, #{superPExp,jdbcType=VARCHAR}, 
-      #{superPScore,jdbcType=VARCHAR}, #{ifAdd,jdbcType=CHAR}, #{enableTime,jdbcType=DATE}, 
-      #{deactiTime,jdbcType=DATE}, #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+    values (#{sc01Id,jdbcType=VARCHAR}, #{superPNo,jdbcType=VARCHAR}, #{superPLevel,jdbcType=VARCHAR},
+      #{sysNo,jdbcType=VARCHAR}, #{superPCheck,jdbcType=VARCHAR}, #{superPExp,jdbcType=VARCHAR},
+      #{superPScore,jdbcType=VARCHAR}, #{superPStandard,jdbcType=VARCHAR}, #{superPIndicator,jdbcType=VARCHAR},
+      #{superPExplain,jdbcType=VARCHAR}, #{ifAdd,jdbcType=CHAR}, #{enableTime,jdbcType=DATE},
+      #{deactiTime,jdbcType=DATE}, #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
       #{deleteFlag,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.manager.entry.tour.SuperContent">
@@ -73,6 +78,15 @@
       </if>
       <if test="superPScore != null">
         SUPER_P_SCORE,
+      </if>
+      <if test="superPStandard != null">
+        SUPER_P_STANDARD,
+      </if>
+      <if test="superPIndicator != null">
+        SUPER_P_INDICATOR,
+      </if>
+      <if test="superPExplain != null">
+        SUPER_P_EXPLAIN,
       </if>
       <if test="ifAdd != null">
         IF_ADD,
@@ -124,6 +138,15 @@
       <if test="superPScore != null">
         #{superPScore,jdbcType=VARCHAR},
       </if>
+      <if test="superPStandard != null">
+        #{superPStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="superPIndicator != null">
+        #{superPIndicator,jdbcType=VARCHAR},
+      </if>
+      <if test="superPExplain != null">
+        #{superPExplain,jdbcType=VARCHAR},
+      </if>
       <if test="ifAdd != null">
         #{ifAdd,jdbcType=CHAR},
       </if>
@@ -174,6 +197,15 @@
       <if test="superPScore != null">
         SUPER_P_SCORE = #{superPScore,jdbcType=VARCHAR},
       </if>
+      <if test="superPStandard != null">
+        SUPER_P_STANDARD = #{superPStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="superPIndicator != null">
+        SUPER_P_INDICATOR = #{superPIndicator,jdbcType=VARCHAR},
+      </if>
+      <if test="superPExplain != null">
+        SUPER_P_EXPLAIN = #{superPExplain,jdbcType=VARCHAR},
+      </if>
       <if test="ifAdd != null">
         IF_ADD = #{ifAdd,jdbcType=CHAR},
       </if>
@@ -212,6 +244,9 @@
       SUPER_P_CHECK = #{superPCheck,jdbcType=VARCHAR},
       SUPER_P_EXP = #{superPExp,jdbcType=VARCHAR},
       SUPER_P_SCORE = #{superPScore,jdbcType=VARCHAR},
+      SUPER_P_STANDARD = #{superPStandard,jdbcType=VARCHAR},
+      SUPER_P_INDICATOR = #{superPIndicator,jdbcType=VARCHAR},
+      SUPER_P_EXPLAIN = #{superPExplain,jdbcType=VARCHAR},
       IF_ADD = #{ifAdd,jdbcType=CHAR},
       ENABLE_TIME = #{enableTime,jdbcType=DATE},
       DEACTI_TIME = #{deactiTime,jdbcType=DATE},

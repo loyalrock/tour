@@ -35,9 +35,25 @@ public class SuperContent extends CommonEntry implements CommonTime {
 
     private String superPCheck;
 
+    /**
+     * 内容说明
+     */
     private String superPExp;
 
     private String superPScore;
+
+    /**
+     * 评分标准
+     */
+    private String superPStandard;
+    /**
+     * 具体指标
+     */
+    private String superPIndicator;
+    /**
+     * 自评得分依据及说明
+     */
+    private String superPExplain;
 
     private String ifAdd;
 
@@ -62,7 +78,7 @@ public class SuperContent extends CommonEntry implements CommonTime {
         this.superContents = superContents;
     }
 
-    public SuperContent(String sc01Id, String superPNo, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPScore, String ifAdd, Date enableTime, Date deactiTime, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+    public SuperContent(String sc01Id, String superPNo, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPScore, String superPStandard, String superPIndicator, String superPExplain, String ifAdd, Date enableTime, Date deactiTime, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
         super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
         this.sc01Id = sc01Id;
         this.superPNo = superPNo;
@@ -71,6 +87,9 @@ public class SuperContent extends CommonEntry implements CommonTime {
         this.superPCheck = superPCheck;
         this.superPExp = superPExp;
         this.superPScore = superPScore;
+        this.superPStandard = superPStandard;
+        this.superPIndicator = superPIndicator;
+        this.superPExplain = superPExplain;
         this.ifAdd = ifAdd;
         this.enableTime = enableTime;
         this.deactiTime = deactiTime;

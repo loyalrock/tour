@@ -5,6 +5,7 @@ import com.manager.entry.system.Role;
 import com.manager.system.dao.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * 角色
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class RoleServiceImpl implements RoleService {
 
     @Autowired

@@ -11,6 +11,7 @@ import com.manager.util.Message;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -18,6 +19,7 @@ import java.util.*;
  * impl
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class ProjectContentServiceImpl implements ProjectContentService {
 
     @Autowired

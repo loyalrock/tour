@@ -13,6 +13,7 @@ import com.manager.system.dao.CategoryMapper;
 import com.manager.system.dao.DictMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.UUID;
  * 数据字典 service Impl
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class DictServiceImpl implements DictService{
 
     private String initDirId = "DIR00001";
