@@ -8,6 +8,7 @@ import com.manager.entry.tour.*;
 import com.manager.tour.dao.*;
 import com.manager.util.Flag;
 import com.manager.util.Message;
+import org.apache.logging.log4j.util.Strings;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -107,7 +108,7 @@ public class ProjectContentServiceImpl implements ProjectContentService {
             // 存在文件
             projectContent.setIfFile(Flag.HAVE);
             for (DocumentShow documentShow : documentShows) {
-                if (documentShow.getSc020101Id() == null) {
+                if (Strings.isBlank(documentShow.getSc020101Id())) {
                     // 创建新对象
                     UserUtil.insertData(documentShow);
                     documentShow.setSc020101Id(UUID.randomUUID().toString());
@@ -142,7 +143,7 @@ public class ProjectContentServiceImpl implements ProjectContentService {
         if (imageShows != null && imageShows.size() > 0) {
             projectContent.setIfPic(Flag.HAVE);
             for (ImageShow imageShow : imageShows) {
-                if (imageShow.getSc020102Id() == null) {
+                if (Strings.isBlank(imageShow.getSc020102Id())) {
                     UserUtil.insertData(imageShow);
                     imageShow.setSc020102Id(UUID.randomUUID().toString());
                     imageShow.setPicSource(sc0201Id);
@@ -173,7 +174,7 @@ public class ProjectContentServiceImpl implements ProjectContentService {
         if (lineShows != null && lineShows.size() > 0) {
             projectContent.setIfLine(Flag.HAVE);
             for (LineShow lineShow : lineShows) {
-                if (lineShow.getSc020103Id() == null) {
+                if (Strings.isBlank(lineShow.getSc020103Id())) {
                     UserUtil.insertData(lineShow);
                     lineShow.setSc020103Id(UUID.randomUUID().toString());
                     lineShow.setLineSource(sc0201Id);
@@ -205,7 +206,7 @@ public class ProjectContentServiceImpl implements ProjectContentService {
         if (regionShows != null && regionShows.size() > 0) {
             projectContent.setIfDist(Flag.HAVE);
             for (RegionShow regionShow : regionShows) {
-                if (regionShow.getSc020104Id() == null) {
+                if (Strings.isBlank(regionShow.getSc020104Id())) {
                     UserUtil.insertData(regionShow);
                     regionShow.setSc020104Id(UUID.randomUUID().toString());
                     regionShow.setDistSource(sc0201Id);

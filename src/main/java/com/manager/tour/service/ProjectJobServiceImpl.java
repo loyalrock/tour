@@ -11,6 +11,7 @@ import com.manager.tour.dao.*;
 import com.manager.util.Flag;
 import com.manager.util.Message;
 import com.manager.util.Role;
+import org.apache.logging.log4j.util.Strings;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -144,7 +145,7 @@ public class ProjectJobServiceImpl implements ProjectJobService {
         if (uploadDataFiles != null && uploadDataFiles.size() > 0) {
             projectJob.setIndexPic(Flag.HAVE);
             for (UploadDataFile uploadDataFile : uploadDataFiles) {
-                if (uploadDataFile.getSfj01Id() == null) {
+                if (Strings.isBlank(uploadDataFile.getSfj01Id())) {
                     UserUtil.insertData(uploadDataFile);
                     uploadDataFile.setSfj01Id(UUID.randomUUID().toString());
                     uploadDataFile.setAppSource(projectJob.getProjectNo());
@@ -171,7 +172,7 @@ public class ProjectJobServiceImpl implements ProjectJobService {
         List<ProjectContent> projectContents = projectJob.getProjectContents();
         if (projectContents != null && projectContents.size() > 0) {
             for (ProjectContent projectContent : projectContents) {
-                if (projectContent.getSc0201Id() == null) {
+                if (Strings.isBlank(projectContent.getSc0201Id())) {
                     UserUtil.insertData(projectContent);
                     projectContent.setSc0201Id(UUID.randomUUID().toString());
                     projectContent.setProjectNo(projectJob.getProjectNo());

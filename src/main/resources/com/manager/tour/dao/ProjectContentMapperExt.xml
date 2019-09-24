@@ -107,8 +107,8 @@
     </resultMap>
 
     <update id="deleteAll">
-        update SC0201 set STATUS = 0, DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
-        where PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+        update SC0201 set STATUS = '0', DELETE_FLAG = '1', UPDATE_TIME = now(), UPDATE_USER = #{ss01Id,jdbcType=VARCHAR}
+        where PROJECT_NO = #{projectNo,jdbcType=VARCHAR} and STATUS = '1' and DELETE_FLAG = '0'
         <if test="ids != null and ids.size > 0">
             and SC0201_ID not in
             <foreach collection="ids" item="id" separator="," open="(" close=")">
