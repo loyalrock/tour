@@ -100,7 +100,7 @@ public class SuperContentController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @RequiresRoles(value = {Role.SYSTEM, Role.EXPERTS})
+    @RequiresRoles(value = {Role.SYSTEM, Role.EXPERTS}, logical = Logical.OR)
     public ResultEntry selectByLevel (@RequestParam(defaultValue = "1", value = "level") String level,
                                       @RequestParam(value = "code", required = false) String code) {
         List<SuperContent> superContents = superContentService.selectLevel(level, code);

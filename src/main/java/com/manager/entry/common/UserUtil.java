@@ -5,6 +5,7 @@ import com.manager.entry.system.UserProject;
 import com.manager.util.Delete;
 import com.manager.util.Message;
 import com.manager.util.Role;
+import org.apache.logging.log4j.util.Strings;
 import org.apache.shiro.SecurityUtils;
 
 import java.util.Date;
@@ -111,5 +112,21 @@ public class UserUtil {
         } else {
             return User.ENABLE;
         }
+    }
+
+    /**
+     * 校验正确的级别关系
+     * @param checkParentNo
+     * @return
+     */
+    public static String checkParentNo (CheckParentNo checkParentNo) {
+        String superPNo = checkParentNo.getSuperPNo();
+        String superPLevel = checkParentNo.getSuperPLevel();
+        String superParent = null;
+        if (Integer.parseInt(superPLevel) > 1) {
+            superParent = superPNo.substring(0, superPNo.length() - 3);
+            checkParentNo.setSuperParent(superParent);
+        }
+        return superParent;
     }
 }

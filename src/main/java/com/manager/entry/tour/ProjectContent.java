@@ -1,5 +1,6 @@
 package com.manager.entry.tour;
 
+import com.manager.entry.common.CheckParentNo;
 import com.manager.entry.common.CommonEntry;
 import com.manager.util.group.InsertGroup;
 import com.manager.util.group.UpdateGroup;
@@ -14,7 +15,7 @@ import java.util.List;
  * 项目内容维护
  */
 @Data
-public class ProjectContent extends CommonEntry {
+public class ProjectContent extends CommonEntry implements CheckParentNo {
 
     @NotBlank(message = "缺失内容维护主键", groups = {UpdateGroup.class})
     private String sc0201Id;
@@ -40,6 +41,8 @@ public class ProjectContent extends CommonEntry {
 
     @NotBlank(message = "缺失维护内容编号", groups = {InsertGroup.class})
     private String superPNo;
+
+    private String superParent;
 
     @NotBlank(message = "缺失维护内容层级", groups = {InsertGroup.class})
     private String superPLevel;
@@ -90,10 +93,11 @@ public class ProjectContent extends CommonEntry {
     private String superPStandard;
 
 
-    public ProjectContent(String sc0201Id, String projectNo, String superPNo, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPCont, Integer superPScore, String superPExplain, String superPIndicator, String superPStandard, String opUnit, String status, String showNo, String ifFile, String ifPic, String ifLine, String ifDist, Integer score, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+    public ProjectContent(String sc0201Id, String projectNo, String superPNo, String superParent, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPCont, Integer superPScore, String superPExplain, String superPIndicator, String superPStandard, String opUnit, String status, String showNo, String ifFile, String ifPic, String ifLine, String ifDist, Integer score, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
         this.sc0201Id = sc0201Id;
         this.projectNo = projectNo;
         this.superPNo = superPNo;
+        this.superParent = superParent;
         this.superPLevel = superPLevel;
         this.sysNo = sysNo;
         this.superPCheck = superPCheck;

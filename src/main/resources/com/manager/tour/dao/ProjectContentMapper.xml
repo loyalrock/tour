@@ -6,6 +6,7 @@
       <idArg column="SC0201_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="PROJECT_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="SUPER_P_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SUPER_PARENT" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="SUPER_P_LEVEL" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="SYS_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="SUPER_P_CHECK" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -31,7 +32,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    SC0201_ID, PROJECT_NO, SUPER_P_NO, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP,
+    SC0201_ID, PROJECT_NO, SUPER_P_NO, SUPER_PARENT, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP,
     SUPER_P_CONT, SUPER_P_SCORE, SUPER_P_EXPLAIN, SUPER_P_INDICATOR, SUPER_P_STANDARD,
     OP_UNIT, STATUS, SHOW_NO, IF_FILE, IF_PIC, IF_LINE, IF_DIST, SCORE, CREATE_USER,
     CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG
@@ -47,7 +48,7 @@
     where SC0201_ID = #{sc0201Id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.manager.entry.tour.ProjectContent">
-    insert into SC0201 (SC0201_ID, PROJECT_NO, SUPER_P_NO,
+    insert into SC0201 (SC0201_ID, PROJECT_NO, SUPER_P_NO, SUPER_PARENT,
       SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK,
       SUPER_P_EXP, SUPER_P_CONT, SUPER_P_SCORE,
       SUPER_P_EXPLAIN, SUPER_P_INDICATOR, SUPER_P_STANDARD,
@@ -56,7 +57,7 @@
       SCORE, CREATE_USER, CREATE_TIME,
       UPDATE_USER, UPDATE_TIME, DELETE_FLAG
       )
-    values (#{sc0201Id,jdbcType=VARCHAR}, #{projectNo,jdbcType=VARCHAR}, #{superPNo,jdbcType=VARCHAR},
+    values (#{sc0201Id,jdbcType=VARCHAR}, #{projectNo,jdbcType=VARCHAR}, #{superPNo,jdbcType=VARCHAR}, #{superParent,jdbcType=VARCHAR},
       #{superPLevel,jdbcType=VARCHAR}, #{sysNo,jdbcType=VARCHAR}, #{superPCheck,jdbcType=VARCHAR},
       #{superPExp,jdbcType=VARCHAR}, #{superPCont,jdbcType=VARCHAR}, #{superPScore,jdbcType=INTEGER},
       #{superPExplain,jdbcType=VARCHAR}, #{superPIndicator,jdbcType=VARCHAR}, #{superPStandard,jdbcType=VARCHAR},
@@ -74,6 +75,9 @@
       </if>
       <if test="projectNo != null">
         PROJECT_NO,
+      </if>
+      <if test="superParent != null">
+        SUPER_PARENT,
       </if>
       <if test="superPNo != null">
         SUPER_P_NO,
@@ -155,6 +159,9 @@
       <if test="superPNo != null">
         #{superPNo,jdbcType=VARCHAR},
       </if>
+      <if test="superParent != null">
+        #{superParent,jdbcType=VARCHAR},
+      </if>
       <if test="superPLevel != null">
         #{superPLevel,jdbcType=VARCHAR},
       </if>
@@ -232,6 +239,9 @@
       <if test="superPNo != null">
         SUPER_P_NO = #{superPNo,jdbcType=VARCHAR},
       </if>
+      <if test="superParent != null">
+        SUPER_PARENT = #{superParent,jdbcType=VARCHAR},
+      </if>
       <if test="superPLevel != null">
         SUPER_P_LEVEL = #{superPLevel,jdbcType=VARCHAR},
       </if>
@@ -305,6 +315,7 @@
     update SC0201
     set PROJECT_NO = #{projectNo,jdbcType=VARCHAR},
       SUPER_P_NO = #{superPNo,jdbcType=VARCHAR},
+      SUPER_PARENT = #{superParent,jdbcType=VARCHAR},
       SUPER_P_LEVEL = #{superPLevel,jdbcType=VARCHAR},
       SYS_NO = #{sysNo,jdbcType=VARCHAR},
       SUPER_P_CHECK = #{superPCheck,jdbcType=VARCHAR},

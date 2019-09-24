@@ -5,6 +5,7 @@
     <constructor>
       <idArg column="SC01_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="SUPER_P_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SUPER_PARENT" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="SUPER_P_LEVEL" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="SYS_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="SUPER_P_CHECK" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -25,7 +26,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    SC01_ID, SUPER_P_NO, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE,
+    SC01_ID, SUPER_P_NO, SUPER_PARENT, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE,
     SUPER_P_STANDARD, SUPER_P_INDICATOR, SUPER_P_EXPLAIN, IF_ADD, ENABLE_TIME, DEACTI_TIME,
     STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG
   </sql>
@@ -40,14 +41,14 @@
     where SC01_ID = #{sc01Id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.manager.entry.tour.SuperContent">
-    insert into SC01 (SC01_ID, SUPER_P_NO, SUPER_P_LEVEL,
+    insert into SC01 (SC01_ID, SUPER_P_NO, SUPER_PARENT, SUPER_P_LEVEL,
       SYS_NO, SUPER_P_CHECK, SUPER_P_EXP,
       SUPER_P_SCORE, SUPER_P_STANDARD, SUPER_P_INDICATOR,
       SUPER_P_EXPLAIN, IF_ADD, ENABLE_TIME,
       DEACTI_TIME, STATUS, CREATE_USER,
       CREATE_TIME, UPDATE_USER, UPDATE_TIME,
       DELETE_FLAG)
-    values (#{sc01Id,jdbcType=VARCHAR}, #{superPNo,jdbcType=VARCHAR}, #{superPLevel,jdbcType=VARCHAR},
+    values (#{sc01Id,jdbcType=VARCHAR}, #{superPNo,jdbcType=VARCHAR}, #{superParent,jdbcType=VARCHAR}, #{superPLevel,jdbcType=VARCHAR},
       #{sysNo,jdbcType=VARCHAR}, #{superPCheck,jdbcType=VARCHAR}, #{superPExp,jdbcType=VARCHAR},
       #{superPScore,jdbcType=VARCHAR}, #{superPStandard,jdbcType=VARCHAR}, #{superPIndicator,jdbcType=VARCHAR},
       #{superPExplain,jdbcType=VARCHAR}, #{ifAdd,jdbcType=CHAR}, #{enableTime,jdbcType=DATE},
@@ -63,6 +64,9 @@
       </if>
       <if test="superPNo != null">
         SUPER_P_NO,
+      </if>
+      <if test="superParent != null">
+        SUPER_PARENT,
       </if>
       <if test="superPLevel != null">
         SUPER_P_LEVEL,
@@ -123,6 +127,9 @@
       <if test="superPNo != null">
         #{superPNo,jdbcType=VARCHAR},
       </if>
+      <if test="superParent != null">
+        #{superParent,jdbcType=VARCHAR},
+      </if>
       <if test="superPLevel != null">
         #{superPLevel,jdbcType=VARCHAR},
       </if>
@@ -182,6 +189,9 @@
       <if test="superPNo != null">
         SUPER_P_NO = #{superPNo,jdbcType=VARCHAR},
       </if>
+      <if test="superParent != null">
+        SUPER_PARENT = #{superParent,jdbcType=VARCHAR},
+      </if>
       <if test="superPLevel != null">
         SUPER_P_LEVEL = #{superPLevel,jdbcType=VARCHAR},
       </if>
@@ -239,6 +249,7 @@
   <update id="updateByPrimaryKey" parameterType="com.manager.entry.tour.SuperContent">
     update SC01
     set SUPER_P_NO = #{superPNo,jdbcType=VARCHAR},
+      SUPER_PARENT = #{superParent,jdbcType=VARCHAR},
       SUPER_P_LEVEL = #{superPLevel,jdbcType=VARCHAR},
       SYS_NO = #{sysNo,jdbcType=VARCHAR},
       SUPER_P_CHECK = #{superPCheck,jdbcType=VARCHAR},

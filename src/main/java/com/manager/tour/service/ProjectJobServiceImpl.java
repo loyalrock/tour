@@ -104,6 +104,7 @@ public class ProjectJobServiceImpl implements ProjectJobService {
             for(ProjectContent projectContent : projectContents) {
                 UserUtil.insertData(projectContent);
                 projectContent.setSc0201Id(UUID.randomUUID().toString());
+                UserUtil.checkParentNo(projectContent);
                 projectContent.setProjectNo(projectJob.getProjectNo());
             }
 

@@ -52,6 +52,8 @@ public class SuperContentServiceImpl implements SuperContentService{
     @Override
     public int add(SuperContent superContent) {
 
+        // 保证父级
+        UserUtil.checkParentNo(superContent);
         SuperContent check = superContentMapper.selectByCode(superContent.getSuperPNo());
         if (check != null) {
             throw new CommonException(Message.CODE_UN_UNIQUE);
@@ -129,7 +131,8 @@ public class SuperContentServiceImpl implements SuperContentService{
         } else {
             // 计算长度 除以三 + level是否下一级
             String queryLevel = String.valueOf(code.replace("QJ", "").length() / 3 + level);
-            String nextCode = superContentMapper.selectNextCode(queryLevel, level == 0 ? null : code);
+            // 查找下一级则保持不断模糊查询 如果当前级去除后三位查询
+            String nextCode = superContentMapper.selectNextCode(queryLevel, level > 0 ? code : code.substring(0, code.length() - 3));
             if (nextCode == null) {
                 // 下一级开始
                 nextCode = code + "000";
@@ -140,6 +143,8 @@ public class SuperContentServiceImpl implements SuperContentService{
             nextCode = nextCode.substring(0, nextCode.length() - end.length()) + end;
             superContent.setSuperPLevel(queryLevel);
             superContent.setSuperPNo(nextCode);
+            // 保证父级
+            UserUtil.checkParentNo(superContent);
             superContent.setSysNo(getSysNo(nextCode));
         }
 

@@ -1,6 +1,7 @@
 package com.manager.entry.tour;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.manager.entry.common.CheckParentNo;
 import com.manager.entry.common.CommonEntry;
 import com.manager.entry.common.CommonTime;
 import com.manager.util.group.InsertGroup;
@@ -15,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class SuperContent extends CommonEntry implements CommonTime {
+public class SuperContent extends CommonEntry implements CommonTime, CheckParentNo {
     @NotBlank(message = "缺失主键", groups = {UpdateGroup.class})
     private String sc01Id;
 
@@ -24,6 +25,8 @@ public class SuperContent extends CommonEntry implements CommonTime {
 
     @NotBlank(message = "缺失编号", groups = {InsertGroup.class, UpdateGroup.class})
     private String superPNo;
+
+    private String superParent;
 
     @NotBlank(message = "缺失层级", groups = {InsertGroup.class, UpdateGroup.class})
     private String superPLevel;
@@ -78,10 +81,11 @@ public class SuperContent extends CommonEntry implements CommonTime {
         this.superContents = superContents;
     }
 
-    public SuperContent(String sc01Id, String superPNo, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPScore, String superPStandard, String superPIndicator, String superPExplain, String ifAdd, Date enableTime, Date deactiTime, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+    public SuperContent(String sc01Id, String superPNo, String superParent, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPScore, String superPStandard, String superPIndicator, String superPExplain, String ifAdd, Date enableTime, Date deactiTime, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
         super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
         this.sc01Id = sc01Id;
         this.superPNo = superPNo;
+        this.superParent = superParent;
         this.superPLevel = superPLevel;
         this.sysNo = sysNo;
         this.superPCheck = superPCheck;

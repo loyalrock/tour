@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.manager.tour.dao.SuperContentMapper">
   <select id="selectPage" resultMap="PageResultMap">
-    select t1.SC01_ID, t1.SUPER_P_NO, t1.SYS_NO, t1.SUPER_P_CHECK, t1.SUPER_P_EXP, t1.SUPER_P_SCORE, t1.SUPER_P_LEVEL, t1.IF_ADD,
+    select t1.SC01_ID, t1.SUPER_P_NO, t1.SUPER_PARENT, t1.SYS_NO, t1.SUPER_P_CHECK, t1.SUPER_P_EXP, t1.SUPER_P_SCORE, t1.SUPER_P_LEVEL, t1.IF_ADD,
     t1.STATUS, SUM(t2.SUPER_P_SCORE) as TOTAL_SCORE from SC01 t1
-    LEFT JOIN SC01 t2 ON t2.SUPER_P_NO REGEXP CONCAT('^', t1.SUPER_P_NO) AND t2.STATUS = '1' AND t2.DELETE_FLAG = '0'
+    LEFT JOIN SC01 t2 ON t2.SUPER_PARENT = t1.SUPER_P_NO AND t2.STATUS = '1' AND t2.DELETE_FLAG = '0'
     where t1.DELETE_FLAG = '0'
     <if test="query != null">
       <if test="query.superPNo != null and query.superPNo.trim() != ''">
@@ -25,7 +25,7 @@
   </select>
 
   <select id="selectLevel" resultMap="PageResultMap">
-    select SC01_ID, SUPER_P_NO, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE, SUPER_P_LEVEL, IF_ADD,
+    select SC01_ID, SUPER_P_NO, SUPER_PARENT, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE, SUPER_P_LEVEL, IF_ADD,
     STATUS from SC01 where DELETE_FLAG = '0'
       <if test="code != null and code.trim() != ''">
         and SUPER_P_NO like concat('', #{code,jdbcType=VARCHAR}, '%')
@@ -42,6 +42,7 @@
   <resultMap id="PageResultMap" type="com.manager.entry.tour.SuperContent">
     <id column="SC01_ID" property="sc01Id" jdbcType="VARCHAR"></id>
     <result column="SUPER_P_NO" property="superPNo" jdbcType="VARCHAR"></result>
+    <result column="SUPER_PARENT" property="superParent" jdbcType="VARCHAR"></result>
     <result column="SYS_NO" property="sysNo" jdbcType="VARCHAR"></result>
     <result column="SUPER_P_CHECK" property="superPCheck" jdbcType="VARCHAR"></result>
     <result column="SUPER_P_EXP" property="superPExp" jdbcType="VARCHAR"></result>
@@ -61,17 +62,17 @@
   </select>
 
   <insert id="insertAll" parameterType="List">
-    insert into SC01 ( SC01_ID, SUPER_P_NO, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE,
+    insert into SC01 (SC01_ID, SUPER_P_NO, SUPER_PARENT, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP, SUPER_P_SCORE,
     SUPER_P_STANDARD, SUPER_P_INDICATOR, SUPER_P_EXPLAIN, IF_ADD, ENABLE_TIME, DEACTI_TIME,
     STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG) value
     <foreach collection="query" item="item" separator=",">
-      (#{sc01Id,jdbcType=VARCHAR}, #{superPNo,jdbcType=VARCHAR}, #{superPLevel,jdbcType=VARCHAR},
-      #{sysNo,jdbcType=VARCHAR}, #{superPCheck,jdbcType=VARCHAR}, #{superPExp,jdbcType=VARCHAR},
-      #{superPScore,jdbcType=VARCHAR}, #{superPStandard,jdbcType=VARCHAR}, #{superPIndicator,jdbcType=VARCHAR},
-      #{superPExplain,jdbcType=VARCHAR}, #{ifAdd,jdbcType=CHAR}, #{enableTime,jdbcType=DATE},
-      #{deactiTime,jdbcType=DATE}, #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR},
-      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
-      #{deleteFlag,jdbcType=CHAR})
+      (#{item.sc01Id,jdbcType=VARCHAR}, #{item.superPNo,jdbcType=VARCHAR}, #{item.superParent,jdbcType=VARCHAR}, #{item.superPLevel,jdbcType=VARCHAR},
+      #{item.sysNo,jdbcType=VARCHAR}, #{item.superPCheck,jdbcType=VARCHAR}, #{item.superPExp,jdbcType=VARCHAR},
+      #{item.superPScore,jdbcType=VARCHAR}, #{item.superPStandard,jdbcType=VARCHAR}, #{item.superPIndicator,jdbcType=VARCHAR},
+      #{item.superPExplain,jdbcType=VARCHAR}, #{item.ifAdd,jdbcType=CHAR}, #{item.enableTime,jdbcType=DATE},
+      #{item.deactiTime,jdbcType=DATE}, #{item.status,jdbcType=CHAR}, #{item.createUser,jdbcType=VARCHAR},
+      #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP},
+      #{item.deleteFlag,jdbcType=CHAR})
     </foreach>
   </insert>
 
@@ -99,7 +100,7 @@
     FROM
     SC01 t1
     LEFT JOIN SC01 t2
-    ON t2.SUPER_P_NO REGEXP CONCAT('^', t1.SUPER_P_NO) AND t2.STATUS = '1' AND t2.DELETE_FLAG = '0'
+    ON t2.SUPER_PARENT = t1.SUPER_P_NO AND t2.STATUS = '1' AND t2.DELETE_FLAG = '0'
     WHERE t1.SUPER_P_LEVEL = 1
     <if test="query != null">
       <if test="query.superPNo != null and query.superPNo.trim() != ''">
@@ -126,10 +127,10 @@
     FROM
     SC01 t1
     LEFT JOIN SC01 t2
-    ON t2.SUPER_P_NO REGEXP CONCAT('^', t1.SUPER_P_NO) AND t2.STATUS = '1' AND t2.DELETE_FLAG = '0'
-    WHERE t1.SUPER_P_NO regexp concat('^', #{code}) and t1.SUPER_P_LEVEL = #{level} + 1
+    ON t2.SUPER_PARENT = t1.SUPER_P_NO AND t2.STATUS = '1' AND t2.DELETE_FLAG = '0'
+    WHERE t1.SUPER_PARENT = #{code} and t1.SUPER_P_LEVEL = #{level} + 1
     GROUP BY t1.SC01_ID
-    order by cast(REPLACE(t1.SYS_NO, '.', '') as SIGNED)
+    order by t1.SUPER_P_NO
   </select>
 
   <resultMap id="AllResultMap" type="com.manager.entry.tour.SuperContent">
