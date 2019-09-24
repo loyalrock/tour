@@ -71,6 +71,7 @@ public class GlobalExceptionHandler {
             return ResultUtil.error(Message.NO_PERMISSIONS);
         } else {
             e.printStackTrace();
+            logger.error(e.getMessage());
             return new ResultEntry("9999", "系统异常！", null);
         }
     }
