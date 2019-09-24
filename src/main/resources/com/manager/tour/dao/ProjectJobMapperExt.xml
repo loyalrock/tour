@@ -96,7 +96,7 @@
         from SC02 t1
                 left join SC0201 pc on t1.PROJECT_NO = pc.PROJECT_NO and pc.STATUS = '1' and pc.DELETE_FLAG = '0'
                 left join SFJ01 t2 on t2.APP_SOURCE = t1.PROJECT_NO and t2.STATUS = '1' and t2.DELETE_FLAG = '0'
-        where t1.SC02_ID = #{sc02Id,jdbcType=VARCHAR} and t1.DELETE_FLAG = '0' order by cast(REPLACE(pc.SYS_NO, '.', '') as SIGNED)
+        where t1.SC02_ID = #{sc02Id,jdbcType=VARCHAR} and t1.DELETE_FLAG = '0' order by pc.SUPER_P_NO
   </select>
     <resultMap id="DetailResultMap" type="com.manager.entry.tour.ProjectJob">
         <id column="SC02_ID" jdbcType="VARCHAR" property="sc02Id"/>

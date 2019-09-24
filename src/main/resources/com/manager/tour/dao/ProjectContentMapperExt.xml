@@ -137,7 +137,7 @@
         and t1.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
         and t1.STATUS = '1' and t1.DELETE_FLAG = '0'
         <if test="level != '1'.toString()">
-            and t1.PROJECT_NO = #{code,jdbcType=VARCHAR}
+            and t1.SUPER_PARENT = #{code,jdbcType=VARCHAR}
         </if>
         group by t1.SC0201_ID
         order by t1.SUPER_P_NO
