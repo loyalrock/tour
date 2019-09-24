@@ -7,10 +7,10 @@
       <arg column="LINE_SOURCE" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="LINE_NUM" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="LINE_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="LINE_START_LONG" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="LINE_START_LAT" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="LINE_END_LONG" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="LINE_END_LAT" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="LINE_START_LONG" javaType="java.lang.String" jdbcType="INTEGER" />
+      <arg column="LINE_START_LAT" javaType="java.lang.String" jdbcType="INTEGER" />
+      <arg column="LINE_END_LONG" javaType="java.lang.String" jdbcType="INTEGER" />
+      <arg column="LINE_END_LAT" javaType="java.lang.String" jdbcType="INTEGER" />
       <arg column="STATUS" javaType="java.lang.String" jdbcType="CHAR" />
       <arg column="CREATE_USER" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
@@ -40,8 +40,8 @@
       CREATE_USER, CREATE_TIME, UPDATE_USER,
       UPDATE_TIME, DELETE_FLAG)
     values (#{sc020103Id,jdbcType=VARCHAR}, #{lineSource,jdbcType=VARCHAR}, #{lineNum,jdbcType=VARCHAR},
-      #{lineName,jdbcType=VARCHAR}, #{lineStartLong,jdbcType=INTEGER}, #{lineStartLat,jdbcType=INTEGER},
-      #{lineEndLong,jdbcType=INTEGER}, #{lineEndLat,jdbcType=INTEGER}, #{status,jdbcType=CHAR},
+      #{lineName,jdbcType=VARCHAR}, #{lineStartLong,jdbcType=VARCHAR}, #{lineStartLat,jdbcType=VARCHAR},
+      #{lineEndLong,jdbcType=VARCHAR}, #{lineEndLat,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
       #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
   </insert>
@@ -105,16 +105,16 @@
         #{lineName,jdbcType=VARCHAR},
       </if>
       <if test="lineStartLong != null">
-        #{lineStartLong,jdbcType=INTEGER},
+        #{lineStartLong,jdbcType=VARCHAR},
       </if>
       <if test="lineStartLat != null">
-        #{lineStartLat,jdbcType=INTEGER},
+        #{lineStartLat,jdbcType=VARCHAR},
       </if>
       <if test="lineEndLong != null">
-        #{lineEndLong,jdbcType=INTEGER},
+        #{lineEndLong,jdbcType=VARCHAR},
       </if>
       <if test="lineEndLat != null">
-        #{lineEndLat,jdbcType=INTEGER},
+        #{lineEndLat,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=CHAR},
@@ -149,16 +149,16 @@
         LINE_NAME = #{lineName,jdbcType=VARCHAR},
       </if>
       <if test="lineStartLong != null">
-        LINE_START_LONG = #{lineStartLong,jdbcType=INTEGER},
+        LINE_START_LONG = #{lineStartLong,jdbcType=VARCHAR},
       </if>
       <if test="lineStartLat != null">
-        LINE_START_LAT = #{lineStartLat,jdbcType=INTEGER},
+        LINE_START_LAT = #{lineStartLat,jdbcType=VARCHAR},
       </if>
       <if test="lineEndLong != null">
-        LINE_END_LONG = #{lineEndLong,jdbcType=INTEGER},
+        LINE_END_LONG = #{lineEndLong,jdbcType=VARCHAR},
       </if>
       <if test="lineEndLat != null">
-        LINE_END_LAT = #{lineEndLat,jdbcType=INTEGER},
+        LINE_END_LAT = #{lineEndLat,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         STATUS = #{status,jdbcType=CHAR},
@@ -186,10 +186,10 @@
     set LINE_SOURCE = #{lineSource,jdbcType=VARCHAR},
       LINE_NUM = #{lineNum,jdbcType=VARCHAR},
       LINE_NAME = #{lineName,jdbcType=VARCHAR},
-      LINE_START_LONG = #{lineStartLong,jdbcType=INTEGER},
-      LINE_START_LAT = #{lineStartLat,jdbcType=INTEGER},
-      LINE_END_LONG = #{lineEndLong,jdbcType=INTEGER},
-      LINE_END_LAT = #{lineEndLat,jdbcType=INTEGER},
+      LINE_START_LONG = #{lineStartLong,jdbcType=VARCHAR},
+      LINE_START_LAT = #{lineStartLat,jdbcType=VARCHAR},
+      LINE_END_LONG = #{lineEndLong,jdbcType=VARCHAR},
+      LINE_END_LAT = #{lineEndLat,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=CHAR},
       CREATE_USER = #{createUser,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},

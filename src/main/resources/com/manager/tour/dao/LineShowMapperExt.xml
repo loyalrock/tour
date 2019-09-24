@@ -10,8 +10,8 @@
     values
     <foreach collection="lineShows" separator="," item="item">
       (#{item.sc020103Id,jdbcType=VARCHAR}, #{item.lineSource,jdbcType=VARCHAR}, #{item.lineNum,jdbcType=VARCHAR},
-      #{item.lineName,jdbcType=VARCHAR}, #{item.lineStartLong,jdbcType=INTEGER}, #{item.lineStartLat,jdbcType=INTEGER},
-      #{item.lineEndLong,jdbcType=INTEGER}, #{item.lineEndLat,jdbcType=INTEGER}, #{item.status,jdbcType=CHAR},
+      #{item.lineName,jdbcType=VARCHAR}, #{item.lineStartLong,jdbcType=VARCHAR}, #{item.lineStartLat,jdbcType=VARCHAR},
+      #{item.lineEndLong,jdbcType=VARCHAR}, #{item.lineEndLat,jdbcType=VARCHAR}, #{item.status,jdbcType=CHAR},
       #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR},
       #{item.updateTime,jdbcType=TIMESTAMP}, #{item.deleteFlag,jdbcType=CHAR})
     </foreach>

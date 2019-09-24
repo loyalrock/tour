@@ -12,7 +12,7 @@
     <foreach collection="regionShows" separator="," item="item">
       (#{item.sc020104Id,jdbcType=VARCHAR}, #{item.distSource,jdbcType=VARCHAR}, #{item.distNo,jdbcType=VARCHAR},
       #{item.distClass,jdbcType=VARCHAR}, #{item.distSecCalss,jdbcType=VARCHAR}, #{item.distName,jdbcType=VARCHAR},
-      #{item.distStartLong,jdbcType=INTEGER}, #{item.distStartLat,jdbcType=INTEGER}, #{item.distAdres,jdbcType=VARCHAR},
+      #{item.distStartLong,jdbcType=VARCHAR}, #{item.distStartLat,jdbcType=VARCHAR}, #{item.distAdres,jdbcType=VARCHAR},
       #{item.distPicUrl,jdbcType=CHAR}, #{item.distTel,jdbcType=VARCHAR}, #{item.distExp,jdbcType=VARCHAR},
       #{item.status,jdbcType=CHAR}, #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP},
       #{item.updateUser,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.deleteFlag,jdbcType=CHAR})

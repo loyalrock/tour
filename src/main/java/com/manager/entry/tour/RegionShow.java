@@ -19,9 +19,9 @@ public class RegionShow extends CommonEntry {
 
     private String distName;
 
-    private Integer distStartLong;
+    private String distStartLong;
 
-    private Integer distStartLat;
+    private String distStartLat;
 
     private String distAdres;
 
@@ -31,7 +31,7 @@ public class RegionShow extends CommonEntry {
 
     private String distExp;
 
-    public RegionShow(String sc020104Id, String distSource, String distNo, String distClass, String distSecCalss, String distName, Integer distStartLong, Integer distStartLat, String distAdres, String distPicUrl, String distTel, String distExp, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+    public RegionShow(String sc020104Id, String distSource, String distNo, String distClass, String distSecCalss, String distName, String distStartLong, String distStartLat, String distAdres, String distPicUrl, String distTel, String distExp, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
         super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
         this.sc020104Id = sc020104Id;
         this.distSource = distSource;

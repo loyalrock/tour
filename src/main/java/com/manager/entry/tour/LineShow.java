@@ -15,15 +15,15 @@ public class LineShow extends CommonEntry {
 
     private String lineName;
 
-    private Integer lineStartLong;
+    private String lineStartLong;
 
-    private Integer lineStartLat;
+    private String lineStartLat;
 
-    private Integer lineEndLong;
+    private String lineEndLong;
 
-    private Integer lineEndLat;
+    private String lineEndLat;
 
-    public LineShow(String sc020103Id, String lineSource, String lineNum, String lineName, Integer lineStartLong, Integer lineStartLat, Integer lineEndLong, Integer lineEndLat, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+    public LineShow(String sc020103Id, String lineSource, String lineNum, String lineName, String lineStartLong, String lineStartLat, String lineEndLong, String lineEndLat, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
         this.sc020103Id = sc020103Id;
         this.lineSource = lineSource;
         this.lineNum = lineNum;

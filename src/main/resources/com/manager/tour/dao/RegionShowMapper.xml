@@ -9,8 +9,8 @@
       <arg column="DIST_CLASS" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="DIST_SEC_CALSS" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="DIST_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="DIST_START_LONG" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="DIST_START_LAT" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="DIST_START_LONG" javaType="java.lang.String" jdbcType="INTEGER" />
+      <arg column="DIST_START_LAT" javaType="java.lang.String" jdbcType="INTEGER" />
       <arg column="DIST_ADRES" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="DIST_PIC_URL" javaType="java.lang.String" jdbcType="CHAR" />
       <arg column="DIST_TEL" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -48,7 +48,7 @@
       )
     values (#{sc020104Id,jdbcType=VARCHAR}, #{distSource,jdbcType=VARCHAR}, #{distNo,jdbcType=VARCHAR},
       #{distClass,jdbcType=VARCHAR}, #{distSecCalss,jdbcType=VARCHAR}, #{distName,jdbcType=VARCHAR},
-      #{distStartLong,jdbcType=INTEGER}, #{distStartLat,jdbcType=INTEGER}, #{distAdres,jdbcType=VARCHAR},
+      #{distStartLong,jdbcType=VARCHAR}, #{distStartLat,jdbcType=VARCHAR}, #{distAdres,jdbcType=VARCHAR},
       #{distPicUrl,jdbcType=CHAR}, #{distTel,jdbcType=VARCHAR}, #{distExp,jdbcType=VARCHAR},
       #{status,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}
@@ -132,10 +132,10 @@
         #{distName,jdbcType=VARCHAR},
       </if>
       <if test="distStartLong != null">
-        #{distStartLong,jdbcType=INTEGER},
+        #{distStartLong,jdbcType=VARCHAR},
       </if>
       <if test="distStartLat != null">
-        #{distStartLat,jdbcType=INTEGER},
+        #{distStartLat,jdbcType=VARCHAR},
       </if>
       <if test="distAdres != null">
         #{distAdres,jdbcType=VARCHAR},
@@ -188,10 +188,10 @@
         DIST_NAME = #{distName,jdbcType=VARCHAR},
       </if>
       <if test="distStartLong != null">
-        DIST_START_LONG = #{distStartLong,jdbcType=INTEGER},
+        DIST_START_LONG = #{distStartLong,jdbcType=VARCHAR},
       </if>
       <if test="distStartLat != null">
-        DIST_START_LAT = #{distStartLat,jdbcType=INTEGER},
+        DIST_START_LAT = #{distStartLat,jdbcType=VARCHAR},
       </if>
       <if test="distAdres != null">
         DIST_ADRES = #{distAdres,jdbcType=VARCHAR},
