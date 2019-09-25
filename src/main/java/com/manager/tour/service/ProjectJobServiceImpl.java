@@ -159,6 +159,11 @@ public class ProjectJobServiceImpl implements ProjectJobService {
         } else {
             projectJob.setIndexPic(Flag.NOT_HAVE);
         }
+
+        // 最多上传三张
+        if (deleteUploadNotInIds.size() + insertUploadList.size() > 3) {
+            throw new CommonException(Message.PROJECT_INDEX_PIC_MAX_3);
+        }
         // 先删除在新增 如果有id就排除法删除 没有的情况下全删 修改时 已有的数据即为全部
         uploadDataFileMapper.deleteAll(projectJob.getProjectNo(), deleteUploadNotInIds, ss01Id);
         if (insertUploadList.size() > 0) {

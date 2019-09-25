@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
 
         // 判断项目
         String currentUserRoleId = currentUser.getUserRole().getUserRoleId();
-        // 如果是全域管理员且项目编码改变
+        // 如果是全域管理员（有改变权利）且项目编码改变
         if (currentUserRoleId.equals(Role.SYSTEM) && !userManager.getProjectNo().equals(beforeUpdateUser.getProjectNo())) {
             UserProject userProject = new UserProject();
             userProject.setSs01Id(userUid);

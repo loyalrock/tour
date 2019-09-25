@@ -131,6 +131,10 @@ public class SuperContentServiceImpl implements SuperContentService{
         } else {
             // 计算长度 除以三 + level是否下一级
             String queryLevel = String.valueOf(code.replace("QJ", "").length() / 3 + level);
+
+            if (Integer.parseInt(queryLevel) > 5) {
+                throw new CommonException(Message.SUPER_LEVEL_MAX_5);
+            }
             // 查找下一级则保持不断模糊查询 如果当前级去除后三位查询
             String nextCode = superContentMapper.selectNextCode(queryLevel, level > 0 ? code : code.substring(0, code.length() - 3));
             if (nextCode == null) {
@@ -166,7 +170,7 @@ public class SuperContentServiceImpl implements SuperContentService{
         StringBuffer codeBuffer = new StringBuffer(code);
         StringBuffer sysNoBuffer = new StringBuffer();
         while (codeBuffer.length() > 0) {
-            sysNoBuffer.append(codeBuffer.substring(0, 3).replace("0", ""));
+            sysNoBuffer.append(Integer.parseInt(codeBuffer.substring(0, 3)));
             sysNoBuffer.append(".");
             // 改变code
             codeBuffer = codeBuffer.delete(0, 3);

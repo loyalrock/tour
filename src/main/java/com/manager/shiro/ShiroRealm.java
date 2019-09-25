@@ -95,7 +95,7 @@ public class ShiroRealm extends AuthorizingRealm {
         if (!userRoleId.equals(Role.SYSTEM)) {
             UserProject userProject = userProjectMapper.selectProjectBySs01Id(user.getSs01Id());
             if (userProject == null || userProject.getProjectNo() == null || "".equals(userProject.getProjectNo().trim())) {
-                throw new CommonException(Message.UN_BIND_PROJECT);
+                throw new CommonException(Message.PROJECT_DISABLE);
             }
             user.setUserProject(userProject);
         }

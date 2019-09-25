@@ -34,7 +34,7 @@
                     and t5.PROJECT_NO = #{query.projectNo,jdbcType=VARCHAR}
                 </if>
                 <if test="query.projectName != null and query.projectName.trim() != ''">
-                    and t1.PROJECT_NAME like CONCAT('%', #{query.projectName,jdbcType=VARCHAR}, '%')
+                    and t5.PROJECT_NAME like CONCAT('%', #{query.projectName,jdbcType=VARCHAR}, '%')
                 </if>
                 <if test="query.userRoleId != null and query.userRoleId.trim() != ''">
                     and t2.USER_ROLE_ID = #{query.userRoleId,jdbcType=VARCHAR}

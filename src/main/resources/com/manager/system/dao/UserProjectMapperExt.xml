@@ -25,7 +25,7 @@
     select t1.*, t2.PROJECT_NAME, t2.PROJECT_NAME_J, t2.PROJECT_LONG
     from SS0102 t1 left join SC02 t2
     on t1.PROJECT_NO = t2.PROJECT_NO
-    where t1.SS01_ID = #{ss01Id} and t1.DELETE_FLAG = '0'
+    where t1.SS01_ID = #{ss01Id} and t1.DELETE_FLAG = '0' and t2.STATUS = '1' and t2.DELETE_FLAG = '0'
   </select>
 
   <resultMap id="DetailResultMap" type="com.manager.entry.system.UserProject">

@@ -16,7 +16,7 @@ public enum Message {
     CODE_UN_UNIQUE("9007", "编号不唯一"),
     FILE_IS_EMPTY("9008", "文件大小为0"),
     FILE_SAVE_FAILED("9009", "文件保存失败"),
-    UN_BIND_PROJECT("9010", "请给当前用户分配项目"),
+    PROJECT_DISABLE("9010", "未分配项目或者项目已被停用，请联系全域管理员"),
     PASSWORD_LENGTH_SHORT("9011", "密码长度不能小于6"),
     ERROR_PROJECT("9012", "项目编号有误，请正确选择"),
     LOGIN_TYPE_ERROR("9015", "请重新选择登录前后台"),
@@ -41,6 +41,8 @@ public enum Message {
     SUPER_CONTENT_DEACTI_ERROR("2004", "内容维护停用时间不能等于或早于今天"),
     SUPER_CONTENT_TIME_ERROR("2005", "内容维护启用时间不能等于或晚于停用时间"),
     SCORE_OVER_MAX("2006", "自评分数不能超过内容维护最大分值"),
+    SUPER_LEVEL_MAX_5("2007", "内容维护最大层级5"),
+    PROJECT_INDEX_PIC_MAX_3("2008", "项目首页图片最多3张"),
 
 
     PROJECT_NAME_J_UNIQUE("3001", "项目简称不唯一")
