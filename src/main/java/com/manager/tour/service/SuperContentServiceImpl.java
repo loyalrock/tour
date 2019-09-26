@@ -12,6 +12,7 @@ import com.manager.tour.dao.SuperContentMapper;
 import com.manager.util.Delete;
 import com.manager.util.Message;
 import com.manager.util.excel.ExcelUtil;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ import java.util.logging.Level;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class SuperContentServiceImpl implements SuperContentService{
+public class SuperContentServiceImpl implements SuperContentService {
 
     @Autowired
     private SuperContentMapper superContentMapper;
@@ -69,6 +70,7 @@ public class SuperContentServiceImpl implements SuperContentService{
 
     /**
      * 修改维护内容
+     *
      * @param superContent
      * @return
      */
@@ -93,7 +95,7 @@ public class SuperContentServiceImpl implements SuperContentService{
 
             StringBuffer errorBuffer = new StringBuffer();
 
-            SuperContentExcel superContentExcel = (SuperContentExcel)items.get(i);
+            SuperContentExcel superContentExcel = (SuperContentExcel) items.get(i);
 
             if (superContentExcel.getSuperPNo() == null || "".equals(superContentExcel.getSuperPNo().trim())) {
                 errorBuffer.append("内容编号缺失；");
@@ -124,33 +126,31 @@ public class SuperContentServiceImpl implements SuperContentService{
     @Override
     public SuperContent getNextCode(Integer level, String code) {
         SuperContent superContent = new SuperContent();
-        if (code == null) {
-            superContent.setSuperPNo("QJ001");
-            superContent.setSuperPLevel("1");
-            superContent.setSysNo("1");
-        } else {
-            // 计算长度 除以三 + level是否下一级
-            String queryLevel = String.valueOf(code.replace("QJ", "").length() / 3 + level);
-
-            if (Integer.parseInt(queryLevel) > 5) {
-                throw new CommonException(Message.SUPER_LEVEL_MAX_5);
-            }
-            // 查找下一级则保持不断模糊查询 如果当前级去除后三位查询
-            String nextCode = superContentMapper.selectNextCode(queryLevel, level > 0 ? code : code.substring(0, code.length() - 3));
-            if (nextCode == null) {
-                // 下一级开始
-                nextCode = code + "000";
-            }
-            // 取末尾数字
-            String end = String.valueOf(Integer.parseInt(nextCode.substring(nextCode.length() - 3)) + 1);
-            // 替换末尾的数字
-            nextCode = nextCode.substring(0, nextCode.length() - end.length()) + end;
-            superContent.setSuperPLevel(queryLevel);
-            superContent.setSuperPNo(nextCode);
-            // 保证父级
-            UserUtil.checkParentNo(superContent);
-            superContent.setSysNo(getSysNo(nextCode));
+        if (Strings.isBlank(code)) {
+            code = "QJ";
+            level = 1;
         }
+        String queryLevel = String.valueOf(code.replace("QJ", "").length() / 3 + level);
+
+        if (Integer.parseInt(queryLevel) > 5) {
+            throw new CommonException(Message.SUPER_LEVEL_MAX_5);
+        }
+        // 查找下一级则保持不断模糊查询 如果当前级去除后三位查询
+        String nextCode = superContentMapper.selectNextCode(queryLevel, level > 0 ? code : code.substring(0, code.length() - 3));
+        if (nextCode == null) {
+            // 下一级开始
+            nextCode = code + "000";
+        }
+        // 取末尾数字
+        String end = String.valueOf(Integer.parseInt(nextCode.substring(nextCode.length() - 3)) + 1);
+        // 替换末尾的数字
+        nextCode = nextCode.substring(0, nextCode.length() - end.length()) + end;
+        superContent.setSuperPLevel(queryLevel);
+        superContent.setSuperPNo(nextCode);
+        // 保证父级
+        UserUtil.checkParentNo(superContent);
+        superContent.setSysNo(getSysNo(nextCode));
+
 
         return superContent;
     }
@@ -162,10 +162,11 @@ public class SuperContentServiceImpl implements SuperContentService{
 
     /**
      * 通过编号获取系统编号
+     *
      * @param code
      * @return
      */
-    private String getSysNo (String code) {
+    private String getSysNo(String code) {
         code = code.replace("QJ", "");
         StringBuffer codeBuffer = new StringBuffer(code);
         StringBuffer sysNoBuffer = new StringBuffer();

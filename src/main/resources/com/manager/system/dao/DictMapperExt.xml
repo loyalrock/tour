@@ -9,10 +9,10 @@
         where 1=1
         <if test="query != null">
             <if test="query.dirName != null and query.dirName.trim() != ''">
-                and DIR_NAME like concat('%', #{query.dirName,jdbcType=VARCHAR}, '%')
+                and t1.DIR_NAME like concat('%', #{query.dirName,jdbcType=VARCHAR}, '%')
             </if>
             <if test="query.status != null and query.status.trim() != ''">
-                and STATUS = #{query.status,jdbcType=VARCHAR}
+                and t1.STATUS = #{query.status,jdbcType=VARCHAR}
             </if>
         </if>
         group by t1.SS03_ID order by t1.CREATE_TIME
@@ -42,7 +42,7 @@
         <result column="DIR_EXP" jdbcType="VARCHAR" property="dirExp"/>
         <result column="STATUS" jdbcType="CHAR" property="status"/>
         <collection property="categories" ofType="com.manager.entry.system.Category">
-            <id column="SS05_ID" jdbcType="VARCHAR" property="ss05Id"></id>
+            <id column="SS05_ID" jdbcType="VARCHAR" property="ss05Id"/>
             <result column="CATEGORY_NAME" jdbcType="VARCHAR" property="categoryName"/>
             <result column="CATEGORY_CODE" jdbcType="VARCHAR" property="categoryCode"/>
         </collection>
