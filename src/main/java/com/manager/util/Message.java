@@ -6,6 +6,7 @@ public enum Message {
      * 系统
      */
     SUCCESS("1000", "操作成功"),
+    SYSTEM_ERROR("9999", "系统异常"),
     NOT_USER_FOUND("9001", "找不到用户"),
     DISABLE_USER("9002", "用户被禁用"),
     NEED_LOGIN("9003", "未登录"),

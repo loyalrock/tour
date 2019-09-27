@@ -26,7 +26,11 @@ public class ResultUtil {
         return new ResultEntry(message.getCode(), message.getMessage());
     }
 
+    public static ResultEntry error(Message message, Object obj) {
+        return new ResultEntry(message.getCode(), message.getMessage(), obj);
+    }
+
     public static ResultEntry error(String m) {
-        return new ResultEntry("-1", m);
+        return ResultUtil.error(Message.SYSTEM_ERROR, m);
     }
 }

@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import java.util.function.Consumer;
 
+/**
+ * 全局异常捕获
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -45,19 +48,28 @@ public class GlobalExceptionHandler {
         return ResultUtil.error(errorMessage.toString());
     }
 
+    /**
+     * 捕捉所有异常
+     * @param e
+     * @param response
+     * @return
+     */
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResultEntry exceptionHandler(Exception e, HttpServletResponse response) {
         if (e instanceof CommonException) {
+            // 已知异常
             CommonException commonException = (CommonException) e;
             return ResultUtil.error(commonException.getMessageEnum());
         } else if (e instanceof MissingServletRequestParameterException) {
+            // 缺失参数
             return ResultUtil.error(Message.LOST_PARAM);
         } else if (e instanceof AuthenticationException) {
             // 未登录
             AuthenticationException authenticationException = (AuthenticationException) e;
             Throwable throwable = e.getCause();
             if (throwable instanceof CommonException) {
+                // shiro releam中报错
                 return ResultUtil.error(((CommonException) throwable).getMessageEnum());
             } else if (e instanceof IncorrectCredentialsException) {
                 // 密码错误
@@ -70,9 +82,10 @@ public class GlobalExceptionHandler {
             // 没有权限
             return ResultUtil.error(Message.NO_PERMISSIONS);
         } else {
+            // 其他异常 打印错误信息 记录进入error.log 返回
             e.printStackTrace();
             logger.error(e.getMessage());
-            return new ResultEntry("9999", "系统异常！", e.getMessage());
+            return ResultUtil.error(e.getMessage());
         }
     }
 
