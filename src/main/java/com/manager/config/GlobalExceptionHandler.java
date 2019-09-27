@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
         } else {
             e.printStackTrace();
             logger.error(e.getMessage());
-            return new ResultEntry("9999", "系统异常！", null);
+            return new ResultEntry("9999", "系统异常！", e.getMessage());
         }
     }
 
