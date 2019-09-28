@@ -16,6 +16,8 @@ public class UserProject {
 
     private Integer projectLong;
 
+    private String projectLat;
+
     private String projectNo;
 
     private String opUnit;
