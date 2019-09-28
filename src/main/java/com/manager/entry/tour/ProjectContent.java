@@ -34,6 +34,8 @@ public class ProjectContent extends CommonEntry implements CheckParentNo {
      */
     private String projectStatus;
 
+    private String nextLevel;
+
     /**
      * 项目主键
      */

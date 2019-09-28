@@ -192,6 +192,9 @@
         t2.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
         where t1.SUPER_PARENT = #{code,jdbcType=VARCHAR}
         and t1.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+        <if test="_parameter.containsKey('level') and level != null">
+            and t1.SUPER_P_LEVEL = #{level,jdbcType=VARCHAR}
+        </if>
         and t1.STATUS = '1' and t1.DELETE_FLAG = '0'
         group by t1.SC0201_ID
         order by t1.SUPER_P_NO
@@ -203,6 +206,7 @@
         <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName"/>
         <result column="PROJECT_STATUS" jdbcType="VARCHAR" property="projectStatus"/>
         <result column="SC02_ID" jdbcType="VARCHAR" property="sc02Id"/>
+        <result column="nextLevel" jdbcType="VARCHAR" property="nextLevel"></result>
         <result column="SUPER_P_NO" jdbcType="VARCHAR" property="superPNo"/>
         <result column="SUPER_PARENT" jdbcType="VARCHAR" property="superParent"/>
         <result column="SUPER_P_LEVEL" jdbcType="VARCHAR" property="superPLevel"/>
@@ -222,7 +226,7 @@
         <result column="totalSuperScore" jdbcType="INTEGER" property="totalSuperScore"/>
         <result column="totalScore" jdbcType="INTEGER" property="totalScore"/>
         <collection property="projectContents"
-                    select="selectProjectContentLevel"
+                    select="selectProjectContentAll"
                     ofType="com.manager.entry.tour.ProjectContent"
                     column="{code=SUPER_P_NO, level=nextLevel, projectNo=PROJECT_NO}">
 
