@@ -35,6 +35,14 @@ public interface ProjectContentMapper {
 
     List<ProjectContent> selectProjectContentLevel(@Param("projectNo") String projectNo, @Param("code") String code, @Param("level") String level);
 
+    /**
+     * 根据父节点superContentNo 查询所有子节点
+     * @param projectNo
+     * @param code
+     * @return
+     */
+    List<ProjectContent> selectProjectContentAll(@Param("projectNo") String projectNo, @Param("code") String code);
+
     List<ProjectScore> selectProjectScoreStatistics(@Param("projectNo") String projectNo);
 
     List<ProjectDocumentNum> selectProjectDocumentStatistics(@Param("projectNo") String projectNo);

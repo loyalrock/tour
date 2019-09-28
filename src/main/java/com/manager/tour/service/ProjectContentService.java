@@ -45,4 +45,6 @@ public interface ProjectContentService {
 
     List<ProjectDocumentNum> selectProjectDocumentStatistics(String projectNo);
 
+    List<ProjectContent> selectProjectContentAll(String projectNo, String code);
+
 }

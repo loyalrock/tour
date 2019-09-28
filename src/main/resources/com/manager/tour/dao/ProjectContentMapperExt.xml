@@ -2,21 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.manager.tour.dao.ProjectContentMapper">
     <insert id="insertAll" parameterType="com.manager.entry.tour.ProjectContent">
-        insert into SC0201 (SC0201_ID, PROJECT_NO, SUPER_P_NO,SUPER_PARENT, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK, SUPER_P_EXP,
+        insert into SC0201 (SC0201_ID, PROJECT_NO, SUPER_P_NO,SUPER_PARENT, SUPER_P_LEVEL, SYS_NO, SUPER_P_CHECK,
+        SUPER_P_EXP,
         SUPER_P_CONT, SUPER_P_SCORE, SUPER_P_EXPLAIN, SUPER_P_INDICATOR, SUPER_P_STANDARD,
         OP_UNIT, STATUS, SHOW_NO, IF_FILE, IF_PIC, IF_LINE, IF_DIST, SCORE, CREATE_USER,
         CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG
         )
         values
         <foreach collection="projectContents" item="projectContent" separator=",">
-            (#{projectContent.sc0201Id,jdbcType=VARCHAR}, #{projectContent.projectNo,jdbcType=VARCHAR}, #{projectContent.superPNo,jdbcType=VARCHAR}, #{projectContent.superParent,jdbcType=VARCHAR},
-            #{projectContent.superPLevel,jdbcType=VARCHAR}, #{projectContent.sysNo,jdbcType=VARCHAR}, #{projectContent.superPCheck,jdbcType=VARCHAR},
-            #{projectContent.superPExp,jdbcType=VARCHAR}, #{projectContent.superPCont,jdbcType=VARCHAR}, #{projectContent.superPScore,jdbcType=INTEGER},
-            #{projectContent.superPExplain,jdbcType=VARCHAR}, #{projectContent.superPIndicator,jdbcType=VARCHAR}, #{projectContent.superPStandard,jdbcType=VARCHAR},
-            #{projectContent.opUnit,jdbcType=VARCHAR}, #{projectContent.status,jdbcType=CHAR}, #{projectContent.showNo,jdbcType=VARCHAR},
-            #{projectContent.ifFile,jdbcType=CHAR}, #{projectContent.ifPic,jdbcType=CHAR}, #{projectContent.ifLine,jdbcType=CHAR}, #{projectContent.ifDist,jdbcType=CHAR},
-            #{projectContent.score,jdbcType=INTEGER}, #{projectContent.createUser,jdbcType=VARCHAR}, #{projectContent.createTime,jdbcType=TIMESTAMP},
-            #{projectContent.updateUser,jdbcType=VARCHAR}, #{projectContent.updateTime,jdbcType=TIMESTAMP}, #{projectContent.deleteFlag,jdbcType=CHAR}
+            (#{projectContent.sc0201Id,jdbcType=VARCHAR}, #{projectContent.projectNo,jdbcType=VARCHAR},
+            #{projectContent.superPNo,jdbcType=VARCHAR}, #{projectContent.superParent,jdbcType=VARCHAR},
+            #{projectContent.superPLevel,jdbcType=VARCHAR}, #{projectContent.sysNo,jdbcType=VARCHAR},
+            #{projectContent.superPCheck,jdbcType=VARCHAR},
+            #{projectContent.superPExp,jdbcType=VARCHAR}, #{projectContent.superPCont,jdbcType=VARCHAR},
+            #{projectContent.superPScore,jdbcType=INTEGER},
+            #{projectContent.superPExplain,jdbcType=VARCHAR}, #{projectContent.superPIndicator,jdbcType=VARCHAR},
+            #{projectContent.superPStandard,jdbcType=VARCHAR},
+            #{projectContent.opUnit,jdbcType=VARCHAR}, #{projectContent.status,jdbcType=CHAR},
+            #{projectContent.showNo,jdbcType=VARCHAR},
+            #{projectContent.ifFile,jdbcType=CHAR}, #{projectContent.ifPic,jdbcType=CHAR},
+            #{projectContent.ifLine,jdbcType=CHAR}, #{projectContent.ifDist,jdbcType=CHAR},
+            #{projectContent.score,jdbcType=INTEGER}, #{projectContent.createUser,jdbcType=VARCHAR},
+            #{projectContent.createTime,jdbcType=TIMESTAMP},
+            #{projectContent.updateUser,jdbcType=VARCHAR}, #{projectContent.updateTime,jdbcType=TIMESTAMP},
+            #{projectContent.deleteFlag,jdbcType=CHAR}
             )
         </foreach>
     </insert>
@@ -128,7 +137,9 @@
     </select>
 
     <select id="selectProjectContentLevel" resultMap="LevelResultMap">
-        select t1.*, sum(t2.SUPER_P_SCORE) as totalSuperScore, sum(t2.SCORE) as totalScore
+        select t1.SC0201_ID, t1.PROJECT_NO, t1.SUPER_P_NO, t1.SUPER_PARENT, t1.SUPER_P_LEVEL, t1.SYS_NO, t1.SUPER_P_CHECK,
+        t1.SUPER_P_EXP, t1.SUPER_P_CONT, t1.SUPER_P_SCORE, t1.SUPER_P_EXPLAIN, t1.SUPER_P_INDICATOR, t1.SUPER_P_STANDARD,
+        t1.OP_UNIT, t1.STATUS, t1.SHOW_NO, t1.IF_FILE, t1.IF_PIC, t1.IF_LINE, t1.IF_DIST, t1.SCORE, sum(t2.SUPER_P_SCORE) as totalSuperScore, sum(t2.SCORE) as totalScore
         from SC0201 t1
         left join SC0201 t2
         on t2.SUPER_PARENT = t1.SUPER_P_NO and t2.STATUS = '1' and t2.DELETE_FLAG = '0' and
@@ -167,6 +178,55 @@
         <result column="SCORE" jdbcType="INTEGER" property="score"/>
         <result column="totalSuperScore" jdbcType="INTEGER" property="totalSuperScore"/>
         <result column="totalScore" jdbcType="INTEGER" property="totalScore"/>
+    </resultMap>
+
+    <!--二级开始查询-->
+    <select id="selectProjectContentAll" resultMap="AllLevelResultMap">
+        select t1.SC0201_ID, t1.PROJECT_NO, t1.SUPER_P_NO, t1.SUPER_PARENT, t1.SUPER_P_LEVEL, t1.SYS_NO, t1.SUPER_P_CHECK,
+        t1.SUPER_P_EXP, t1.SUPER_P_CONT, t1.SUPER_P_SCORE, t1.SUPER_P_EXPLAIN, t1.SUPER_P_INDICATOR, t1.SUPER_P_STANDARD,
+        t1.OP_UNIT, t1.STATUS, t1.SHOW_NO, t1.IF_FILE, t1.IF_PIC, t1.IF_LINE, t1.IF_DIST, t1.SCORE,
+        (t1.SUPER_P_LEVEL + 1) as nextLevel, sum(t2.SUPER_P_SCORE) as totalSuperScore, sum(t2.SCORE) as totalScore
+        from SC0201 t1
+        left join SC0201 t2
+        on t2.SUPER_PARENT = t1.SUPER_P_NO and t2.STATUS = '1' and t2.DELETE_FLAG = '0' and
+        t2.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+        where t1.SUPER_PARENT = #{code,jdbcType=VARCHAR}
+        and t1.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+        and t1.STATUS = '1' and t1.DELETE_FLAG = '0'
+        group by t1.SC0201_ID
+        order by t1.SUPER_P_NO
+    </select>
+
+    <resultMap id="AllLevelResultMap" type="com.manager.entry.tour.ProjectContent">
+        <id column="SC0201_ID" jdbcType="VARCHAR" property="sc0201Id"/>
+        <result column="PROJECT_NO" jdbcType="VARCHAR" property="projectNo"/>
+        <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName"/>
+        <result column="PROJECT_STATUS" jdbcType="VARCHAR" property="projectStatus"/>
+        <result column="SC02_ID" jdbcType="VARCHAR" property="sc02Id"/>
+        <result column="SUPER_P_NO" jdbcType="VARCHAR" property="superPNo"/>
+        <result column="SUPER_PARENT" jdbcType="VARCHAR" property="superParent"/>
+        <result column="SUPER_P_LEVEL" jdbcType="VARCHAR" property="superPLevel"/>
+        <result column="SYS_NO" jdbcType="VARCHAR" property="sysNo"/>
+        <result column="SUPER_P_CHECK" jdbcType="VARCHAR" property="superPCheck"/>
+        <result column="SUPER_P_EXP" jdbcType="VARCHAR" property="superPExp"/>
+        <result column="SUPER_P_CONT" jdbcType="VARCHAR" property="superPCont"/>
+        <result column="SUPER_P_SCORE" jdbcType="INTEGER" property="superPScore"/>
+        <result column="OP_UNIT" jdbcType="VARCHAR" property="opUnit"/>
+        <result column="STATUS" jdbcType="CHAR" property="status"/>
+        <result column="SHOW_NO" jdbcType="VARCHAR" property="showNo"/>
+        <result column="IF_FILE" jdbcType="CHAR" property="ifFile"/>
+        <result column="IF_PIC" jdbcType="CHAR" property="ifPic"/>
+        <result column="IF_LINE" jdbcType="CHAR" property="ifLine"/>
+        <result column="IF_DIST" jdbcType="CHAR" property="ifDist"/>
+        <result column="SCORE" jdbcType="INTEGER" property="score"/>
+        <result column="totalSuperScore" jdbcType="INTEGER" property="totalSuperScore"/>
+        <result column="totalScore" jdbcType="INTEGER" property="totalScore"/>
+        <collection property="projectContents"
+                    select="selectProjectContentLevel"
+                    ofType="com.manager.entry.tour.ProjectContent"
+                    column="{code=SUPER_P_NO, level=nextLevel, projectNo=PROJECT_NO}">
+
+        </collection>
     </resultMap>
 
     <select id="selectProjectScoreStatistics" parameterType="String" resultMap="ScoreStatisticsResultMap">

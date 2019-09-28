@@ -116,4 +116,18 @@ public class ProjectContentController {
         List<ProjectDocumentNum> projectDocumentNums = projectContentService.selectProjectDocumentStatistics(projectNo);
         return ResultUtil.success(Message.SELECT_SUCCESS, projectDocumentNums);
     }
+
+    /**
+     * 根据父节点查询所有子节点
+     * @param projectNo
+     * @param code
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/level/all", method = RequestMethod.GET)
+    public ResultEntry selectDocumentNum(@RequestParam(required = false, value = "projectNo") String projectNo,
+                                         @RequestParam(required = false, value = "code") String code) throws Exception {
+        List<ProjectContent> projectContents = projectContentService.selectProjectContentAll(projectNo, code);
+        return ResultUtil.success(Message.SELECT_SUCCESS, projectContents);
+    }
 }

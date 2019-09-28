@@ -53,6 +53,12 @@ public class ProjectContent extends CommonEntry implements CheckParentNo {
     @NotBlank(message = "缺失维护内容", groups = {InsertGroup.class})
     private String superPCheck;
 
+    private String superPExplain;
+
+    private String superPIndicator;
+
+    private String superPStandard;
+
     private String superPExp;
 
     private String superPCont;
@@ -78,6 +84,8 @@ public class ProjectContent extends CommonEntry implements CheckParentNo {
 
     private Integer totalScore;
 
+    private List<ProjectContent> projectContents;
+
     private List<ImageShow> imageShows;
 
     private List<DocumentShow> documentShows;
@@ -85,12 +93,6 @@ public class ProjectContent extends CommonEntry implements CheckParentNo {
     private List<LineShow> lineShows;
 
     private List<RegionShow> regionShows;
-
-    private String superPExplain;
-
-    private String superPIndicator;
-
-    private String superPStandard;
 
 
     public ProjectContent(String sc0201Id, String projectNo, String superPNo, String superParent, String superPLevel, String sysNo, String superPCheck, String superPExp, String superPCont, Integer superPScore, String superPExplain, String superPIndicator, String superPStandard, String opUnit, String status, String showNo, String ifFile, String ifPic, String ifLine, String ifDist, Integer score, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {

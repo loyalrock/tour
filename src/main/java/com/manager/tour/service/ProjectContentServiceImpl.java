@@ -45,6 +45,12 @@ public class ProjectContentServiceImpl implements ProjectContentService {
     }
 
     @Override
+    public List<ProjectContent> selectProjectContentAll(String projectNo, String code) {
+        projectNo = UserUtil.getProjectNo(projectNo);
+        return projectContentMapper.selectProjectContentAll(projectNo, code);
+    }
+
+    @Override
     public int updateScore(String sc0201Id, Integer score) {
 
         ProjectContent projectContent = projectContentMapper.selectDetail(sc0201Id);
