@@ -194,15 +194,14 @@
         (t1.SUPER_P_LEVEL + 1) as nextLevel, sum(t2.SUPER_P_SCORE) as totalSuperScore, IFNULL(sum(t2.SCORE), 0) as totalScore
         from SC0201 t1
         left join SC0201 t2
-              on t2.SUPER_P_NO regexp concat('^', t1.SUPER_P_NO) and t2.STATUS = '1' and t2.DELETE_FLAG = '0'
-              and t2.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+              on t2.SUPER_PARENT regexp concat('^', t1.SUPER_P_NO) and t2.STATUS = '1' and t2.DELETE_FLAG = '0'
+              and t2.PROJECT_NO = t1.PROJECT_NO
               and t2.SUPER_P_NO not in (select t3.SUPER_P_NO
                                     from SC0201 t3
                                     where t3.STATUS = '1'
-                                    and t3.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+                                    and t3.PROJECT_NO = t1.PROJECT_NO
                                     and t3.DELETE_FLAG = '0'
                                     and t3.SUPER_PARENT regexp concat('^', t2.SUPER_P_NO))
-        and t2.SUPER_P_NO != t1.SUPER_P_NO
         where t1.SUPER_PARENT = #{code,jdbcType=VARCHAR}
         and t1.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
         <if test="_parameter.containsKey('level') and level != null">
