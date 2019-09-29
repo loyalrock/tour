@@ -137,9 +137,12 @@
     </select>
 
     <select id="selectProjectContentLevel" resultMap="LevelResultMap">
-        select t1.SC0201_ID, t1.PROJECT_NO, t1.SUPER_P_NO, t1.SUPER_PARENT, t1.SUPER_P_LEVEL, t1.SYS_NO, t1.SUPER_P_CHECK,
-        t1.SUPER_P_EXP, t1.SUPER_P_CONT, t1.SUPER_P_SCORE, t1.SUPER_P_EXPLAIN, t1.SUPER_P_INDICATOR, t1.SUPER_P_STANDARD,
-        t1.OP_UNIT, t1.STATUS, t1.SHOW_NO, t1.IF_FILE, t1.IF_PIC, t1.IF_LINE, t1.IF_DIST, t1.SCORE, sum(t2.SUPER_P_SCORE) as totalSuperScore, sum(t2.SCORE) as totalScore
+        select t1.SC0201_ID, t1.PROJECT_NO, t1.SUPER_P_NO, t1.SUPER_PARENT, t1.SUPER_P_LEVEL, t1.SYS_NO,
+        t1.SUPER_P_CHECK,
+        t1.SUPER_P_EXP, t1.SUPER_P_CONT, t1.SUPER_P_SCORE, t1.SUPER_P_EXPLAIN, t1.SUPER_P_INDICATOR,
+        t1.SUPER_P_STANDARD,
+        t1.OP_UNIT, t1.STATUS, t1.SHOW_NO, t1.IF_FILE, t1.IF_PIC, t1.IF_LINE, t1.IF_DIST, t1.SCORE,
+        sum(t2.SUPER_P_SCORE) as totalSuperScore, sum(t2.SCORE) as totalScore
         from SC0201 t1
         left join SC0201 t2
         on t2.SUPER_PARENT = t1.SUPER_P_NO and t2.STATUS = '1' and t2.DELETE_FLAG = '0' and
@@ -181,15 +184,25 @@
     </resultMap>
 
     <!--二级开始查询-->
+    <!--查询所有的子节点 并在子节点中排除SUPER_P_NO 在SUPER_PARENT中出现的数据 -->
     <select id="selectProjectContentAll" resultMap="AllLevelResultMap">
-        select t1.SC0201_ID, t1.PROJECT_NO, t1.SUPER_P_NO, t1.SUPER_PARENT, t1.SUPER_P_LEVEL, t1.SYS_NO, t1.SUPER_P_CHECK,
-        t1.SUPER_P_EXP, t1.SUPER_P_CONT, t1.SUPER_P_SCORE, t1.SUPER_P_EXPLAIN, t1.SUPER_P_INDICATOR, t1.SUPER_P_STANDARD,
+        select t1.SC0201_ID, t1.PROJECT_NO, t1.SUPER_P_NO, t1.SUPER_PARENT, t1.SUPER_P_LEVEL, t1.SYS_NO,
+        t1.SUPER_P_CHECK,
+        t1.SUPER_P_EXP, t1.SUPER_P_CONT, t1.SUPER_P_SCORE, t1.SUPER_P_EXPLAIN, t1.SUPER_P_INDICATOR,
+        t1.SUPER_P_STANDARD,
         t1.OP_UNIT, t1.STATUS, t1.SHOW_NO, t1.IF_FILE, t1.IF_PIC, t1.IF_LINE, t1.IF_DIST, ifnull(t1.SCORE, 0) as SCORE,
         (t1.SUPER_P_LEVEL + 1) as nextLevel, sum(t2.SUPER_P_SCORE) as totalSuperScore, IFNULL(sum(t2.SCORE), 0) as totalScore
         from SC0201 t1
         left join SC0201 t2
-        on t2.SUPER_PARENT = t1.SUPER_P_NO and t2.STATUS = '1' and t2.DELETE_FLAG = '0' and
-        t2.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+              on t2.SUPER_P_NO regexp concat('^', t1.SUPER_P_NO) and t2.STATUS = '1' and t2.DELETE_FLAG = '0'
+              and t2.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+              and t2.SUPER_P_NO not in (select t3.SUPER_P_NO
+                                    from SC0201 t3
+                                    where t3.STATUS = '1'
+                                    and t3.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+                                    and t3.DELETE_FLAG = '0'
+                                    and t3.SUPER_PARENT regexp concat('^', t2.SUPER_P_NO))
+        and t2.SUPER_P_NO != t1.SUPER_P_NO
         where t1.SUPER_PARENT = #{code,jdbcType=VARCHAR}
         and t1.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
         <if test="_parameter.containsKey('level') and level != null">
@@ -234,7 +247,7 @@
     </resultMap>
 
     <select id="selectProjectScoreStatistics" parameterType="String" resultMap="ScoreStatisticsResultMap">
-        select t3.*, convert(t3.totalScore / t3.totalSuperScore * 100, decimal(10,2)) as percent
+        select t3.*, convert((t3.totalScore / t3.totalSuperScore) * 100, decimal(10,2)) as percent
         from (select t1.SUPER_P_CHECK,
                      count(t2.SC0201_ID)              as childNum,
                      ifnull(sum(t2.SUPER_P_SCORE), 0) as totalSuperScore,
@@ -255,7 +268,7 @@
         <result column="childNum" property="childNum" jdbcType="INTEGER"></result>
         <result column="totalSuperScore" property="totalSuperScore" jdbcType="INTEGER"></result>
         <result column="totalScore" property="totalScore" jdbcType="INTEGER"></result>
-        <result column="percent" property="totalScore" jdbcType="DOUBLE"></result>
+        <result column="percent" property="percent" jdbcType="DOUBLE"></result>
     </resultMap>
 
     <select id="selectProjectDocumentStatistics" parameterType="String" resultMap="DocumentResultMap">
