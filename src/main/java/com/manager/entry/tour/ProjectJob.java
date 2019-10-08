@@ -47,6 +47,16 @@ public class ProjectJob extends CommonEntry implements CommonTime {
     private Date deactiTime;
 
     /**
+     * 拓展字段 存放展示pdf
+     */
+    private String projectExpand1;
+
+    /**
+     * 拓展字段 存放展示pdf
+     */
+    private String projectExpand2;
+
+    /**
      * 关联项目
      */
     @NotEmpty(message = "未添加维护内容", groups = {InsertGroup.class})
@@ -57,23 +67,12 @@ public class ProjectJob extends CommonEntry implements CommonTime {
      */
     private List<UploadDataFile> uploadDataFiles;
 
-    public List<UploadDataFile> getUploadDataFiles() {
-        return uploadDataFiles;
-    }
+    /**
+     * 地域展示
+     */
+    private List<RegionShow> regionShows;
 
-    public void setUploadDataFiles(List<UploadDataFile> uploadDataFiles) {
-        this.uploadDataFiles = uploadDataFiles;
-    }
-
-    public List<ProjectContent> getProjectContents() {
-        return projectContents;
-    }
-
-    public void setProjectContents(List<ProjectContent> projectContents) {
-        this.projectContents = projectContents;
-    }
-
-    public ProjectJob(String sc02Id, String projectNo, String projectName, String projectNameJ, Integer projectLong, String projectLat, String indexPic, Date enableTime, Date deactiTime, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
+    public ProjectJob(String sc02Id, String projectNo, String projectName, String projectNameJ, Integer projectLong, String projectLat, String indexPic, String projectExpand1, String projectExpand2, Date enableTime, Date deactiTime, String status, String createUser, Date createTime, String updateUser, Date updateTime, String deleteFlag) {
         super(status, createUser, createTime, updateUser, updateTime, deleteFlag);
         this.sc02Id = sc02Id;
         this.projectNo = projectNo;
@@ -84,6 +83,8 @@ public class ProjectJob extends CommonEntry implements CommonTime {
         this.indexPic = indexPic;
         this.enableTime = enableTime;
         this.deactiTime = deactiTime;
+        this.projectExpand1 = projectExpand1;
+        this.projectExpand2 = projectExpand2;
     }
 
     public ProjectJob() {

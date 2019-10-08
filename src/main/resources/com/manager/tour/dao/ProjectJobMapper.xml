@@ -10,6 +10,8 @@
       <arg column="PROJECT_LONG" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="PROJECT_LAT" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="INDEX_PIC" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="PROJECT_EXPAND_1" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="PROJECT_EXPAND_2" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="ENABLE_TIME" javaType="java.util.Date" jdbcType="DATE" />
       <arg column="DEACTI_TIME" javaType="java.util.Date" jdbcType="DATE" />
       <arg column="STATUS" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -21,7 +23,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    SC02_ID, PROJECT_NO, PROJECT_NAME, PROJECT_NAME_J, PROJECT_LONG, PROJECT_LAT, INDEX_PIC,
+    SC02_ID, PROJECT_NO, PROJECT_NAME, PROJECT_NAME_J, PROJECT_LONG, PROJECT_LAT, INDEX_PIC, PROJECT_EXPAND_1, PROJECT_EXPAND_2,
     ENABLE_TIME, DEACTI_TIME, STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME, DELETE_FLAG
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -37,12 +39,12 @@
   <insert id="insert" parameterType="com.manager.entry.tour.ProjectJob">
     insert into SC02 (SC02_ID, PROJECT_NO, PROJECT_NAME,
       PROJECT_NAME_J, PROJECT_LONG, PROJECT_LAT,
-      INDEX_PIC, ENABLE_TIME, DEACTI_TIME, STATUS,
+      INDEX_PIC, PROJECT_EXPAND_1, PROJECT_EXPAND_2, ENABLE_TIME, DEACTI_TIME, STATUS,
       CREATE_USER, CREATE_TIME, UPDATE_USER,
       UPDATE_TIME, DELETE_FLAG)
     values (#{sc02Id,jdbcType=VARCHAR}, #{projectNo,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR},
       #{projectNameJ,jdbcType=VARCHAR}, #{projectLong,jdbcType=INTEGER}, #{projectLat,jdbcType=VARCHAR},
-      #{indexPic,jdbcType=CHAR}, #{enableTime,jdbcType=DATE}, #{deactiTime,jdbcType=DATE}, #{status,jdbcType=VARCHAR},
+      #{indexPic,jdbcType=CHAR}, #{projectExpand1,jdbcType=VARCHAR}, #{projectExpand2,jdbcType=VARCHAR}, #{enableTime,jdbcType=DATE}, #{deactiTime,jdbcType=DATE}, #{status,jdbcType=VARCHAR},
       #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR})
   </insert>
@@ -69,6 +71,12 @@
       </if>
       <if test="indexPic != null">
         INDEX_PIC,
+      </if>
+      <if test="projectExpand1 != null">
+        PROJECT_EXPAND_1,
+      </if>
+      <if test="projectExpand2 != null">
+        PROJECT_EXPAND_2,
       </if>
       <if test="enableTime != null">
         ENABLE_TIME,
@@ -117,6 +125,12 @@
       <if test="indexPic != null">
         #{indexPic,jdbcType=CHAR},
       </if>
+      <if test="projectExpand1 != null">
+        #{projectExpand1,jdbcType=VARCHAR},
+      </if>
+      <if test="projectExpand2 != null">
+        #{projectExpand2,jdbcType=VARCHAR},
+      </if>
       <if test="enableTime != null">
         #{enableTime,jdbcType=DATE},
       </if>
@@ -164,6 +178,12 @@
       <if test="indexPic != null">
         INDEX_PIC = #{indexPic,jdbcType=CHAR},
       </if>
+      <if test="projectExpand1 != null">
+        PROJECT_EXPAND_1 = #{projectExpand1,jdbcType=VARCHAR},
+      </if>
+      <if test="projectExpand2 != null">
+        PROJECT_EXPAND_2 = #{projectExpand2,jdbcType=VARCHAR},
+      </if>
       <if test="enableTime != null">
         ENABLE_TIME = #{enableTime,jdbcType=DATE},
       </if>
@@ -199,6 +219,8 @@
       PROJECT_LONG = #{projectLong,jdbcType=INTEGER},
       PROJECT_LAT = #{projectLat,jdbcType=VARCHAR},
       INDEX_PIC = #{indexPic,jdbcType=CHAR},
+      PROJECT_EXPAND_1 = #{projectExpand1,jdbcType=VARCHAR},
+      PROJECT_EXPAND_2 = #{projectExpand2,jdbcType=VARCHAR},
       ENABLE_TIME = #{enableTime,jdbcType=DATE},
       DEACTI_TIME = #{deactiTime,jdbcType=DATE},
       STATUS = #{status,jdbcType=VARCHAR},

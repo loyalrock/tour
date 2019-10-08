@@ -187,5 +187,14 @@ public class ProjectJobController {
         return ResultUtil.success(Message.SELECT_SUCCESS, pics);
     }
 
-
+    /**
+     * 查询当前项目下所有的地域
+     * @param projectNo
+     * @return
+     */
+    @RequestMapping(value = "/dist", method = RequestMethod.GET)
+    public ResultEntry selectProjectDist(@RequestParam(value = "projectNo", required = false) String projectNo) {
+        ProjectJob projectJob = projectJobService.selectProjectDist(projectNo);
+        return ResultUtil.success(Message.SELECT_SUCCESS, projectJob);
+    }
 }

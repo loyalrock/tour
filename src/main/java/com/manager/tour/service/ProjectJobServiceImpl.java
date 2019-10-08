@@ -219,6 +219,12 @@ public class ProjectJobServiceImpl implements ProjectJobService {
     private int codeLength = 5;
 
     @Override
+    public ProjectJob selectProjectDist(String projectNo) {
+        projectNo = UserUtil.getProjectNo(projectNo);
+        return projectJobMapper.selectProjectDist(projectNo);
+    }
+
+    @Override
     public String getNextCode() {
 
         int count = projectJobMapper.selectCount();

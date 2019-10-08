@@ -13,7 +13,7 @@
   </update>
 
     <update id="updateStatus">
-    UPDATE SC02 set STATUS = #{query.status},
+        UPDATE SC02 set STATUS = #{query.status},
         <choose>
             <when test="query.status == '1'">
                 ENABLE_TIME = now()
@@ -22,18 +22,20 @@
                 DEACTI_TIME = now()
             </otherwise>
         </choose>
-     where SC02_ID = #{query.sc02Id,jdbcType=VARCHAR}
-  </update>
+        where SC02_ID = #{query.sc02Id,jdbcType=VARCHAR}
+    </update>
 
     <select id="selectPage" resultMap="PageResultMap">
-        select SC02_ID, PROJECT_NO, PROJECT_NAME, PROJECT_NAME_J, STATUS from SC02 where DELETE_FLAG = '0'
+        select SC02_ID, PROJECT_NO, PROJECT_NAME, PROJECT_NAME_J, PROJECT_EXPAND_1, PROJECT_EXPAND_2, STATUS from SC02
+        where DELETE_FLAG = '0'
         <if test="query != null">
             <if test="query.projectName != null and query.projectName.trim() != ''">
                 and PROJECT_NAME like concat('%', #{query.projectName,jdbcType=VARCHAR}, '%')
             </if>
         </if>
         <if test="ss01Id != null and ss01Id != ''">
-            and PROJECT_NO in (select PROJECT_NO from SS0102 where SS01_ID = #{ss01Id,jdbcType=VARCHAR} and DELETE_FLAG = '0')
+            and PROJECT_NO in (select PROJECT_NO from SS0102 where SS01_ID = #{ss01Id,jdbcType=VARCHAR} and DELETE_FLAG
+            = '0')
         </if>
         order by PROJECT_NO
     </select>
@@ -43,6 +45,8 @@
         <result column="PROJECT_NO" property="projectNo" jdbcType="VARCHAR"></result>
         <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR"></result>
         <result column="PROJECT_NAME_J" property="projectNameJ" jdbcType="VARCHAR"></result>
+        <result column="PROJECT_EXPAND_1" property="projectExpand1" jdbcType="VARCHAR"></result>
+        <result column="PROJECT_EXPAND_2" property="projectExpand2" jdbcType="VARCHAR"></result>
         <result column="STATUS" property="status" jdbcType="VARCHAR"></result>
     </resultMap>
 
@@ -63,6 +67,12 @@
             </if>
             <if test="indexPic != null">
                 INDEX_PIC = #{indexPic,jdbcType=CHAR},
+            </if>
+            <if test="projectExpand1 != null">
+                PROJECT_EXPAND_1 = #{projectExpand1,jdbcType=VARCHAR},
+            </if>
+            <if test="projectExpand2 != null">
+                PROJECT_EXPAND_2 = #{projectExpand2,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
                 STATUS = #{status,jdbcType=CHAR},
@@ -87,8 +97,8 @@
     </update>
 
     <select id="selectDetail" parameterType="String" resultMap="DetailResultMap">
-        select t1.SC02_ID, t1.PROJECT_NO, t1.PROJECT_NAME, t1.PROJECT_NAME_J, t1.PROJECT_LONG, t1.PROJECT_LAT, t1.INDEX_PIC,
-        pc.SC0201_ID, pc.PROJECT_NO as PROJECT_NO_CONTENT, pc.SUPER_P_NO, pc.SUPER_P_LEVEL, pc.SYS_NO, pc.SUPER_P_CHECK, pc.SUPER_P_EXP, pc.SUPER_P_CONT, pc.SUPER_P_SCORE, pc.OP_UNIT,
+        select t1.SC02_ID, t1.PROJECT_NO, t1.PROJECT_NAME, t1.PROJECT_NAME_J, t1.PROJECT_LONG, t1.PROJECT_LAT, t1.INDEX_PIC, t1.PROJECT_EXPAND_1, t1.PROJECT_EXPAND_2,
+        pc.SC0201_ID, pc.PROJECT_NO as PROJECT_NO_CONTENT, pc.SUPER_P_NO, pc.SUPER_P_LEVEL, pc.SYS_NO, pc.SUPER_P_CHECK, pc.SUPER_P_EXP, pc.SUPER_P_CONT, pc.SUPER_P_SCORE, pc.OP_UNIT, pc.SCORE,
         t2.SFJ01_ID,
         t2.APP_URL    as index_url,
         t2.APP_NUM    as index_num,
@@ -105,6 +115,8 @@
         <result column="PROJECT_NAME_J" jdbcType="VARCHAR" property="projectNameJ"/>
         <result column="PROJECT_LONG" jdbcType="INTEGER" property="projectLong"/>
         <result column="PROJECT_LAT" jdbcType="VARCHAR" property="projectLat"/>
+        <result column="PROJECT_EXPAND_1" property="projectExpand1" jdbcType="VARCHAR"/>
+        <result column="PROJECT_EXPAND_2" property="projectExpand2" jdbcType="VARCHAR"/>
         <result column="INDEX_PIC" jdbcType="CHAR" property="indexPic"/>
         <collection property="uploadDataFiles" ofType="com.manager.entry.tour.UploadDataFile">
             <id column="SFJ01_ID" jdbcType="VARCHAR" property="sfj01Id"/>
@@ -113,16 +125,87 @@
             <result column="index_url" jdbcType="VARCHAR" property="appUrl"/>
         </collection>
         <collection property="projectContents" ofType="com.manager.entry.tour.ProjectContent">
-            <id column="SC0201_ID" jdbcType="VARCHAR" property="sc0201Id" />
-            <result column="PROJECT_NO_CONTENT" jdbcType="VARCHAR" property="projectNo" />
-            <result column="SUPER_P_NO" jdbcType="VARCHAR" property="superPNo" />
-            <result column="SUPER_P_LEVEL" jdbcType="VARCHAR" property="superPLevel" />
-            <result column="SYS_NO" jdbcType="VARCHAR" property="sysNo" />
-            <result column="SUPER_P_CHECK" jdbcType="VARCHAR" property="superPCheck" />
-            <result column="SUPER_P_EXP" jdbcType="VARCHAR" property="superPExp" />
-            <result column="SUPER_P_CONT" jdbcType="VARCHAR" property="superPCont" />
-            <result column="SUPER_P_SCORE" jdbcType="INTEGER" property="superPScore" />
-            <result column="OP_UNIT" jdbcType="VARCHAR" property="opUnit" />
+            <id column="SC0201_ID" jdbcType="VARCHAR" property="sc0201Id"/>
+            <result column="PROJECT_NO_CONTENT" jdbcType="VARCHAR" property="projectNo"/>
+            <result column="SUPER_P_NO" jdbcType="VARCHAR" property="superPNo"/>
+            <result column="SUPER_P_LEVEL" jdbcType="VARCHAR" property="superPLevel"/>
+            <result column="SYS_NO" jdbcType="VARCHAR" property="sysNo"/>
+            <result column="SUPER_P_CHECK" jdbcType="VARCHAR" property="superPCheck"/>
+            <result column="SUPER_P_EXP" jdbcType="VARCHAR" property="superPExp"/>
+            <result column="SUPER_P_CONT" jdbcType="VARCHAR" property="superPCont"/>
+            <result column="SUPER_P_SCORE" jdbcType="INTEGER" property="superPScore"/>
+            <result column="SCORE" jdbcType="INTEGER" property="score"/>
+            <result column="OP_UNIT" jdbcType="VARCHAR" property="opUnit"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectProjectDist" parameterType="String" resultMap="DistResultMap">
+        select project.PROJECT_NO,
+               project.SC02_ID,
+               project.PROJECT_NAME,
+               project.PROJECT_NAME_J,
+               project.PROJECT_EXPAND_1,
+               project.PROJECT_EXPAND_2,
+               project.PROJECT_LONG,
+               project.PROJECT_LAT,
+               project.INDEX_PIC,
+               dist.DIST_SOURCE,
+               dist.DIST_ADRES,
+               dist.DIST_CLASS,
+               dist.DIST_SEC_CALSS,
+               dist.DIST_EXP,
+               dist.DIST_TEL,
+               dist.DIST_NAME,
+               dist.DIST_START_LONG,
+               dist.DIST_START_LAT,
+               dist.DIST_PIC_URL,
+               dist.DIST_NO,
+               dist.SC020104_ID
+        from SC02 project
+               left join (select t1.PROJECT_NO, t2.*
+                          from SC0201 t1,
+                               SC020104 t2
+                          where t1.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+                            and t1.SC0201_ID = t2.DIST_SOURCE
+                            and t1.SUPER_P_NO not in (select t3.SUPER_PARENT
+                                                      from SC0201 t3
+                                                      where t3.PROJECT_NO = t1.PROJECT_NO
+                                                        and t3.STATUS = '1'
+                                                        and t3.DELETE_FLAG = '0'
+                                                        and t3.SUPER_PARENT is not null)
+                            and t1.STATUS = '1'
+                            and t1.DELETE_FLAG = '0'
+                            and t2.STATUS = '1'
+                            and t2.DELETE_FLAG = '0') dist
+                 on project.PROJECT_NO = dist.PROJECT_NO
+        where project.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+          and project.STATUS = '1'
+          and project.DELETE_FLAG = '0'
+    </select>
+
+    <resultMap id="DistResultMap" type="com.manager.entry.tour.ProjectJob">
+        <id column="SC02_ID" jdbcType="VARCHAR" property="sc02Id"/>
+        <result column="PROJECT_NO" jdbcType="VARCHAR" property="projectNo"/>
+        <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName"/>
+        <result column="PROJECT_NAME_J" jdbcType="VARCHAR" property="projectNameJ"/>
+        <result column="PROJECT_LONG" jdbcType="INTEGER" property="projectLong"/>
+        <result column="PROJECT_LAT" jdbcType="VARCHAR" property="projectLat"/>
+        <result column="PROJECT_EXPAND_1" property="projectExpand1" jdbcType="VARCHAR"/>
+        <result column="PROJECT_EXPAND_2" property="projectExpand2" jdbcType="VARCHAR"/>
+        <result column="INDEX_PIC" jdbcType="CHAR" property="indexPic"/>
+        <collection property="regionShows" ofType="com.manager.entry.tour.RegionShow">
+            <id column="SC020104_ID"          property="sc020104Id" jdbcType="VARCHAR" />
+            <result column="DIST_SOURCE"      property="distSource" jdbcType="VARCHAR" />
+            <result column="DIST_NO"          property="distNo" jdbcType="VARCHAR" />
+            <result column="DIST_CLASS"       property="distClass" jdbcType="VARCHAR" />
+            <result column="DIST_SEC_CALSS"   property="distSecCalss" jdbcType="VARCHAR" />
+            <result column="DIST_NAME"        property="distName" jdbcType="VARCHAR" />
+            <result column="DIST_START_LONG"  property="distStartLong" jdbcType="INTEGER" />
+            <result column="DIST_START_LAT"   property="distStartLat" jdbcType="INTEGER" />
+            <result column="DIST_ADRES"       property="distAdres" jdbcType="VARCHAR" />
+            <result column="DIST_PIC_URL"     property="distPicUrl" jdbcType="CHAR" />
+            <result column="DIST_TEL"         property="distTel" jdbcType="VARCHAR" />
+            <result column="DIST_EXP"         property="distExp" jdbcType="VARCHAR" />
         </collection>
     </resultMap>
 </mapper>

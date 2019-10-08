@@ -61,4 +61,11 @@ public interface ProjectJobService {
      */
     List<String> selectIndexPics(String code);
 
+    /**
+     * 查询项目下所有的地域
+     * @param projectNo
+     * @return
+     */
+    ProjectJob selectProjectDist(String projectNo);
+
 }

@@ -45,18 +45,7 @@ public class ShiroRealm extends AuthorizingRealm {
         String ss01Id = user.getSs01Id();
         String role = USER_ROLE_CACHE.get(ss01Id);
 
-//        if (roles == null) {
-//            // 缓存并设置角色
-//            List<UserRole> userRoles = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
-//            roles = new ArrayList<>();
-//            for (UserRole userRole : userRoles) {
-//                roles.add(userRole.getUserRoleId());
-//            }
-//            USER_ROLE_CACHE.put(ss01Id, roles);
-//            info.addRoles(roles);
-//        } else {
         info.addRole(role);
-//        }
 
         return info;
     }
@@ -78,10 +67,12 @@ public class ShiroRealm extends AuthorizingRealm {
             // 用户被管理员锁定抛出异常
             throw new CommonException(Message.DISABLE_USER);
         }
+        // 比较密码
         if (!user.getPassword().equals(password)) {
             throw new CommonException(Message.PASSWORD_ERROR);
         }
 
+        // 获取当前的角色
         UserRole userRole = userRoleService.selectUserRoleByUserUid(user.getSs01Id());
         String userRoleId = userRole.getUserRoleId();
         USER_ROLE_CACHE.put(user.getSs01Id(), userRoleId);
