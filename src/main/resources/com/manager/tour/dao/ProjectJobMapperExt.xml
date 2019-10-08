@@ -102,10 +102,20 @@
         t2.SFJ01_ID,
         t2.APP_URL    as index_url,
         t2.APP_NUM    as index_num,
-        t2.APP_NAME   as index_name
+        t2.APP_NAME   as index_name,
+        if(t3.SUPER_P_NO is null, 0, 1) as isChild
         from SC02 t1
                 left join SC0201 pc on t1.PROJECT_NO = pc.PROJECT_NO and pc.STATUS = '1' and pc.DELETE_FLAG = '0'
                 left join SFJ01 t2 on t2.APP_SOURCE = t1.PROJECT_NO and t2.STATUS = '1' and t2.DELETE_FLAG = '0'
+                left join (select t1.PROJECT_NO, t1.SUPER_P_NO
+                  from SC0201 t1
+                  where t1.SUPER_P_NO not in (select t2.SUPER_PARENT
+                                              from SC0201 t2
+                                              where t2.SUPER_PARENT is not null
+                                                and t2.STATUS = '1'
+                                                and t2.DELETE_FLAG = '0')
+                    and t1.STATUS = '1'
+                    and t1.DELETE_FLAG = '0') t3 on t3.PROJECT_NO = t1.PROJECT_NO and t3.SUPER_P_NO = pc.SUPER_P_NO
         where t1.SC02_ID = #{sc02Id,jdbcType=VARCHAR} and t1.DELETE_FLAG = '0' order by pc.SUPER_P_NO
   </select>
     <resultMap id="DetailResultMap" type="com.manager.entry.tour.ProjectJob">
@@ -136,6 +146,7 @@
             <result column="SUPER_P_SCORE" jdbcType="INTEGER" property="superPScore"/>
             <result column="SCORE" jdbcType="INTEGER" property="score"/>
             <result column="OP_UNIT" jdbcType="VARCHAR" property="opUnit"/>
+            <result column="isChild" jdbcType="CHAR" property="isChild"/>
         </collection>
     </resultMap>
 

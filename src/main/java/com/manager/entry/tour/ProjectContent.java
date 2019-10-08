@@ -86,6 +86,11 @@ public class ProjectContent extends CommonEntry implements CheckParentNo {
 
     private Integer totalScore;
 
+    /**
+     * 是否为子节点
+     */
+    private String isChild;
+
     private List<ProjectContent> projectContents;
 
     private List<ImageShow> imageShows;
