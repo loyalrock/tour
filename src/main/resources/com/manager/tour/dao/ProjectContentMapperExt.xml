@@ -64,6 +64,9 @@
         <result column="SUPER_P_NO" jdbcType="VARCHAR" property="superPNo"/>
         <result column="SUPER_PARENT" jdbcType="VARCHAR" property="superParent"/>
         <result column="SUPER_P_LEVEL" jdbcType="VARCHAR" property="superPLevel"/>
+        <result column="SUPER_P_EXPLAIN" jdbcType="VARCHAR" property="superPExplain"/>
+        <result column="SUPER_P_INDICATOR" jdbcType="VARCHAR" property="superPIndicator"/>
+        <result column="SUPER_P_STANDARD" jdbcType="VARCHAR" property="superPStandard"/>
         <result column="SYS_NO" jdbcType="VARCHAR" property="sysNo"/>
         <result column="SUPER_P_CHECK" jdbcType="VARCHAR" property="superPCheck"/>
         <result column="SUPER_P_EXP" jdbcType="VARCHAR" property="superPExp"/>
@@ -166,6 +169,9 @@
         <result column="SUPER_P_NO" jdbcType="VARCHAR" property="superPNo"/>
         <result column="SUPER_PARENT" jdbcType="VARCHAR" property="superParent"/>
         <result column="SUPER_P_LEVEL" jdbcType="VARCHAR" property="superPLevel"/>
+        <result column="SUPER_P_EXPLAIN" jdbcType="VARCHAR" property="superPExplain"/>
+        <result column="SUPER_P_INDICATOR" jdbcType="VARCHAR" property="superPIndicator"/>
+        <result column="SUPER_P_STANDARD" jdbcType="VARCHAR" property="superPStandard"/>
         <result column="SYS_NO" jdbcType="VARCHAR" property="sysNo"/>
         <result column="SUPER_P_CHECK" jdbcType="VARCHAR" property="superPCheck"/>
         <result column="SUPER_P_EXP" jdbcType="VARCHAR" property="superPExp"/>
@@ -221,6 +227,9 @@
         <result column="SC02_ID" jdbcType="VARCHAR" property="sc02Id"/>
         <result column="nextLevel" jdbcType="VARCHAR" property="nextLevel"></result>
         <result column="SUPER_P_NO" jdbcType="VARCHAR" property="superPNo"/>
+        <result column="SUPER_P_EXPLAIN" jdbcType="VARCHAR" property="superPExplain"/>
+        <result column="SUPER_P_INDICATOR" jdbcType="VARCHAR" property="superPIndicator"/>
+        <result column="SUPER_P_STANDARD" jdbcType="VARCHAR" property="superPStandard"/>
         <result column="SUPER_PARENT" jdbcType="VARCHAR" property="superParent"/>
         <result column="SUPER_P_LEVEL" jdbcType="VARCHAR" property="superPLevel"/>
         <result column="SYS_NO" jdbcType="VARCHAR" property="sysNo"/>
