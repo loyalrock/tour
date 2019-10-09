@@ -3,6 +3,7 @@ package com.manager.tour.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.manager.entry.common.ResultEntry;
+import com.manager.entry.tour.ProjectDocumentProgress;
 import com.manager.entry.tour.ProjectJob;
 import com.manager.entry.tour.ProjectJobQuery;
 import com.manager.tour.service.ProjectJobService;
@@ -196,5 +197,16 @@ public class ProjectJobController {
     public ResultEntry selectProjectDist(@RequestParam(value = "projectNo", required = false) String projectNo) {
         ProjectJob projectJob = projectJobService.selectProjectDist(projectNo);
         return ResultUtil.success(Message.SELECT_SUCCESS, projectJob);
+    }
+
+    /**
+     * 首页查询进度
+     * @param projectNo
+     * @return
+     */
+    @RequestMapping(value = "/progress", method = RequestMethod.GET)
+    public ResultEntry selectProjectDocumentProgress(@RequestParam(value = "projectNo", required = false) String projectNo) {
+        ProjectDocumentProgress projectDocumentProgress = projectJobService.selectDocumentStatistics(projectNo);
+        return ResultUtil.success(Message.SELECT_SUCCESS, projectDocumentProgress);
     }
 }

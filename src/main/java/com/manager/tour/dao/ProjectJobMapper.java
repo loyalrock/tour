@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.manager.entry.tour.ProjectDocumentProgress;
 import com.manager.entry.tour.ProjectJob;
 import com.manager.entry.tour.ProjectJobQuery;
 import org.apache.ibatis.annotations.Param;
@@ -57,8 +58,10 @@ public interface ProjectJobMapper {
     @Select("select count(*) from SC02 where PROJECT_NAME_J = #{code}")
     int checkProjectJobShort(@Param("code") String code);
 
-    @Select("select APP_URL from SFJ01 where STATUS = '1' and DELETE_FLAG = '0' and APP_SOURCE in (select PROJECT_NO from SC02 where PROJECT_NAME_J = #{code})")
+    @Select("select APP_URL from SFJ01 where APP_SOURCE in (select PROJECT_NO from SC02 where PROJECT_NAME_J = #{code}) and APP_URL is not null and STATUS = '1' and DELETE_FLAG = '0'")
     List<String> selectIndexPics(@Param("code") String code);
 
     ProjectJob selectProjectDist(@Param("projectNo") String projectNo);
+
+    ProjectDocumentProgress selectDocumentStatistics(@Param("projectNo") String projectNo);
 }

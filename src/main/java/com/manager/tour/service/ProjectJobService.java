@@ -2,6 +2,7 @@ package com.manager.tour.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.manager.entry.tour.ProjectDocumentProgress;
 import com.manager.entry.tour.ProjectJob;
 import com.manager.entry.tour.ProjectJobQuery;
 import org.apache.ibatis.annotations.Param;
@@ -67,5 +68,12 @@ public interface ProjectJobService {
      * @return
      */
     ProjectJob selectProjectDist(String projectNo);
+
+    /**
+     * 首页查询进度
+     * @param projectNo
+     * @return
+     */
+    ProjectDocumentProgress selectDocumentStatistics(String projectNo);
 
 }

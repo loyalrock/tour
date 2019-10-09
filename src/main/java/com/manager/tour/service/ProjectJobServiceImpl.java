@@ -51,6 +51,12 @@ public class ProjectJobServiceImpl implements ProjectJobService {
     private RegionShowMapper regionShowMapper;
 
     @Override
+    public ProjectDocumentProgress selectDocumentStatistics(String projectNo) {
+        projectNo = UserUtil.getProjectNo(projectNo);
+        return projectJobMapper.selectDocumentStatistics(projectNo);
+    }
+
+    @Override
     public List<String> selectIndexPics(String code) {
         return projectJobMapper.selectIndexPics(code);
     }

@@ -205,18 +205,38 @@
         <result column="PROJECT_EXPAND_2" property="projectExpand2" jdbcType="VARCHAR"/>
         <result column="INDEX_PIC" jdbcType="CHAR" property="indexPic"/>
         <collection property="regionShows" ofType="com.manager.entry.tour.RegionShow">
-            <id column="SC020104_ID"          property="sc020104Id" jdbcType="VARCHAR" />
-            <result column="DIST_SOURCE"      property="distSource" jdbcType="VARCHAR" />
-            <result column="DIST_NO"          property="distNo" jdbcType="VARCHAR" />
-            <result column="DIST_CLASS"       property="distClass" jdbcType="VARCHAR" />
-            <result column="DIST_SEC_CALSS"   property="distSecCalss" jdbcType="VARCHAR" />
-            <result column="DIST_NAME"        property="distName" jdbcType="VARCHAR" />
-            <result column="DIST_START_LONG"  property="distStartLong" jdbcType="INTEGER" />
-            <result column="DIST_START_LAT"   property="distStartLat" jdbcType="INTEGER" />
-            <result column="DIST_ADRES"       property="distAdres" jdbcType="VARCHAR" />
-            <result column="DIST_PIC_URL"     property="distPicUrl" jdbcType="CHAR" />
-            <result column="DIST_TEL"         property="distTel" jdbcType="VARCHAR" />
-            <result column="DIST_EXP"         property="distExp" jdbcType="VARCHAR" />
+            <id column="SC020104_ID" property="sc020104Id" jdbcType="VARCHAR"/>
+            <result column="DIST_SOURCE" property="distSource" jdbcType="VARCHAR"/>
+            <result column="DIST_NO" property="distNo" jdbcType="VARCHAR"/>
+            <result column="DIST_CLASS" property="distClass" jdbcType="VARCHAR"/>
+            <result column="DIST_SEC_CALSS" property="distSecCalss" jdbcType="VARCHAR"/>
+            <result column="DIST_NAME" property="distName" jdbcType="VARCHAR"/>
+            <result column="DIST_START_LONG" property="distStartLong" jdbcType="INTEGER"/>
+            <result column="DIST_START_LAT" property="distStartLat" jdbcType="INTEGER"/>
+            <result column="DIST_ADRES" property="distAdres" jdbcType="VARCHAR"/>
+            <result column="DIST_PIC_URL" property="distPicUrl" jdbcType="CHAR"/>
+            <result column="DIST_TEL" property="distTel" jdbcType="VARCHAR"/>
+            <result column="DIST_EXP" property="distExp" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
+
+
+    <select id="selectDocumentStatistics" parameterType="String"
+            resultType="com.manager.entry.tour.ProjectDocumentProgress">
+        select t4.*, convert((t4.finish / t4.total) * 100, decimal(10, 2)) as percent
+            from (select count(*) as total, sum(t3.num) as finish
+                  from (select t1.PROJECT_NO, t1.SUPER_P_NO, if(t2.SC020101_ID is null, 0, 1) as num
+                        from SC0201 t1
+                               left join SC020101 t2 on t1.SC0201_ID = t2.FILE_SOURCE and t2.STATUS = '1' and t2.DELETE_FLAG = '0'
+                        where t1.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
+                          and t1.STATUS = '1'
+                          and t1.DELETE_FLAG = '0'
+                          and t1.SUPER_P_NO not in (select t2.SUPER_PARENT
+                                                    from SC0201 t2
+                                                    where t2.SUPER_PARENT is not null
+                                                      and t2.STATUS = '1'
+                                                      and t2.DELETE_FLAG = '0'
+                                                      and t2.PROJECT_NO = t1.PROJECT_NO)) t3
+                  group by t3.PROJECT_NO) t4
+      </select>
 </mapper>
