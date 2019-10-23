@@ -151,7 +151,7 @@
     </resultMap>
 
     <select id="selectProjectDist" parameterType="String" resultMap="DistResultMap">
-        select project.PROJECT_NO,
+        select * from (select project.PROJECT_NO,
                project.SC02_ID,
                project.PROJECT_NAME,
                project.PROJECT_NAME_J,
@@ -191,7 +191,7 @@
                  on project.PROJECT_NO = dist.PROJECT_NO
         where project.PROJECT_NO = #{projectNo,jdbcType=VARCHAR}
           and project.STATUS = '1'
-          and project.DELETE_FLAG = '0'
+          and project.DELETE_FLAG = '0') t group by t.DIST_START_LONG, t.DIST_START_LAT, t.DIST_CLASS
     </select>
 
     <resultMap id="DistResultMap" type="com.manager.entry.tour.ProjectJob">
